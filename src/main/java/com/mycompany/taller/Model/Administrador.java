@@ -5,11 +5,12 @@ import java.util.*;
  * 
  */
 public class Administrador extends Persona {
-
+    private String nombreAdmin;
     /**
      * Default constructor
      */
     public Administrador() {
+        this.nombreAdmin = "Java"
     }
 
     /**

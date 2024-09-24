@@ -5,7 +5,7 @@ import java.util.*;
  * 
  */
 public class Cliente extends Cliente {
-
+    public int numero123;
     /**
      * Default constructor
      */
