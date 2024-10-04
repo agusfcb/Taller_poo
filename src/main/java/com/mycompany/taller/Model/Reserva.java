@@ -1,5 +1,8 @@
+package com.mycompany.taller.Model;
+
 
 import java.util.*;
+import java.time.LocalDate;
 
 /**
  * 
@@ -20,16 +23,6 @@ public class Reserva {
     /**
      * 
      */
-    private Date fecha;
-
-    /**
-     * 
-     */
-    private Date hora;
-
-    /**
-     * 
-     */
     private Date hora;
 
     /**
@@ -46,11 +39,6 @@ public class Reserva {
      * 
      */
     private boolean asistencia;
-
-    /**
-     * 
-     */
-    public void Attribute1;
 
     /**
      * @return
@@ -78,7 +66,7 @@ public class Reserva {
      * @param DateTime fecha 
      * @param DateTime hora
      */
-    public void verDisponibilidad(void DateTime fecha, void DateTime hora) {
+    public void verDisponibilidad(LocalDate fecha, LocalDate hora) {
         // TODO implement here
     }
 
