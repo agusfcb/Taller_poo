@@ -1,3 +1,4 @@
+package com.mycompany.taller.Model;
 
 import java.util.*;
 
