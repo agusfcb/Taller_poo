@@ -1,3 +1,5 @@
+package com.mycompany.taller.Model;
+
 
 import java.util.*;
 
@@ -20,7 +22,7 @@ public class Mesa {
     /**
      * 
      */
-    private void sector;
+    private String sector;
 
     /**
      * 
