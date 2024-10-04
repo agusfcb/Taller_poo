@@ -1,184 +1,67 @@
+import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
-import java.util.*;
+public class Administrador {
 
-/**
- * 
- */
-public class Administrador extends Persona {
+    private String idUsuario;
+    private String rol;
 
-    /**
-     * Default constructor
-     */
-    public Administrador() {
+
+    public Administrador(String idUsuario, String rol) {
+        this.idUsuario = idUsuario;
+        this.rol = rol;
     }
 
-    /**
-     * @param Persona 
-     * @param String
-     */
-    public void cargarEmpleado(void Persona, void String) {
-        // TODO implement here
+
+    public boolean cambiarRol(String idUsuario, String nuevoRol) {
+    System.out.println("El rol de " + idUsuario + " ha sido cambiado a " + nuevoRol);
+        return true;
     }
 
-    /**
-     * @param Persona 
-     * @param Rol
-     */
-    private void crearEmpleado(void Persona, void Rol) {
-        // TODO implement here
+    public boolean editarRol(String idUsuario, String nuevoRol) {
+        System.out.println("El rol de " + idUsuario + " ha sido actualizado a " + nuevoRol);
+        return true;
     }
 
-    /**
-     * @param String 
-     * @return
-     */
-    private boolean asignarContraseña(void String) {
-        // TODO implement here
-        return false;
+    public void actualizarSiguienteApertura(Date fechaFin, LocalDateTime nuevaApertura) {
+        System.out.println("La siguiente apertura será en: " + nuevaApertura);
     }
 
-    /**
-     * @param String 
-     * @return
-     */
-    public boolean crearContraseña(void String) {
-        // TODO implement here
-        return false;
+    public void definirAforo(String nombre, Date fechaInicio, Date fechaFin, LocalDateTime horaInicio, LocalDateTime horaFin, ArrayList<Integer> numMesas) {
+        System.out.println("Definiendo aforo para " + nombre);
     }
 
-    /**
-     * 
-     */
-    public void bloquearMesasHoras() {
-        // TODO implement here
+    public void actualizarApertura(LocalDateTime fechaInicio, LocalDateTime fechaHoraApertura) {
+        System.out.println("Actualización de apertura para " + fechaInicio);
     }
 
-    /**
-     * 
-     */
-    public void bloquearMesasDias() {
-        // TODO implement here
+    public void actualizarCierre(LocalDateTime fechaInicio, LocalDateTime fechaHoraCierre) {
+        System.out.println("Actualización de cierre para " + fechaInicio);
     }
 
-    /**
-     * @param String 
-     * @return
-     */
-    private boolean asignarRol(void String) {
-        // TODO implement here
-        return false;
+    public void editarCierre(LocalDateTime fechaInicio, LocalDateTime fechaHoraCierre) {
+        System.out.println("Cierre editado para " + fechaInicio);
     }
 
-    /**
-     * @param String 
-     * @return
-     */
-    public boolean asignarRol(void String) {
-        // TODO implement here
-        return false;
+    public void configurarFranjaHoraria(LocalDateTime fechaInicio, LocalDateTime fechaFin, LocalDateTime horaInicio, LocalDateTime horaFin) {
+        System.out.println("Franja horaria configurada desde " + horaInicio + " hasta " + horaFin);
     }
 
-    /**
-     * @param Usuario idUsuario 
-     * @param String 
-     * @return
-     */
-    private boolean cambiarRol(void Usuario idUsuario, void String) {
-        // TODO implement here
-        return false;
+
+    public String getIdUsuario() {
+        return idUsuario;
     }
 
-    /**
-     * @param String 
-     * @return
-     */
-    public boolean editarRol(void String) {
-        // TODO implement here
-        return false;
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    /**
-     * 
-     */
-    private void Operation10() {
-        // TODO implement here
+    public String getRol() {
+        return rol;
     }
 
-    /**
-     * @param DateTime fecha 
-     * @param DateTime hora
-     */
-    public void gestionarMesasHoras(void DateTime fecha, void DateTime hora) {
-        // TODO implement here
+    public void setRol(String rol) {
+        this.rol = rol;
     }
-
-    /**
-     * @param DateTime fecha 
-     * @param DateTime hora
-     */
-    public void gestionarMesasHoras(void DateTime fecha, void DateTime hora) {
-        // TODO implement here
-    }
-
-    /**
-     * @param String nombre 
-     * @param Date fechaInicio 
-     * @param Date fechaFin 
-     * @param Date horaInicio 
-     * @param Date horaFin 
-     * @param ArrayList numerosDeMesas
-     */
-    public void definirEvento(void String nombre, void Date fechaInicio, void Date fechaFin, void Date horaInicio, void Date horaFin, void ArrayList numerosDeMesas) {
-        // TODO implement here
-    }
-
-    /**
-     * @param DateTime fecha 
-     * @param Datetime hora
-     */
-    private void actualizarApertura(void DateTime fecha, void Datetime hora) {
-        // TODO implement here
-    }
-
-    /**
-     * @param DateTime fecha 
-     * @param DateTime hora
-     */
-    public void definirApertura(void DateTime fecha, void DateTime hora) {
-        // TODO implement here
-    }
-
-    /**
-     * @param DataTime fecha 
-     * @param DataTime hora
-     */
-    private void actualizarCierre(void DataTime fecha, void DataTime hora) {
-        // TODO implement here
-    }
-
-    /**
-     * @param DateTime fecha 
-     * @param DateTime hora
-     */
-    public void definirCierrre(void DateTime fecha, void DateTime hora) {
-        // TODO implement here
-    }
-
-    /**
-     * @param DateTime fecha 
-     * @param DateTime hora
-     */
-    public void franjaHoraria(void DateTime fecha, void DateTime hora) {
-        // TODO implement here
-    }
-
-    /**
-     * @param DateTime fecha 
-     * @param DateTime desde 
-     * @param DateTime hasta
-     */
-    private void configurarFranjaHoraria(void DateTime fecha, void DateTime desde, void DateTime hasta) {
-        // TODO implement here
-    }
-
 }
