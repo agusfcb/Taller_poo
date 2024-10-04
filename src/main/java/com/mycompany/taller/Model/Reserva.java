@@ -18,12 +18,12 @@ public class Reserva {
     /**
      * 
      */
-    private Date fecha;
+    private Date diaOcupado;
 
     /**
      * 
      */
-    private Date hora;
+    private Date horaOcupada;
 
     /**
      * 

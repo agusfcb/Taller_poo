@@ -6,7 +6,7 @@ import java.time.LocalDate;
  */
 public class Cliente extends Usuario {
 
-    private static ArrayList<Reserva> agendaReservas = new ArrayList<>();
+    private ArrayList<Reserva> agendaReservas = new ArrayList<>();
     
     /**
      * Default constructor
@@ -16,7 +16,7 @@ public class Cliente extends Usuario {
     }
     
     public Cliente(String a, String b, String c, String d){
-        super(a, b, c, d);
+        // super(a, b, c, d);
         // A COMPLETAR
     }
 
@@ -28,28 +28,29 @@ public class Cliente extends Usuario {
      * @return
      */
     
-    private ArrayList<String> buscarMesaDisponible(LocalDate fecha, LocalDate hora) {
-        public LocalDate fecha1 = fecha;
-        public LocalDate hora1 = hora;
-        public ArrayList<String> subLista = new ArrayList<>();
-        
-        //Sublista debe ser una lista con los horarios disponibles
+    private ArrayList<LocalDate> buscarMesaDisponible(LocalDate fecha, LocalDate hora) {
+        LocalDate fecha1 = fecha;
+        LocalDate hora1 = hora;
+        //TODAVIA QUEDA DEFINIR EL FORMATO DE LA HORA, SI STRING O LOCALDATE
+        ArrayList<LocalDate> subListaHora = new ArrayList<>();
+        ArrayList<LocalDate> subListaDia = new ArrayList<>():
 
-        
-        /* CODIGO QUE AUN NO FUNCIONA POR PROBLEMA CON NETBEANS 
         for (int i = 0; i < agendaReservas.size() ; i++) {
-            // Recorre la lista y va removiendo los horarios ocupados
+            if (agendaReservas.get(i).diaOcupado == fecha1) {
+                // DEBE EXISTIR UNA LISTA STATIC FINAL CON TODOS LOS HORARIOS FIJOS
+                // SE CREA UNA LISTA NUEVA RESULTADO DE RESTAR DE LA LISTA DE HORARIOS LOS HORARIOS OCUPADOS
+            }
+            
         }
-        */
         
-        return subLista;
+        return subListaHora;
     }
 
     /**
      * @param Date fecha 
      * @param Date hora
      */
-    public void verMesasDisponibles(void Date fecha, void Date hora) {
+    public void verMesasDisponibles(LocalDate fecha, LocalDate hora){
         // TODO implement here
     }
 
