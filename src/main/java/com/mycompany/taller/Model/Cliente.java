@@ -1,50 +1,48 @@
-
+package com.mycompany.taller.Model;
 import java.util.*;
-
+import java.time.LocalDate;
 /**
  * 
  */
-public class Cliente extends Cliente {
-    public int numero123;
+public class Cliente extends Usuario {
+
+    private static ArrayList<Reserva> agendaReservas = new ArrayList<>();
+    
     /**
      * Default constructor
      */
     public Cliente() {
+        super();
+    }
+    
+    public Cliente(String a, String b, String c, String d){
+        super(a, b, c, d);
+        // A COMPLETAR
     }
 
-    /**
-     * 
-     */
-    private String nombre;
 
-    /**
-     * 
-     */
-    private String telefono;
-
-    /**
-     * 
-     */
-    private String correo;
-
-    /**
-     * 
-     */
-    private String contraseña;
-
-    /**
-     * 
-     */
-    public ArrayList<Reserva> historialReservas;
 
     /**
      * @param Date fecha 
      * @param Date hora 
      * @return
      */
-    private ArrayList<String> buscarMesaDisponible(void Date fecha, void Date hora) {
-        // TODO implement here
-        return null;
+    
+    private ArrayList<String> buscarMesaDisponible(LocalDate fecha, LocalDate hora) {
+        public LocalDate fecha1 = fecha;
+        public LocalDate hora1 = hora;
+        public ArrayList<String> subLista = new ArrayList<>();
+        
+        //Sublista debe ser una lista con los horarios disponibles
+
+        
+        /* CODIGO QUE AUN NO FUNCIONA POR PROBLEMA CON NETBEANS 
+        for (int i = 0; i < agendaReservas.size() ; i++) {
+            // Recorre la lista y va removiendo los horarios ocupados
+        }
+        */
+        
+        return subLista;
     }
 
     /**
