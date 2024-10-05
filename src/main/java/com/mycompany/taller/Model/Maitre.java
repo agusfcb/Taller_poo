@@ -11,6 +11,6 @@ import java.util.*;
      * @return
      */
 public class Maitre extends Empleado {
-
+    // Esta es mi clase
 
 }
