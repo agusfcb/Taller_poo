@@ -12,5 +12,6 @@ import java.util.*;
      */
 public class Maitre extends Empleado {
     // Esta es mi clase
+    // Saludos desde PC Agustin
 
 }
