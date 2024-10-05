@@ -6,19 +6,10 @@ import java.util.*;
  */
 public class Mesero extends Empleado {
 
-    /**
-     * Default constructor
-     */
-    public Mesero() {
-    }
 
+//Formato metodos:
     /**
      * @param String idReserva 
      * @return
      */
-    public String verReserva(void String idReserva) {
-        // TODO implement here
-        return "";
-    }
-
 }

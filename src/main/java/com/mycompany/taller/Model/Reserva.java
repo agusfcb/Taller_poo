@@ -8,66 +8,9 @@ import java.time.LocalDate;
  * 
  */
 public class Reserva {
-
+//Formato metodos:
     /**
-     * Default constructor
-     */
-    public Reserva() {
-    }
-
-    /**
-     * 
-     */
-    private Date diaOcupado;
-
-    /**
-     * 
-     */
-    private Date horaOcupada;
-
-    /**
-     * 
-     */
-    private String comentarios;
-
-    /**
-     * 
-     */
-    private String idReserva;
-
-    /**
-     * 
-     */
-    private boolean asistencia;
-
-    /**
+     * @param String idReserva 
      * @return
      */
-    public String leerComentarios() {
-        // TODO implement here
-        return "";
-    }
-
-    /**
-     * 
-     */
-    private void mandarRecordatorio() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    private void multa() {
-        // TODO implement here
-    }
-
-    /**
-     * @param DateTime fecha 
-     * @param DateTime hora
-     */
-    public void verDisponibilidad(LocalDate fecha, LocalDate hora) {
-        // TODO implement here
-    }
-
 }
