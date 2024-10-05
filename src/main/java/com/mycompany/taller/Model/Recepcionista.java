@@ -1,4 +1,4 @@
-
+package com.mycompany.taller.Model;
 import java.util.*;
 
 /**
@@ -10,4 +10,5 @@ public class Recepcionista extends Empleado {
      * @param String idReserva 
      * @return
      */
+    
 }
