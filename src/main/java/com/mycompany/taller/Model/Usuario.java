@@ -1,158 +1,78 @@
 
 import java.util.*;
 
-/**
- * 
- */
+//hola
 public class Usuario {
 
-    /**
-     * Default constructor
-     */
+    private String nombre;
+    private String telefono;
+    private String correo;
+    private String contrasenia;
+    private String genero;
+    private String idUsuario;
+
+
     public Usuario() {
     }
 
-    /**
-     * 
-     */
-    private String nombre;
+    private void crearUsuario(String nombre, String telefono, String correo, String contrasenia) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.contrasenia = contrasenia;
 
-    /**
-     * 
-     */
-    private String telefono;
-
-    /**
-     * 
-     */
-    private String correo;
-
-    /**
-     * 
-     */
-    private String contrasenia;
-
-    /**
-     * 
-     */
-    private String genero;
-
-    /**
-     * 
-     */
-    private String idUsuario;
-
-    /**
-     * 
-     */
-    public void cambiarContraseña() {
-        // TODO implement here
+        this.idUsuario = UUID.randomUUID().toString();
     }
 
-    /**
-     * @param String nombre 
-     * @param String telefono 
-     * @param String correo 
-     * @param String contrasenia
-     */
-    private void crearUsuario(void String nombre, void String telefono, void String correo, void String contrasenia) {
-        // TODO implement here
+    public void registrarUsuario(String nombre, String telefono, String correo, String contrasenia) {
+        crearUsuario(nombre, telefono, correo, contrasenia);
     }
 
-    /**
-     * @param String nombre 
-     * @param String telefono 
-     * @param String correo 
-     * @param String contrasenia
-     */
-    public void registrarUsuario(void String nombre, void String telefono, void String correo, void String contrasenia) {
-        // TODO implement here
+
+    private void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    /**
-     * @param String
-     */
-    private void setNombre(void String) {
-        // TODO implement here
+    private void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
-    /**
-     * @param String
-     */
-    private void setTelefono(void String) {
-        // TODO implement here
+    private void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    /**
-     * @param String
-     */
-    private void setCorreo(void String) {
-        // TODO implement here
+    private void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
-    /**
-     * @param String
-     */
-    private void setContrasenia(void String) {
-        // TODO implement here
+
+    public void cambiarNombre(String nombre) {
+        setNombre(nombre);
     }
 
-    /**
-     * 
-     */
+    public void cambiarTelefono(String telefono) {
+        setTelefono(telefono);
+    }
+
+    public void cambiarCorreo(String correo) {
+        setCorreo(correo);
+    }
+
+    public void cambiarContrasenia(String contrasenia) {
+        setContrasenia(contrasenia);
+    }
+
+
+    private boolean validarUsuario(String correo, String contrasenia) {
+        return this.correo.equals(correo) && this.contrasenia.equals(contrasenia);
+    }
+
+    public boolean iniciarSesion(String correo, String contrasenia) {
+        return validarUsuario(correo, contrasenia);
+    }
+
+
     public void Operation1() {
-        // TODO implement here
-    }
 
-    /**
-     * @param String
-     */
-    public void cambiarNombre(void String) {
-        // TODO implement here
     }
-
-    /**
-     * @param String
-     */
-    public void cambiarTelefono(void String) {
-        // TODO implement here
-    }
-
-    /**
-     * @param String
-     */
-    public void camiarCorreo(void String) {
-        // TODO implement here
-    }
-
-    /**
-     * @param String
-     */
-    public void cambiarContrasenia(void String) {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void iniciarSesion() {
-        // TODO implement here
-    }
-
-    /**
-     * @param String correo 
-     * @param String contrasenia
-     */
-    private void validarUsuario(void String correo, void String contrasenia) {
-        // TODO implement here
-    }
-
-    /**
-     * @param String coreo 
-     * @param String consenia
-     */
-    public void iniciarSsion(void String coreo, void String consenia) {
-        // TODO implement here
-    }
-
 }
