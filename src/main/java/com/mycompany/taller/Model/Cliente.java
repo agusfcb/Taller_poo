@@ -1,6 +1,7 @@
 package com.mycompany.taller.Model;
 import java.util.*;
 import java.time.LocalDate;
+
 /**
  * 
  */
@@ -14,44 +15,47 @@ public class Cliente extends Usuario {
     public Cliente() {
         super();
     }
-    
-    public Cliente(String a, String b, String c, String d){
-        // super(a, b, c, d);
-        // A COMPLETAR
+    /*
+     * Constructor parametrizado
+     */
+    public Cliente(String name, String tel, String email, String pass){
+        this.registrarUsuario(name, tel, email, pass);
     }
-
-
-
+    
     /**
      * @param Date fecha 
      * @param Date hora 
      * @return
      */
     
-    private ArrayList<LocalDate> buscarMesaDisponible(LocalDate fecha, LocalDate hora) {
-        LocalDate fecha1 = fecha;
-        LocalDate hora1 = hora;
-        //TODAVIA QUEDA DEFINIR EL FORMATO DE LA HORA, SI STRING O LOCALDATE
-        ArrayList<LocalDate> subListaHora = new ArrayList<>();
-        ArrayList<LocalDate> subListaDia = new ArrayList<>():
-
-        for (int i = 0; i < agendaReservas.size() ; i++) {
-            if (agendaReservas.get(i).diaOcupado == fecha1) {
-                // DEBE EXISTIR UNA LISTA STATIC FINAL CON TODOS LOS HORARIOS FIJOS
-                // SE CREA UNA LISTA NUEVA RESULTADO DE RESTAR DE LA LISTA DE HORARIOS LOS HORARIOS OCUPADOS
-            }
-            
-        }
+    private ArrayList<String> buscarMesaDisponible(String fecha1, String hora1) {
         
-        return subListaHora;
     }
 
     /**
      * @param Date fecha 
      * @param Date hora
      */
-    public void verMesasDisponibles(LocalDate fecha, LocalDate hora){
-        // TODO implement here
+    public ArrayList<Mesa> verMesasDisponibles(LocalDate fecha, LocalDate hora){
+        ArrayList<Reserva> listaAuxReservas = new ArrayList<>();
+        listaAuxReservas = Reserva.listaReservas.clone();
+        
+        ArrayList<String> filtroFecha = new ArrayList<>();
+        ArrayList<String> filtroHora = new ArrayList<String>();
+        ArrayList<Mesa> mesasDisponibles;
+        
+        for (Reserva extraer : listaAuxReservas) {
+            filtroFecha.add(extraer.getDia());
+        }
+        if (!filtroFecha.contains(fecha)) {
+        // Si no hay ninguna reserva en esa fecha todas las ubicaciones estan libres a cualquier hora
+            mesasDisponibles = Mesa.mesasExistentes.clone();
+            return mesasDisponibles;
+        }
+        else {
+            //PENDIENTE FILTRAR CUANDO HAY OCUPACION EN DICHO DIA
+            }
+        }
     }
 
     /**
@@ -59,8 +63,8 @@ public class Cliente extends Usuario {
      * @param DateTime hora 
      * @param Mesa mesa
      */
-    public void crearReservar(void DateTime fecha, void DateTime hora, void Mesa mesa) {
-        // TODO implement here
+    public void crearReservar(String fecha, String hora, Mesa mesa) {
+        
     }
 
     /**
