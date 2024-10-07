@@ -45,7 +45,12 @@ public class Usuario {
     private void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
-
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+    public String getIdUsuario() {
+        return idUsuario;
+    }
 
     public void cambiarNombre(String nombre) {
         setNombre(nombre);
