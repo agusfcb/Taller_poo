@@ -71,7 +71,7 @@ public class Reserva {
         this.estado = estado;
     }
     
-        public Mesa getMesaReservada() {
+    public Mesa getMesaReservada() {
         return mesaReservada;
     }
 
@@ -95,7 +95,7 @@ public class Reserva {
         this.idReserva = idReserva;
     }
     
-    public static ArrayList<Reserva> GetListaReservas(){
+    public static ArrayList<Reserva> getListaReservas(){
         return listaReservas;
     }   
 }
