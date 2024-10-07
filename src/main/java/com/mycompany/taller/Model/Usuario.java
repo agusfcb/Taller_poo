@@ -16,7 +16,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    private void crearUsuario(String nombre, String telefono, String correo, String contrasenia) {
+    private Usuario(String nombre, String telefono, String correo, String contrasenia) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
@@ -24,11 +24,6 @@ public class Usuario {
 
         this.idUsuario = UUID.randomUUID().toString();
     }
-
-    public void registrarUsuario(String nombre, String telefono, String correo, String contrasenia) {
-        crearUsuario(nombre, telefono, correo, contrasenia);
-    }
-
 
     private void setNombre(String nombre) {
         this.nombre = nombre;
@@ -77,8 +72,4 @@ public class Usuario {
         return validarUsuario(correo, contrasenia);
     }
 
-
-    public void Operation1() {
-
-    }
 }
