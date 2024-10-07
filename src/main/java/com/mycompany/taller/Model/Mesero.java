@@ -5,7 +5,7 @@ import java.util.*;
  * 
  */
 public class Mesero extends Empleado {
-
+    
     
 
 //Formato metodos:
@@ -13,4 +13,7 @@ public class Mesero extends Empleado {
      * @param String idReserva 
      * @return
      */
+    public Mesero() {
+        super();
+    }
 }

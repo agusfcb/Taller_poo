@@ -14,6 +14,7 @@ public class Usuario {
 
 
     public Usuario() {
+        
     }
 
     private Usuario(String nombre, String telefono, String correo, String contrasenia) {
@@ -21,10 +22,16 @@ public class Usuario {
         this.telefono = telefono;
         this.correo = correo;
         this.contrasenia = contrasenia;
-
         this.idUsuario = UUID.randomUUID().toString();
+        this.genero = "Desconocido";
     }
-
+    public Usuario(String nombre, String telefono, String correo, String contrasenia, String genero) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+        this.genero = genero;
+    }
     private void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -40,13 +47,19 @@ public class Usuario {
     private void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+    public String getGenero() {
+        return genero;
+    }
     public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
     }
     public String getIdUsuario() {
         return idUsuario;
     }
-
+    
     public void cambiarNombre(String nombre) {
         setNombre(nombre);
     }

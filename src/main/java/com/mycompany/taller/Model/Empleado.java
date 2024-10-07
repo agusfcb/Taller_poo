@@ -35,11 +35,10 @@ public class Empleado extends Usuario {
      * @param idUsuario 
      */
     public Empleado(ArrayList<Reserva> reservas, String name, String tel, String email, String pass, String rol, String permiso, String idUsuario) {
-        super(name, tel, email, pass, idUsuario);
         this.reservas = reservas;
         this.rol = rol;
         this.permiso = permiso;
-        this.registrarUsuario(name, tel, email, pass);
+        super(name, tel, email, pass);
     }
     public ArrayList<Reserva> getReservas() {
         return reservas;
@@ -57,7 +56,7 @@ public class Empleado extends Usuario {
     }
 
     public String getIdEmpleado() {
-        return super.getIdUsuario();
+        return this.getIdUsuario();
     }
     public String getPermiso() {
         return permiso;
@@ -68,12 +67,6 @@ public class Empleado extends Usuario {
     
     public void agregarReservas(Reserva r) {
         this.reservas.add(r);
-    }
-    public String devolverRol(String idEmpleado) {
-        if (super.getIdUsuario().equals(idEmpleado)) {
-            return this.rol;
-        }
-        return "Empleado no encontrado";
     }
     public String mostrarRol(Empleado empleado) {
         return "ID: " + empleado.getIdEmpleado() + ", Rol: " + empleado.getRol();
