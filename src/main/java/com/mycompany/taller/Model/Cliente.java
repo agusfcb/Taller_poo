@@ -29,16 +29,8 @@ public class Cliente extends Usuario {
      */
     
     private ArrayList<String> buscarMesaDisponible(String fecha1, String hora1) {
-        
-    }
-
-    /**
-     * @param Date fecha 
-     * @param Date hora
-     */
-    public ArrayList<Mesa> verMesasDisponibles(LocalDate fecha, LocalDate hora){
         ArrayList<Reserva> listaAuxReservas = new ArrayList<>();
-        listaAuxReservas = Reserva.listaReservas.clone();
+        listaAuxReservas = Reserva.GetListaReservas();
         
         ArrayList<String> filtroFecha = new ArrayList<>();
         ArrayList<String> filtroHora = new ArrayList<String>();
@@ -56,6 +48,14 @@ public class Cliente extends Usuario {
             //PENDIENTE FILTRAR CUANDO HAY OCUPACION EN DICHO DIA
             }
         }
+    }
+
+    /**
+     * @param Date fecha 
+     * @param Date hora
+     */
+    public ArrayList<Mesa> verMesasDisponibles(LocalDate fecha, LocalDate hora){
+
     }
 
     /**
