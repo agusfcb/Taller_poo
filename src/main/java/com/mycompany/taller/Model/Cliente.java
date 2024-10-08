@@ -28,7 +28,21 @@ public class Cliente extends Usuario {
      * @param String capacidad
      * @return ArrayList<Mesa>
      */
-    public ArrayList<Mesa> buscarMesaDisponible(String fecha1, String hora1, String capacidad) {
+    public ArrayList<Mesa> verMesaDisponible(String fecha1, String hora1, String capacidad){
+        //aca debe existir un control de formato de fecha, hora y capacidad
+        
+        ArrayList<Mesa> coincidenciaBusqueda = this.buscarMesaDisponible(fecha1, hora1, capacidad);
+        return coincidenciaBusqueda;
+    }
+    
+    
+    /** Metodo privado para encontrar mesas disponibles
+     * @param String fecha1
+     * @param String hora1
+     * @param String capacidad
+     * @return ArrayList<Mesa>
+     */
+    private ArrayList<Mesa> buscarMesaDisponible(String fecha1, String hora1, String capacidad) {
         ArrayList<Reserva> listaReservas = Reserva.getListaReservas();
         ArrayList<Reserva> reservaDia = new ArrayList<>();
         ArrayList<Mesa> mesasTotales = Mesa.getMesasTot();
@@ -184,4 +198,15 @@ public class Cliente extends Usuario {
         }
         return listadoImprimir;
     }
+    
+    @Override
+    public boolean validarUsuario(String usuario, String contrasenia){
+        return false;
+    }
+
+    @Override
+    boolean iniciarSesion(String correo, String contrasenia) {
+        return false;
+    }
+    
 }

@@ -3,7 +3,7 @@ package com.mycompany.taller.Model;
 import java.util.*;
 
 //hola
-public class Usuario {
+public abstract class Usuario {
 
     private String nombre;
     private String telefono;
@@ -98,13 +98,7 @@ public class Usuario {
         this.setIdUsuario(idUsuario);
     }
 
+    public abstract void validarUsuario(String usuario, String contrasenia);
 
-    private boolean validarUsuario(String correo, String contrasenia) {
-        return this.correo.equals(correo) && this.contrasenia.equals(contrasenia);
-    }
-
-    public boolean iniciarSesion(String correo, String contrasenia) {
-        return validarUsuario(correo, contrasenia);
-    }
-
+    public abstract void iniciarSesion(String correo, String contrasenia);
 }
