@@ -57,4 +57,8 @@ public class Mesa {
         return mesasExistentes;
     }
     
+    public void agregarReserva(Reserva resv){
+        this.reservasMesa.add(resv);
+    }
+    
 }

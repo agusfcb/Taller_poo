@@ -45,6 +45,7 @@ public class Reserva {
         this.hora = hora;
         this.mesaReservada = mesa;
         this.idReserva = UUID.randomUUID().toString();
+        mesa.agregarReserva(this);
         Reserva.listaReservas.add(this);
     }
 
