@@ -16,6 +16,7 @@ public class Mesa {
     private String numero;
     private String capacidad;
     private String ubicacion;
+    private ArrayList<Reserva> reservasMesa = new ArrayList<>();
     private static ArrayList<Mesa> mesasExistentes = new ArrayList<>();
 
     public Mesa() {
@@ -55,4 +56,5 @@ public class Mesa {
     public static ArrayList<Mesa> getMesasTot(){
         return mesasExistentes;
     }
+    
 }

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class Cliente extends Usuario {
 
     private ArrayList<Reserva> agendaReservas = new ArrayList<>();
-    
+    private static final ArrayList<String> opcionesCambios = new ArrayList<>(Arrays.asList("Nombre","Telefono","Correo","Contrasenia","Genero"));
     /**
      * Default constructor
      */
@@ -19,31 +19,34 @@ public class Cliente extends Usuario {
      * Constructor parametrizado
      */
     public Cliente(String name, String tel, String email, String pass){
-        this.registrarUsuario(name, tel, email, pass);
+        super(name, tel, email, pass);
     }
     
-    /** Metodo para filtrar mesas disponibles por dia
-     * @param String fecha 
-     * @param String hora 
-     * @return ArrayList<String>
+    /** Metodo para encontrar mesas disponibles
+     * @param String fecha1
+     * @param String hora1
+     * @param String capacidad
+     * @return ArrayList<Mesa>
      */
-    
-    private ArrayList<Mesa> buscarMesaDisponible(String fecha1, String hora1) {
+    public ArrayList<Mesa> buscarMesaDisponible(String fecha1, String hora1, String capacidad) {
         ArrayList<Reserva> listaReservas = Reserva.getListaReservas();
         ArrayList<Reserva> reservaDia = new ArrayList<>();
-        ArrayList<Mesa> mesasDisponibles = Mesa.getMesasTot();
         ArrayList<Mesa> mesasTotales = Mesa.getMesasTot();
+        ArrayList<Mesa> coincidenciaBusqueda = new ArrayList<>();
         
-        reservaDia = this.buscarMesaDia(listaReservas, fecha1);
-        mesasDisponibles = this.buscarMesasOcupadas(mesasTotales, reservaDia, hora1);
-        return mesasDisponibles;
+        reservaDia = this.filtroDia(listaReservas, fecha1);
+        coincidenciaBusqueda = this.filtroHora(mesasTotales, reservaDia, hora1, capacidad);
+        
+        return coincidenciaBusqueda;
     }
 
-    /*
-    * Metodo para filtrar mesas disponibles por dia
-    */
-    
-    private ArrayList<Reserva> buscarMesaDia(ArrayList<Reserva> listaReservas, String fecha) {
+    /**
+     * Metodo para ver filtrar por dia las reservas
+     * @param ArrayList<Reserva> listaReservas
+     * @param String fecha
+     * @return ArrayList<Reserva>
+     */
+    private ArrayList<Reserva> filtroDia(ArrayList<Reserva> listaReservas, String fecha) {
         ArrayList<Reserva> filtroFecha = new ArrayList<>();
         boolean vacioCompleto = true;
         
@@ -59,94 +62,126 @@ public class Cliente extends Usuario {
         return filtroFecha;
         }
     }
-    /*
-    * Metodo para filtrar mesas disponibles por hora
-    */
     
-    private ArrayList<Mesa> buscarMesasOcupadas(ArrayList<Mesa> mesasTotales, ArrayList<Reserva> listaAux, String hora) {
-        ArrayList<String> filtroHora = new ArrayList<>();
-        ArrayList<Mesa> mesasLibres = new ArrayList<>();
-        
-        // Copia profunda manual
-        for (Mesa mesaAdd : mesasTotales){
-            mesasLibres.add(mesaAdd);
+    /**
+     * Metodo para filtrar mesas disponibles por hora y capadidad de la mesa
+     * @param ArrayList<Mesa> mesasTotales
+     * @param ArrayList<Reserva> listaAux
+     * @param String hora
+     * @param String capacidad
+     * @return ArrayList<Mesa>
+     */
+    private ArrayList<Mesa> filtroHora(ArrayList<Mesa> mesasTotales, ArrayList<Reserva> listaAux, String hora, String capacidad) {
+        ArrayList<Mesa> mesasCapacidad = new ArrayList<>();
+        for (Mesa extraerM : mesasTotales) {
+            if (extraerM.getCapacidad().equals(capacidad)){
+                mesasCapacidad.add(extraerM);
+            }
         }
-        
-        boolean horarioVacio = true;
         
         for (Reserva extraer2 : listaAux) {
             if (extraer2.getHora().equals(hora)){
-                mesasLibres.remove(extraer2.getMesaReservada());
-                horarioVacio = false;
+                if (extraer2.getMesaReservada().getCapacidad().equals(capacidad)){
+                    mesasCapacidad.remove(extraer2.getMesaReservada());
+                }
             }
         }
-        if (horarioVacio) {
-            return mesasTotales;
-        }else {
-            return mesasLibres;
-        }
-    }
-    
-    
-    /**
-     * @param Date fecha 
-     * @param Date hora
-     */
-    public ArrayList<Mesa> verMesasDisponibles(LocalDate fecha, LocalDate hora){
-        //Pendiente para visualizacion o entrega de datos
+        return mesasCapacidad;
     }
 
-    /**
-     * @param DateTime fecha 
-     * @param DateTime hora 
+    /** Metodo para crear la reserva
+     * @param String fecha 
+     * @param String hora 
      * @param Mesa mesa
+     * @return void
      */
-    public void crearReservar(String fecha, String hora, Mesa mesa) {
-        
+    public void crearReserva(String fecha, String hora, Mesa mesa) {
+        Reserva nuevaReserva = new Reserva(fecha, hora, mesa, this);
+        agendaReservas.add(nuevaReserva);
     }
 
     /**
+     * Metodo para cancelar una reserva determinada
      * @param idReserva 
-     * @return
+     * @return boolean
      */
-    public boolean cacelarReserva(void idReserva) {
-        // TODO implement here
+    public boolean cancelarReserva(String idReserva) {
+        try {for (Reserva ext : this.agendaReservas){
+            if (ext.getIdReserva().equals(idReserva)) {
+                ext.setEstado("Cancelado");
+                ext.setMesaReservada(null);
+                return true;
+            }
+        }
+        } catch (Exception e) {
+            return false;
+        }
         return false;
     }
 
     /**
-     * @param DateTime fecha 
-     * @param DateTime hora 
-     * @param Mesa mesa 
+     * @param String idRes es la id de la reserva
+     * @param String fecha fecha de la nueva reserva se usa para crear una nueva reserva
+     * @param String hora de la nueva reserva se usa para crear una nueva reserva
+     * @param String capacidad se usa para crear una nueva reserva
+     * @return boolean
+     */
+    public boolean modificarReserva(String idRes, String fecha, String hora, String capacidad) {
+        boolean confirmacion = this.cancelarReserva(idRes);
+        ArrayList<Mesa> disponible = this.buscarMesaDisponible(fecha, hora, capacidad);
+        return confirmacion;
+    }
+
+    /** 
+     * Metodo para actualizar los datos del cliente
+     * @param String option
+     * @param String argumento
      * @return
      */
-    public boolean modificarReserva(void DateTime fecha, void DateTime hora, void Mesa mesa) {
-        // TODO implement here
-        return false;
+    public boolean actualizarInformacion(String option, String argumento) {
+        switch (String.valueOf(option)) {
+            case "Nombre":
+                this.cambiarNombre(argumento);
+                break;
+            case "Telefono":
+                this.cambiarCorreo(argumento);
+                break;
+            case "Correo":
+                this.cambiarTelefono(argumento);
+                break;
+            case "Contrasenia":
+                //Falta un metodo para validar la contrasenia
+                this.cambiarContrasenia(argumento);
+                break;
+            case "Genero":
+                this.cambiarGenero(argumento);
+                break;
+            default:
+                break;
+        }
+        return true;
     }
-
+    
     /**
-     * @param tuplaDeString 
-     * @return
+     * @return ArrayList<Reservas>
      */
-    public boolean actualizarInformacion(void tuplaDeString) {
-        // TODO implement here
-        return false;
+    public ArrayList<ArrayList<String>> verHistorial() {
+        ArrayList<String> datosReserva = new ArrayList<>();
+        ArrayList<ArrayList<String>> listadoImprimir = new ArrayList<>();
+        
+        ArrayList<Reserva> listaReserva = this.agendaReservas;
+        
+        for (Reserva ext : listaReserva) {
+            String name = ext.getClienteReserva().getNombre();
+            String email = ext.getClienteReserva().getCorreo();
+            String tel = ext.getClienteReserva().getTelefono();
+            String gen = ext.getClienteReserva().getGenero();
+            datosReserva.add(name);
+            datosReserva.add(email);
+            datosReserva.add(tel);
+            datosReserva.add(gen);
+            listadoImprimir.add(datosReserva);
+        }
+        return listadoImprimir;
     }
-
-    /**
-     * @return
-     */
-    public String verHistorial() {
-        // TODO implement here
-        return "";
-    }
-
-    /**
-     * 
-     */
-    public void Operation1() {
-        // TODO implement here
-    }
-
 }

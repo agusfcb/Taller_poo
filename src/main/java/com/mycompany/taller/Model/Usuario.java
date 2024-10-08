@@ -17,13 +17,13 @@ public class Usuario {
         
     }
 
-    private Usuario(String nombre, String telefono, String correo, String contrasenia) {
+    public Usuario(String nombre, String telefono, String correo, String contrasenia) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
         this.contrasenia = contrasenia;
         this.idUsuario = UUID.randomUUID().toString();
-        this.genero = "Desconocido";
+        this.genero = "S/D";
     }
     public Usuario(String nombre, String telefono, String correo, String contrasenia, String genero) {
         this.nombre = nombre;
@@ -32,30 +32,46 @@ public class Usuario {
         this.contrasenia = contrasenia;
         this.genero = genero;
     }
+    
     private void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
     private void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
     private void setCorreo(String correo) {
         this.correo = correo;
     }
-
     private void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
-    public void setGenero(String genero) {
+    private void setGenero(String genero) {
         this.genero = genero;
     }
+    private void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+    
     public String getGenero() {
         return genero;
     }
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
+
     public String getIdUsuario() {
         return idUsuario;
     }
@@ -74,6 +90,12 @@ public class Usuario {
 
     public void cambiarContrasenia(String contrasenia) {
         setContrasenia(contrasenia);
+    }
+    public void cambiarGenero(String genero) {
+        this.setGenero(genero);
+    }
+    public void cambiarIdUsuario(String idUsuario) {
+        this.setIdUsuario(idUsuario);
     }
 
 

@@ -11,9 +11,10 @@ import java.util.UUID;
  * 
  */
 public class Reserva {
+    
     private String dia;
     private String hora;
-    private final String[] estadosPosibles = new String[] {"Pendiente", "Sin asistir", "Completado"};
+    private final String[] estadosPosibles = new String[] {"Pendiente", "Sin asistir", "Completado", "Cancelado"};
     private String estado;
     private Mesa mesaReservada;
     private Cliente clienteReserva;
@@ -97,5 +98,39 @@ public class Reserva {
     
     public static ArrayList<Reserva> getListaReservas(){
         return listaReservas;
-    }   
+    }
+    
+    private ArrayList<ArrayList<String>> historialReservas(ArrayList<Reservas> reservas) {
+        ArrayList<String> datosReserva = new ArrayList<>();
+        ArrayList<ArrayList<String>> listadoImprimir = new ArrayList<>();
+        
+        
+        for (Reserva ext : reservas) {
+            String name = ext.getClienteReserva().getNombre();
+            String email = ext.getClienteReserva().getCorreo();
+            String tel = ext.getClienteReserva().getTelefono();
+            String gen = ext.getClienteReserva().getGenero();
+            datosReserva.add(name);
+            datosReserva.add(email);
+            datosReserva.add(tel);
+            datosReserva.add(gen);
+            listadoImprimir.add(datosReserva);
+        }
+        return listadoImprimir;
+    }
+    
+    /**
+    * Metodo de uso administrativo para ver todas las reservas
+    * @param 
+    * @param 
+    * @return ArrayList<ArrayList<String>>
+    * 
+    */
+    public ArrayList<ArrayList<String>> verHistorial(){
+        
+        ArrayList<Reserva> listaReserva = this.agendaReservas;
+    
+    
+    
+    }
 }
