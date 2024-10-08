@@ -100,37 +100,34 @@ public class Reserva {
         return listaReservas;
     }
     
-    private ArrayList<ArrayList<String>> historialReservas(ArrayList<Reservas> reservas) {
+    /**
+    * Metodo de uso administrativo para ver todas las reservas
+    * @param
+    * @return ArrayList<ArrayList<String>>
+    * 
+    */
+    
+    public ArrayList<ArrayList<String>> historialReservas() {
+        ArrayList<Reserva> reservas = Reserva.getListaReservas();
         ArrayList<String> datosReserva = new ArrayList<>();
         ArrayList<ArrayList<String>> listadoImprimir = new ArrayList<>();
         
-        
+        // FALTA UN METODO QUE ORDENE TODAS LAS RESERVAS, LA LISTA RESERVAS DEBE ESTAR ORDENADA
         for (Reserva ext : reservas) {
             String name = ext.getClienteReserva().getNombre();
-            String email = ext.getClienteReserva().getCorreo();
-            String tel = ext.getClienteReserva().getTelefono();
-            String gen = ext.getClienteReserva().getGenero();
+            String idReserv = ext.getIdReserva();
+            String fechaR = ext.getDia();
+            String horaR = ext.getHora();
             datosReserva.add(name);
-            datosReserva.add(email);
-            datosReserva.add(tel);
-            datosReserva.add(gen);
+            datosReserva.add(idReserv);
+            datosReserva.add(fechaR);
+            datosReserva.add(horaR);
             listadoImprimir.add(datosReserva);
         }
         return listadoImprimir;
     }
     
-    /**
-    * Metodo de uso administrativo para ver todas las reservas
-    * @param 
-    * @param 
-    * @return ArrayList<ArrayList<String>>
-    * 
-    */
-    public ArrayList<ArrayList<String>> verHistorial(){
-        
-        ArrayList<Reserva> listaReserva = this.agendaReservas;
+// PENDIENTE ORDENAR LA LISTA DE RESERVAS
+//    public ArrayList<ArrayList<String>> verHistorial(){}
     
-    
-    
-    }
 }
