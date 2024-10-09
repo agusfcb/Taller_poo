@@ -16,7 +16,7 @@ public class Mesa {
     private String numero;
     private String capacidad;
     private String ubicacion;
-    private ArrayList<Reserva> reservasMesa = new ArrayList<>();
+    private ArrayList<Reserva> reservasMesa;
     private static ArrayList<Mesa> mesasExistentes = new ArrayList<>();
 
     public Mesa() {
@@ -26,6 +26,7 @@ public class Mesa {
         this.numero = numero;
         this.capacidad = capacidad;
         this.ubicacion = ubicacion;
+        this.reservasMesa = new ArrayList<Reserva>();
         Mesa.mesasExistentes.add(this);
     }
 

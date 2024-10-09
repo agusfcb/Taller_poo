@@ -4,7 +4,7 @@ import java.util.*;
 
 //hola
 public abstract class Usuario {
-
+    
     private String nombre;
     private String telefono;
     private String correo;

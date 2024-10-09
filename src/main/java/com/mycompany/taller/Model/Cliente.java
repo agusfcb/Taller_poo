@@ -7,8 +7,10 @@ import java.time.LocalDate;
  */
 public class Cliente extends Usuario {
 
-    private ArrayList<Reserva> agendaReservas = new ArrayList<>();
+    private ArrayList<Reserva> agendaReservas;
+    
     private static final ArrayList<String> opcionesCambios = new ArrayList<>(Arrays.asList("Nombre","Telefono","Correo","Contrasenia","Genero"));
+    
     /**
      * Default constructor
      */
@@ -20,6 +22,7 @@ public class Cliente extends Usuario {
      */
     public Cliente(String name, String tel, String email, String pass){
         super(name, tel, email, pass);
+        this.agendaReservas = new ArrayList<Reserva>();
     }
     
     /** Metodo para encontrar mesas disponibles
@@ -28,6 +31,12 @@ public class Cliente extends Usuario {
      * @param String capacidad
      * @return ArrayList<Mesa>
      */
+    
+    public void addReserva(Reserva res){
+        this.agendaReservas.add(res);
+    }
+    
+    
     public ArrayList<Mesa> verMesaDisponible(String fecha1, String hora1, String capacidad){
         //aca debe existir un control de formato de fecha, hora y capacidad
         
@@ -104,16 +113,28 @@ public class Cliente extends Usuario {
     }
 
     /** Metodo para crear la reserva
-     * @param String fecha 
-     * @param String hora 
-     * @param Mesa mesa
+     * @param String fecha Fecha de la reserva
+     * @param String hora Hora de la reserva
+     * @param String coment Comentarios de la reserva
+     * @param Mesa mesa Mesa de la reserva
      * @return void
      */
-    public void crearReserva(String fecha, String hora, Mesa mesa) {
-        Reserva nuevaReserva = new Reserva(fecha, hora, mesa, this);
-        agendaReservas.add(nuevaReserva);
+    public void crearReserva(String fecha, String hora, String coment, Mesa mesa) {
+        Reserva nuevaReserva = new Reserva(fecha, hora, coment, mesa, this);
     }
-
+    
+    /** Metodo para crear la reserva
+     * @param String fecha Fecha de la reserva
+     * @param String hora Hora de la reserva
+     * @param String coment Comentarios de la reserva
+     * @param String cantidad Cantidad de comensales
+     * @param Mesa mesa Mesa de la reserva
+     * @return void
+     */
+    public void crearReserva(String fecha, String hora, String coment, String cantidad,  Mesa mesa) {
+        Reserva nuevaReserva = new Reserva(fecha, hora, coment, cantidad, mesa, this);
+    }
+    
     /**
      * Metodo para cancelar una reserva determinada
      * @param idReserva 
@@ -200,13 +221,11 @@ public class Cliente extends Usuario {
     }
     
     @Override
-    public boolean validarUsuario(String usuario, String contrasenia){
-        return false;
+    public void validarUsuario(String usuario, String contrasenia){
     }
 
     @Override
-    boolean iniciarSesion(String correo, String contrasenia) {
-        return false;
+    public void iniciarSesion(String correo, String contrasenia) {
     }
     
 }
