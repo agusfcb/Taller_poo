@@ -20,12 +20,11 @@ public class Recepcionista extends Empleado {
     /**
      * Constructor parametrizado
      */
-    public Recepcionista(String name, String tel, String email, String pass, ArrayList<Reserva> reservas, String rol, String permiso, String idUsuario) {
-        this.registrarUsuario(name, tel, tel, name);
-        super(reservas, rol, permiso, idUsuario);
+    public Recepcionista(ArrayList<Reserva> reservas, String rol, String permiso, String name, String tel, String email, String pass) {
+        super(reservas, "Recepcionista", permiso, name, tel, email, pass);
     }
-    public ArrayList<Reserva> buscarReservar(LocalDateTime fecha, LocalDateTime hora) {
-        
+    public ArrayList<Reserva> buscarReservas(LocalDateTime fecha, LocalDateTime hora) {
+        ArrayList<Reserva> reservaEncontrada = 
     }
     public void tomarDatosFecha(LocalDateTime fecha, LocalDateTime hora) {
     

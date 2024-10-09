@@ -25,7 +25,7 @@ public class Reserva {
     
     private final String[] estadosPosibles = new String[] {"Pendiente", "Sin asistir", "Completado", "Cancelado"};
     private static final String[] horarios = new String[] {"11:00", "13:00", "15:00", "20:00", "22:00", "00:00"};
-
+    
 
     /*
     *Constructor para el cliente que hace la reserva
