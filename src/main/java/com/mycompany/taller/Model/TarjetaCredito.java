@@ -12,7 +12,6 @@ public class TarjetaCredito {
     private String numeroTarjeta;
     private String codVerificacion;
     private String multa;
-    private Reserva reservaAsociada;
 
     public String getNombre() {
         return nombre;
@@ -54,13 +53,6 @@ public class TarjetaCredito {
         this.multa = multa;
     }
 
-    public Reserva getReservaAsociada() {
-        return reservaAsociada;
-    }
-
-    public void agregarRes(Reserva res){
-        this.reservaAsociada = res;  
-    }
     @Override
     public String toString() {
         return "TarjetaCredito: " + "\nNombre: " + nombre + "\nEmisor: " + emisor + "\nNumero de tarjeta: " + numeroTarjeta;
