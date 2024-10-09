@@ -42,6 +42,7 @@ public class Reserva {
         Reserva.listaReservas.add(this);
         cliente.addReserva(this);
         mesa.agregarReserva(this);
+        tarjeta.agregarReservaTarj(this);
     }
     
     /*
