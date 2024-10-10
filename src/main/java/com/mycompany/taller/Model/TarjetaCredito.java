@@ -12,7 +12,20 @@ public class TarjetaCredito {
     private String numeroTarjeta;
     private String codVerificacion;
     private String multa;
+    private Reserva reservaT;
+    
+    
+    public TarjetaCredito(){}
 
+    public TarjetaCredito(String nombre, String emisor, String numeroTarjeta, String codVerificacion, String multa) {
+        this.nombre = nombre;
+        this.emisor = emisor;
+        this.numeroTarjeta = numeroTarjeta;
+        this.codVerificacion = codVerificacion;
+        this.multa = multa;
+    }
+
+    
     public String getNombre() {
         return nombre;
     }
@@ -52,11 +65,16 @@ public class TarjetaCredito {
     public void setMulta(String multa) {
         this.multa = multa;
     }
+    
+    public void agregarReser(Reserva res){
+        this.reservaT = res;
+    }
 
     @Override
     public String toString() {
         return "TarjetaCredito: " + "\nNombre: " + nombre + "\nEmisor: " + emisor + "\nNumero de tarjeta: " + numeroTarjeta;
     }
+    
     
     //VALIDAR TARJETA ES UN METODO QUE DEBE COMPROBAR UN NOMBRE Y
     //QUE LA TARJETA TENGA 16 DIGITOS NUMERICOS XXXX XXXX XXXX XXXX

@@ -17,13 +17,14 @@ public class Reserva {
     private String estadoAsist;
     private String cantidadComensales;
     private String comentarios;
+    private String multaAusencia;
     private Mesa mesaReservada;
-    private Cliente clienteReserva;
+    private Usuario clienteReserva;
     private TarjetaCredito tarjeta;
     private String idReserva;
     private static ArrayList<Reserva> listaReservas = new ArrayList<>(); 
     
-    private final String[] estadosPosibles = new String[] {"Pendiente", "Sin asistir", "Completado", "Cancelado"};
+    public static final String[] estadosPosibles = new String[] {"Pendiente", "Sin asistir", "Completado", "Cancelado"};
     private static final String[] horarios = new String[] {"11:00", "13:00", "15:00", "20:00", "22:00", "00:00"};
     
 
@@ -42,6 +43,7 @@ public class Reserva {
         Reserva.listaReservas.add(this);
         cliente.addReserva(this);
         mesa.agregarReserva(this);
+        tarjeta.agregarReser(this);
     }
     
     /*
@@ -65,12 +67,13 @@ public class Reserva {
     /*
     *Constructor para el administrador que gestiona eventos
     */
-    public Reserva(String dia, String hora, Mesa mesa) {
-        this.clienteReserva = null;
+    public Reserva(String dia, String hora, Mesa mesa, Usuario admin) {
+        this.clienteReserva = admin;
         this.estadoAsist = this.estadosPosibles[0];
         this.dia = dia;
         this.hora = hora;
         this.mesaReservada = mesa;
+        this.clienteReserva = admin;
         this.idReserva = UUID.randomUUID().toString();
         Reserva.listaReservas.add(this);
         mesa.agregarReserva(this);
@@ -116,7 +119,7 @@ public class Reserva {
         this.mesaReservada = mesaReservada;
     }
 
-    public Cliente getClienteReserva() {
+    public Usuario getClienteReserva() {
         return clienteReserva;
     }
 
@@ -148,6 +151,13 @@ public class Reserva {
         this.idReserva = idReserva;
     }
     
+    public static String[] getListaEstados(){
+        return estadosPosibles;
+    }
+    
+    public void agregarMulta(){
+        this.multaAusencia = "u$d 50";
+    }
     public static ArrayList<Reserva> getListaReservas(){
         return listaReservas;
     }
@@ -187,6 +197,32 @@ public class Reserva {
     public String toString() {
         return "RESERVA: " + idReserva + "\nCliente: " + clienteReserva + "\nDia: " + dia + "\nHora: " + hora + "\nMesa reservada: " + mesaReservada + "\nCantidadComensales: " + cantidadComensales + "\nEstado de asistencia: " + estadoAsist + "\nComentarios: " + comentarios;
     }
+    
+    
+    /**
+     * Este es un metodo que se colocara directamente luego del loggin de forma que tome la fecha cada dia
+     * 
+     */
+    public static void multa(ArrayList<Reserva> listaFiltradaFecha){
+        LocalDate fechaActual = LocalDate.now();
+        LocalDate fechaReserva;
+        String sinAsist = Reserva.getListaEstados()[1];
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        for (Reserva extReser : listaFiltradaFecha){
+            LocalDate fechaReserva = LocalDate.parse(extReser.getDia(), formatter);
+            if(fechaReserva.isAfter(fechaActual)){
+                if(extReser.getEstadoAsist().equals(sinAsist)){
+                    extReser.agregarMulta();
+                }
+                    
+            }
+        }
+        
+    }
+    
+    
 // PENDIENTE ORDENAR LA LISTA DE RESERVAS
 //    public ArrayList<ArrayList<String>> verHistorial(){}
 // PENDIENTE desglozar reservas asistidas, pendientes y canceladas por fecha

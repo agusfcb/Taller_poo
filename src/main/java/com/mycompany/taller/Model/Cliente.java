@@ -119,8 +119,8 @@ public class Cliente extends Usuario {
      * @param Mesa mesa Mesa de la reserva
      * @return void
      */
-    public void crearReserva(String fecha, String hora, String coment, Mesa mesa) {
-        Reserva nuevaReserva = new Reserva(fecha, hora, coment, mesa, this);
+    public void crearReserva(String fecha, String hora, String coment, Mesa mesa, TarjetaCredito tarjeta) {
+        Reserva nuevaReserva = new Reserva(fecha, hora, coment, mesa, this, tarjeta);
     }
     
     /** Metodo para crear la reserva
@@ -131,8 +131,8 @@ public class Cliente extends Usuario {
      * @param Mesa mesa Mesa de la reserva
      * @return void
      */
-    public void crearReserva(String fecha, String hora, String coment, String cantidad,  Mesa mesa) {
-        Reserva nuevaReserva = new Reserva(fecha, hora, coment, cantidad, mesa, this);
+    public void crearReserva(String fecha, String hora, String coment, String cantidad,  Mesa mesa, TarjetaCredito tarjeta) {
+        Reserva nuevaReserva = new Reserva(fecha, hora, coment, cantidad, mesa, this, tarjeta);
     }
     
     /**
