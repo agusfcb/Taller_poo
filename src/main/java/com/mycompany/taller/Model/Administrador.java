@@ -1,3 +1,4 @@
+import com.mycompany.taller.Model.Reserva;
 import java.util.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,15 +8,13 @@ public class Administrador {
     private String idUsuario;
     private String rol;
 
-
     public Administrador(String idUsuario, String rol) {
         this.idUsuario = idUsuario;
         this.rol = rol;
     }
 
-
     public boolean cambiarRol(String idUsuario, String nuevoRol) {
-    System.out.println("El rol de " + idUsuario + " ha sido cambiado a " + nuevoRol);
+        System.out.println("El rol de " + idUsuario + " ha sido cambiado a " + nuevoRol);
         return true;
     }
 
@@ -48,6 +47,22 @@ public class Administrador {
         System.out.println("Franja horaria configurada desde " + horaInicio + " hasta " + horaFin);
     }
 
+    public void addReserva(Reserva res) {
+        
+        System.out.println("Reserva añadida: " + res.toString());
+    }
+
+    public void mostrarReservas() {
+        ArrayList<Reserva> listaReservas = Reserva.getListaReservas(); 
+        if (listaReservas.isEmpty()) {
+            System.out.println("No hay reservas en la agenda.");
+            return;
+        }
+        System.out.println("Reservas en la agenda:");
+        for (Reserva reserva : listaReservas) {
+            System.out.println(reserva.toString());
+        }
+    }
 
     public String getIdUsuario() {
         return idUsuario;
