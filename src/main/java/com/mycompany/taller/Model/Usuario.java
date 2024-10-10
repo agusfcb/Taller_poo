@@ -11,26 +11,28 @@ public abstract class Usuario {
     private String contrasenia;
     private String genero;
     private String idUsuario;
-
-
+    private String rol;
+    private static final String[] roles = {"Administrador", "Maitre", "Mesero", "Recepcionista", "Usuario"};
+    
     public Usuario() {
-        
     }
 
-    public Usuario(String nombre, String telefono, String correo, String contrasenia) {
+    public Usuario(String nombre, String telefono, String correo, String contrasenia, String rolU) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
         this.contrasenia = contrasenia;
+        this.rol = rolU;
         this.idUsuario = UUID.randomUUID().toString();
         this.genero = "S/D";
     }
-    public Usuario(String nombre, String telefono, String correo, String contrasenia, String genero) {
+    public Usuario(String nombre, String telefono, String correo, String contrasenia, String genero, String rolU) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
         this.contrasenia = contrasenia;
         this.genero = genero;
+        this.rol = rolU;
     }
     
     private void setNombre(String nombre) {
@@ -98,6 +100,18 @@ public abstract class Usuario {
         this.setIdUsuario(idUsuario);
     }
 
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+    
+    public static String[] getRoles(){
+        return roles;
+    }
+    
     public abstract void validarUsuario(String usuario, String contrasenia);
 
     public abstract void iniciarSesion(String correo, String contrasenia);

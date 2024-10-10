@@ -14,7 +14,7 @@ public class Empleado extends Usuario {
     private ArrayList<Reserva> reservas;
     private String rol;
     private String permiso;
-    private static final String[] Roles = {"Administrador", "Maitre", "Mesero", "Recepcionista"};
+
     /**
      * Default constructor
      */
@@ -36,7 +36,7 @@ public class Empleado extends Usuario {
      * @param idUsuario 
      */
     public Empleado(ArrayList<Reserva> reservas, String rol, String permiso, String name, String tel, String email, String pass) {
-        super(name, tel, email, pass);
+        super(name, tel, email, pass, rol);
         this.reservas = reservas;
         this.rol = rol;
         this.permiso = permiso;
@@ -49,10 +49,7 @@ public class Empleado extends Usuario {
     public void setReservas(ArrayList<Reserva> reservas) {
         this.reservas = reservas;
     }
-
-    public String getRol() {
-        return rol;
-    }
+    /*
     private boolean esRolValido(String rol) {
         for(String r : Roles) {
             if (r.equals(rol)) {
@@ -61,12 +58,17 @@ public class Empleado extends Usuario {
         }
         return false;
     }
+    */
+    
+    /*
     public void setRol(String rol) {
         if (esRolValido(rol)) {
             this.rol = rol;
         }
     }
-
+    */
+    
+    
     public String getIdEmpleado() {
         return this.getIdUsuario();
     }

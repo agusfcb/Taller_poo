@@ -25,11 +25,11 @@ public class Reserva {
     private static ArrayList<Reserva> listaReservas = new ArrayList<>(); 
     
     public static final String[] estadosPosibles = new String[] {"Pendiente", "Sin asistir", "Completado", "Cancelado"};
-    private static final String[] horarios = new String[] {"11:00", "13:00", "15:00", "20:00", "22:00", "00:00"};
+    private static String[] horarios = new String[] {"11:00", "13:00", "15:00", "20:00", "22:00", "00:00"};
+    private static String[] horariosAdmin = new String[] {"09:00", "11:00", "13:00", "15:00", "20:00", "22:00", "00:00", "02:00"};
     
-
     /*
-    *Constructor para el cliente que hace la reserva
+    * Constructor para el cliente que hace la reserva
     */
     public Reserva(String dia, String hora, String coment, Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
         this.dia = dia;
@@ -211,12 +211,11 @@ public class Reserva {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         for (Reserva extReser : listaFiltradaFecha){
-            LocalDate fechaReserva = LocalDate.parse(extReser.getDia(), formatter);
+            fechaReserva = LocalDate.parse(extReser.getDia(), formatter);
             if(fechaReserva.isAfter(fechaActual)){
                 if(extReser.getEstadoAsist().equals(sinAsist)){
                     extReser.agregarMulta();
-                }
-                    
+                }  
             }
         }
         
