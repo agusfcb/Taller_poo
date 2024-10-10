@@ -14,54 +14,36 @@ public class Administrador {
     }
 
     public boolean cambiarRol(String idUsuario, String nuevoRol) {
-        System.out.println("El rol de " + idUsuario + " ha sido cambiado a " + nuevoRol);
         return true;
     }
 
     public boolean editarRol(String idUsuario, String nuevoRol) {
-        System.out.println("El rol de " + idUsuario + " ha sido actualizado a " + nuevoRol);
         return true;
     }
 
-    public void actualizarSiguienteApertura(Date fechaFin, LocalDateTime nuevaApertura) {
-        System.out.println("La siguiente apertura será en: " + nuevaApertura);
-    }
-
-    public void definirAforo(String nombre, Date fechaInicio, Date fechaFin, LocalDateTime horaInicio, LocalDateTime horaFin, ArrayList<Integer> numMesas) {
-        System.out.println("Definiendo aforo para " + nombre);
-    }
 
     public void actualizarApertura(LocalDateTime fechaInicio, LocalDateTime fechaHoraApertura) {
-        System.out.println("Actualización de apertura para " + fechaInicio);
+       
     }
 
     public void actualizarCierre(LocalDateTime fechaInicio, LocalDateTime fechaHoraCierre) {
-        System.out.println("Actualización de cierre para " + fechaInicio);
+        
     }
 
     public void editarCierre(LocalDateTime fechaInicio, LocalDateTime fechaHoraCierre) {
-        System.out.println("Cierre editado para " + fechaInicio);
+      
     }
 
     public void configurarFranjaHoraria(LocalDateTime fechaInicio, LocalDateTime fechaFin, LocalDateTime horaInicio, LocalDateTime horaFin) {
-        System.out.println("Franja horaria configurada desde " + horaInicio + " hasta " + horaFin);
+     
     }
 
     public void addReserva(Reserva res) {
-        
-        System.out.println("Reserva añadida: " + res.toString());
+     
     }
 
-    public void mostrarReservas() {
-        ArrayList<Reserva> listaReservas = Reserva.getListaReservas(); 
-        if (listaReservas.isEmpty()) {
-            System.out.println("No hay reservas en la agenda.");
-            return;
-        }
-        System.out.println("Reservas en la agenda:");
-        for (Reserva reserva : listaReservas) {
-            System.out.println(reserva.toString());
-        }
+    public ArrayList<Reserva> getListaReservas() {
+        return Reserva.getListaReservas();  
     }
 
     public String getIdUsuario() {
