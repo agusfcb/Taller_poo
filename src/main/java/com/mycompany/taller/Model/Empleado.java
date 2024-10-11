@@ -12,7 +12,6 @@ import java.util.*;
      */
 public class Empleado extends Usuario {
     private ArrayList<Reserva> reservas;
-    private String rol;
     private String permiso;
 
     /**
@@ -21,24 +20,21 @@ public class Empleado extends Usuario {
     public Empleado() {
         super();
         this.reservas = new ArrayList<>();
-        this.rol = "Rol Desconocido";
         this.permiso = "Permiso Desconocido";
     }
     /**
      * 
      * @param reservas
+     * @param rol
      * @param name
      * @param tel
      * @param email
      * @param pass
-     * @param rol
-     * @param permiso
-     * @param idUsuario 
+     * @param permiso 
      */
     public Empleado(ArrayList<Reserva> reservas, String rol, String permiso, String name, String tel, String email, String pass) {
         super(name, tel, email, pass, rol);
         this.reservas = reservas;
-        this.rol = rol;
         this.permiso = permiso;
         //Nota para Juan: arriba entre parentesis esta el atributo idUduario
         // y aca falta por eso marca el error aca, igual no debe ir, borralo arriba si podes jaja
@@ -60,15 +56,16 @@ public class Empleado extends Usuario {
     }
     */
     
-    /*
+   /*
     public void setRol(String rol) {
         if (esRolValido(rol)) {
             this.rol = rol;
         }
     }
     */
-    
-    
+    public String getRolEmpleado() {
+        return this.getIdUsuario();
+    }
     public String getIdEmpleado() {
         return this.getIdUsuario();
     }
@@ -82,12 +79,20 @@ public class Empleado extends Usuario {
     public void agregarReservas(Reserva r) {
         this.reservas.add(r);
     }
-    // Metodo para mostrar el rol(Mesero, Recepcionista, Administrador o Maitre)del empleado con su ID 
+    /**
+     * Metodo para mostrar el rol del empleado (Administrador, Maitre, Recepcionista o Mesero)
+     * @param empleado
+     * @return String
+     */
     public String mostrarRol(Empleado empleado) {
-        return "ID: " + empleado.getIdEmpleado() + ", Rol: " + empleado.getRol();
+        return "ID: " + empleado.getIdEmpleado() + ", Rol: " + empleado.getRolEmpleado();
     }
     
-    // Metodo para ver los comentarios de las reservas con respecto a su ID
+    /**
+     * Metodo para ver los comentarios de las reservas con respecto al ID
+     * @param idReserva
+     * @return String
+    */
     public String verComentarios(String idReserva) {
         for(int i = 0; i < reservas.size(); i++) {
             Reserva reserva = reservas.get(i);
