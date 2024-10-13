@@ -30,9 +30,11 @@ public class Recepcionista extends Empleado {
      * @param email
      * @param pass 
      */
-    public Recepcionista(ArrayList<Reserva> reservas, String rol, String permiso, String name, String tel, String email, String pass) {
+    public Recepcionista(ArrayList<Reserva> reservas, String permiso, String name, String tel, String email, String pass) {
         super(reservas, "Recepcionista", permiso, name, tel, email, pass);
     }
+    //Corregido: saque el parametro String rol, ya que esta escrito "Recepcionista" no lo necesita en el constructor
+    
     /**
      * Metodo para buscar listas de reservas por una fecha y hora especifica
      * @param fecha

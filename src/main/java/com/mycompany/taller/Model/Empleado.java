@@ -36,9 +36,8 @@ public class Empleado extends Usuario {
         super(name, tel, email, pass, rol);
         this.reservas = reservas;
         this.permiso = permiso;
-        //Nota para Juan: arriba entre parentesis esta el atributo idUduario
-        // y aca falta por eso marca el error aca, igual no debe ir, borralo arriba si podes jaja
     }
+    
     public ArrayList<Reserva> getReservas() {
         return reservas;
     }

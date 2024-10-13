@@ -4,6 +4,7 @@ package com.mycompany.taller.Model;
 import java.util.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
@@ -12,8 +13,9 @@ import java.util.UUID;
  */
 public class Reserva {
     
-    private String dia;
-    private String hora;
+    
+    private LocalDate dia;
+    private LocalTime hora;
     private String estadoAsist;
     private String cantidadComensales;
     private String comentarios;
@@ -31,8 +33,19 @@ public class Reserva {
     /*
     * Constructor para el cliente que hace la reserva
     */
-    public Reserva(String dia, String hora, String coment, Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
-        this.dia = dia;
+    public Reserva(String dia, String horaSt, String coment, Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
+        // Formato Año-Mes-Dia
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        //Paseo a LocalDate
+        LocalDate fechaRes = LocalDate.parse(dia, formatterDate);
+        
+
+        // Formato de la hora
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        // Parsear el String a LocalTime
+        LocalTime hora = LocalTime.parse(horaSt, formatter);
+        
+        this.dia = fechaRes;
         this.hora = hora;
         this.estadoAsist = estadosPosibles[0];
         this.comentarios = coment;
@@ -47,27 +60,9 @@ public class Reserva {
     }
     
     /*
-    * Por si se vuelve opcional agregar la cantidad de comensales
-    */
-    public Reserva(String dia, String hora, String coment, String cantComensales, Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
-        this.dia = dia;
-        this.hora = hora;
-        this.estadoAsist = estadosPosibles[0];
-        this.comentarios = coment;
-        this.cantidadComensales = cantComensales;
-        this.mesaReservada = mesa;
-        this.clienteReserva = cliente;
-        this.tarjeta = tarjeta;
-        this.idReserva = UUID.randomUUID().toString();
-        Reserva.listaReservas.add(this);
-        cliente.addReserva(this);
-        mesa.agregarReserva(this);
-    }
-    
-    /*
     *Constructor para el administrador que gestiona eventos
     */
-    public Reserva(String dia, String hora, Mesa mesa, Usuario admin) {
+    public Reserva(LocalDate dia, LocalTime hora, Mesa mesa, Usuario admin) {
         this.clienteReserva = admin;
         this.estadoAsist = this.estadosPosibles[0];
         this.dia = dia;
@@ -79,20 +74,28 @@ public class Reserva {
         mesa.agregarReserva(this);
     }
 
-    public String getDia() {
+    public LocalDate getDia() {
         return dia;
     }
 
     public void setDia(String dia) {
-        this.dia = dia;
+        // Formato Año-Mes-Dia
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        //Paseo a LocalDate
+        LocalDate diaNuevo = LocalDate.parse(dia, formatterDate);
+        this.dia = diaNuevo;
     }
 
-    public String getHora() {
+    public LocalTime getHora() {
         return hora;
     }
 
     public void setHora(String hora) {
-        this.hora = hora;
+        // Formato de la hora
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        // Parsear el String a LocalTime
+        LocalTime horaNueva = LocalTime.parse(hora, formatter);
+        this.hora = horaNueva;
     }
 
     public String getEstadoAsist() {
@@ -162,33 +165,68 @@ public class Reserva {
         return listaReservas;
     }
     
+    
+    /* Metodo de ordenamiento por fecha. Este metodo debe inicirse cada dia de forma automatica
+    *
+    */
+    public static void ordenarFechaReservas(){
+        ArrayList<Reserva> listaOrdenar = Reserva.getListaReservas();
+        ArrayList<Reserva> listaAux;
+        LocalDate primerRes;
+        LocalDate comparaRes;
+        Reserva aux1;
+        Reserva aux2;
+        int pivote = (listaOrdenar.size()/2);
+        boolean ordenado = false;
+
+        while (pivote > 0) {
+            ordenado = true;
+            for (int i = 0; i+pivote < listaOrdenar.size(); i++) {
+                aux1 = listaOrdenar.get(i);
+                aux2 = listaOrdenar.get(i+pivote);
+            
+                primerRes = listaOrdenar.get(i).getDia();
+                comparaRes = listaOrdenar.get(i+pivote).getDia();
+            
+                //Parseo a LocalDate (se puede optimizar, esto es a fin de comprension de pasos
+            
+                if (primerRes.isAfter(comparaRes)){
+                    listaOrdenar.set(i, aux2);
+                    listaOrdenar.set(i+pivote, aux1);
+                    ordenado = false;
+                }
+            }
+            pivote = pivote / 2;
+            if(ordenado && (pivote == 0)){
+                break;
+            }
+        }
+    }
+    
+    
     /**
     * Metodo de uso administrativo para ver todas las reservas, posiblemente deba colocarlo como metodo de Administrador
     * @param
     * @return ArrayList<ArrayList<String>>
     * 
     */
-    
-    public ArrayList<ArrayList<String>> historialReservas() {
-        ArrayList<Reserva> reservas = Reserva.getListaReservas();
-        ArrayList<String> datosReserva = new ArrayList<>();
-        ArrayList<ArrayList<String>> listadoImprimir = new ArrayList<>();
+    public ArrayList<String> historialReservas(String fechaDesde, String fechaHasta) {
         
-        // FALTA UN METODO QUE ORDENE TODAS LAS RESERVAS, LA LISTA RESERVAS DEBE ESTAR ORDENADA
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaInicio = LocalDate.parse(fechaDesde, formatter);
+        LocalDate fechaFin = LocalDate.parse(fechaHasta, formatter);
+        
+        Reserva.ordenarFechaReservas();
+        ArrayList<Reserva> reservas = Reserva.getListaReservas();
+        
+        ArrayList<String> listadoImprimir = new ArrayList<>();
+        
         for (Reserva ext : reservas) {
-            String name = ext.getClienteReserva().getNombre();
-            String idReserv = ext.getIdReserva();
-            String fechaR = ext.getDia();
-            String horaR = ext.getHora();
-            String estado = ext.getEstadoAsist();
-            String cantComen = ext.getCantidadComensales();
-            datosReserva.add(name);
-            datosReserva.add(idReserv);
-            datosReserva.add(fechaR);
-            datosReserva.add(horaR);
-            datosReserva.add(estado);
-            datosReserva.add(cantComen);
-            listadoImprimir.add(datosReserva);
+            if (!ext.getDia().isBefore(fechaInicio)) {
+                if (!ext.getDia().isAfter(fechaFin)) { 
+                    listadoImprimir.add(ext.toString());
+                }
+            }
         }
         return listadoImprimir;
     }
@@ -201,7 +239,9 @@ public class Reserva {
     
     /**
      * Este es un metodo que se colocara directamente luego del loggin de forma que tome la fecha cada dia
-     * 
+     * Al iniciar este metodo buscara todas las reservas del dia anterior que no tuvieron asistencia y les asignara una multa
+     * @param ArrayList<Reserva> la lista de todas las reservas del dia anterior al dia actual
+     * @return void
      */
     public static void multa(ArrayList<Reserva> listaFiltradaFecha){
         LocalDate fechaActual = LocalDate.now();
@@ -211,7 +251,7 @@ public class Reserva {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         for (Reserva extReser : listaFiltradaFecha){
-            fechaReserva = LocalDate.parse(extReser.getDia(), formatter);
+            fechaReserva = extReser.getDia();
             if(fechaReserva.isAfter(fechaActual)){
                 if(extReser.getEstadoAsist().equals(sinAsist)){
                     extReser.agregarMulta();
@@ -221,10 +261,4 @@ public class Reserva {
         
     }
     
-    
-// PENDIENTE ORDENAR LA LISTA DE RESERVAS
-//    public ArrayList<ArrayList<String>> verHistorial(){}
-// PENDIENTE desglozar reservas asistidas, pendientes y canceladas por fecha
-
-
 }

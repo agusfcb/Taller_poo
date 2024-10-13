@@ -1,6 +1,7 @@
 package com.mycompany.taller.Model;
 import java.util.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 
@@ -21,7 +22,7 @@ public class Cliente extends Usuario {
      * Constructor parametrizado
      */
     public Cliente(String name, String tel, String email, String pass){
-        super(name, tel, email, pass);
+        super(name, tel, email, pass, "Cliente");
         this.agendaReservas = new ArrayList<Reserva>();
     }
     
@@ -52,6 +53,15 @@ public class Cliente extends Usuario {
      * @return ArrayList<Mesa>
      */
     private ArrayList<Mesa> buscarMesaDisponible(String fecha1, String hora1, String capacidad) {
+        // Control de que no se busque en una fecha anterior al mismo dia que se realiza la reserva
+        LocalDate fechaActual = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaAux = LocalDate.parse(fecha1, formatter);
+        if (fechaActual.isBefore(fechaAux)){
+            return null;
+        }
+        
+        // Comienzo del algoritmo de busqueda
         ArrayList<Reserva> listaReservas = Reserva.getListaReservas();
         ArrayList<Reserva> reservaDia = new ArrayList<>();
         ArrayList<Mesa> mesasTotales = Mesa.getMesasTot();
@@ -70,16 +80,17 @@ public class Cliente extends Usuario {
      * @return ArrayList<Reserva>
      */
     private ArrayList<Reserva> filtroDia(ArrayList<Reserva> listaReservas, String fecha) {
+        
         ArrayList<Reserva> filtroFecha = new ArrayList<>();
-        boolean vacioCompleto = true;
+        boolean vacio = true;
         
         for (Reserva extraer : listaReservas) {
             if (extraer.getDia().equals(fecha)) {
-                vacioCompleto = false;
+                vacio = false;
                 filtroFecha.add(extraer);
             }
         }
-        if (vacioCompleto){
+        if (vacio){
             return null;
         } else {
         return filtroFecha;
