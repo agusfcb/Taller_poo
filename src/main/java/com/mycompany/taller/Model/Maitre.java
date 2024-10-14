@@ -16,7 +16,7 @@ public class Maitre extends Empleado {
     public Maitre() {
         super();
     }
-    public Maitre(ArrayList<Reserva> reservas, String rol, String permiso, String name, String tel, String email, String pass) {
-        super(reservas, "Maitre", permiso, name, tel, email, pass);
+    public Maitre(ArrayList<Reserva> reservas, String name, String tel, String email, String pass) {
+        super(reservas, "Maitre",  name, tel, email, pass);
     }
 }

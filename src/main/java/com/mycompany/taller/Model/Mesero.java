@@ -16,8 +16,8 @@ public class Mesero extends Empleado {
     public Mesero() {
         super();
     }
-    public Mesero(ArrayList<Reserva> reservas, String rol, String permiso, String name, String tel, String email, String pass) {
-        super(reservas, "Mesero", permiso, name, tel, email, pass);
+    public Mesero(ArrayList<Reserva> reservas, String name, String tel, String email, String pass) {
+        super(reservas, "Mesero", name, tel, email, pass);
     }
     
 }
