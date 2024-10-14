@@ -12,7 +12,6 @@ import java.util.*;
      */
 public class Empleado extends Usuario {
     private ArrayList<Reserva> reservas;
-    private String permiso;
 
     /**
      * Default constructor
@@ -20,7 +19,6 @@ public class Empleado extends Usuario {
     public Empleado() {
         super();
         this.reservas = new ArrayList<>();
-        this.permiso = "Permiso Desconocido";
     }
     /**
      * 
@@ -32,10 +30,10 @@ public class Empleado extends Usuario {
      * @param pass
      * @param permiso 
      */
-    public Empleado(ArrayList<Reserva> reservas, String rol, String permiso, String name, String tel, String email, String pass) {
+    public Empleado(ArrayList<Reserva> reservas, String rol, String name, String tel, String email, String pass) {
         super(name, tel, email, pass, rol);
         this.reservas = reservas;
-        this.permiso = permiso;
+
     }
     
     public ArrayList<Reserva> getReservas() {
@@ -67,12 +65,6 @@ public class Empleado extends Usuario {
     }
     public String getIdEmpleado() {
         return this.getIdUsuario();
-    }
-    public String getPermiso() {
-        return permiso;
-    }
-    public void setPermiso(String permiso) {
-        this.permiso = permiso;
     }
     
     public void agregarReservas(Reserva r) {

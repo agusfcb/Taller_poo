@@ -1,5 +1,7 @@
 package com.mycompany.taller.Model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -75,7 +77,6 @@ public class TarjetaCredito {
         return "TarjetaCredito: " + "\nNombre: " + nombre + "\nEmisor: " + emisor + "\nNumero de tarjeta: " + numeroTarjeta;
     }
     
-    
     //VALIDAR TARJETA ES UN METODO QUE DEBE COMPROBAR UN NOMBRE Y
     //QUE LA TARJETA TENGA 16 DIGITOS NUMERICOS XXXX XXXX XXXX XXXX
     
@@ -85,4 +86,15 @@ public class TarjetaCredito {
      * @param String idReserva 
      * @return
      */
+    
+    
+    /**
+     * Este es un metodo que se colocara directamente luego del loggin de forma que tome la fecha cada dia
+     * Al iniciar este metodo buscara todas las reservas del dia anterior que no tuvieron asistencia y les asignara una multa
+     * @param ArrayList<Reserva> la lista de todas las reservas del dia anterior al dia actual
+     * @return void
+     */
+    public void agregarMulta(){
+        this.multa = "u$d 50";
+    }
 }

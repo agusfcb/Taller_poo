@@ -1,12 +1,15 @@
 package com.mycompany.taller.Model;
 import java.util.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 /**
  * 
  */
 public class Cliente extends Usuario {
+    
+    
 
     private ArrayList<Reserva> agendaReservas;
     
@@ -122,17 +125,6 @@ public class Cliente extends Usuario {
         }
         return mesasCapacidad;
     }
-
-    /** Metodo para crear la reserva
-     * @param String fecha Fecha de la reserva
-     * @param String hora Hora de la reserva
-     * @param String coment Comentarios de la reserva
-     * @param Mesa mesa Mesa de la reserva
-     * @return void
-     */
-    public void crearReserva(String fecha, String hora, String coment, Mesa mesa, TarjetaCredito tarjeta) {
-        Reserva nuevaReserva = new Reserva(fecha, hora, coment, mesa, this, tarjeta);
-    }
     
     /** Metodo para crear la reserva
      * @param String fecha Fecha de la reserva
@@ -142,7 +134,7 @@ public class Cliente extends Usuario {
      * @param Mesa mesa Mesa de la reserva
      * @return void
      */
-    public void crearReserva(String fecha, String hora, String coment, String cantidad,  Mesa mesa, TarjetaCredito tarjeta) {
+    public void crearReserva(LocalDate fecha, LocalTime hora, String coment, String cantidad,  Mesa mesa, TarjetaCredito tarjeta) {
         Reserva nuevaReserva = new Reserva(fecha, hora, coment, cantidad, mesa, this, tarjeta);
     }
     
@@ -208,7 +200,7 @@ public class Cliente extends Usuario {
         return true;
     }
     
-    /**
+    /** Devuelve el historial de reservas del cliente
      * @return ArrayList<Reservas>
      */
     public ArrayList<ArrayList<String>> verHistorial() {
@@ -216,27 +208,30 @@ public class Cliente extends Usuario {
         ArrayList<ArrayList<String>> listadoImprimir = new ArrayList<>();
         
         ArrayList<Reserva> listaReserva = this.agendaReservas;
-        
+                
         for (Reserva ext : listaReserva) {
-            String name = ext.getClienteReserva().getNombre();
-            String email = ext.getClienteReserva().getCorreo();
-            String tel = ext.getClienteReserva().getTelefono();
-            String gen = ext.getClienteReserva().getGenero();
-            datosReserva.add(name);
-            datosReserva.add(email);
-            datosReserva.add(tel);
-            datosReserva.add(gen);
+            String idRes = ext.getIdReserva().toString();
+            String diaR = ext.getDia().toString();
+            String horaR = ext.getHora().toString();
+            String mesaR = ext.getMesaReservada().getNumero();
+            
+            datosReserva.add(idRes);
+            datosReserva.add(diaR);
+            datosReserva.add(horaR);
+            datosReserva.add(mesaR);
             listadoImprimir.add(datosReserva);
         }
         return listadoImprimir;
     }
-    
+
     @Override
-    public void validarUsuario(String usuario, String contrasenia){
+    public void validarUsuario(String usuario, String contrasenia) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void iniciarSesion(String correo, String contrasenia) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

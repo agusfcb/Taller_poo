@@ -18,6 +18,7 @@ public class Mesa {
     private String ubicacion;
     private ArrayList<Reserva> reservasMesa;
     private static ArrayList<Mesa> mesasExistentes = new ArrayList<>();
+    private static ArrayList<String> capacidadEstandar = new ArrayList<>(Arrays.asList("4", "4-8", "+8"));
 
     public Mesa() {
     }
@@ -62,4 +63,27 @@ public class Mesa {
         this.reservasMesa.add(resv);
     }
     
+    public boolean controlMesa(String num){
+        for(Mesa mesaNum : Mesa.getMesasTot()){
+            if(mesaNum.getNumero().equals(num)){
+                return false;
+            }
+        }
+        return true;
+    }
+    public void agregarMesa(String num, String cap, String ubi){
+        if(controlMesa(num)){
+            Mesa nuevaMesa = new Mesa(num, cap, ubi);
+        }
+    }
+    
+    public void removerMesa(String num){
+        ArrayList<Mesa> mesasTotales = Mesa.getMesasTot();
+        for(Mesa ext : mesasTotales){
+            if(ext.getNumero().equals(num)){
+                Mesa.mesasExistentes.remove(ext);
+            }
+        }
+    
+    }
 }

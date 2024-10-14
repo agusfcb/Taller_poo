@@ -5,12 +5,12 @@ import java.util.*;
 //hola
 public abstract class Usuario {
     
+    private String idUsuario;
     private String nombre;
     private String telefono;
     private String correo;
     private String contrasenia;
     private String genero;
-    private String idUsuario;
     private String rol;
     private static final String[] roles = {"Administrador", "Maitre", "Mesero", "Recepcionista", "Usuario"};
     
@@ -23,9 +23,11 @@ public abstract class Usuario {
         this.correo = correo;
         this.contrasenia = contrasenia;
         this.rol = rolU;
-        this.idUsuario = UUID.randomUUID().toString();
         this.genero = "S/D";
+        this.idUsuario = UUID.randomUUID().toString();
+
     }
+    
     public Usuario(String nombre, String telefono, String correo, String contrasenia, String genero, String rolU) {
         this.nombre = nombre;
         this.telefono = telefono;
@@ -33,6 +35,7 @@ public abstract class Usuario {
         this.contrasenia = contrasenia;
         this.genero = genero;
         this.rol = rolU;
+        this.idUsuario = UUID.randomUUID().toString();
     }
     
     private void setNombre(String nombre) {
