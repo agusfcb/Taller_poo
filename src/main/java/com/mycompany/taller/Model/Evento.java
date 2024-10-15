@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.taller.Model;
 
+import com.mycompany.taller.Model.Mesa;
+import com.mycompany.taller.Model.Reserva;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -26,9 +24,9 @@ public class Evento {
         this.horarioDesde = horaInicio;
         this.horarioHasta = horaFin;
         this.adminEvento = admin;
+        this.reservaEvento= new ArrayList<>();
     }
 
-    
     public LocalDate getFechaEvento() {
         return fechaEvento;
     }
@@ -56,6 +54,155 @@ public class Evento {
     public void addReserva(Reserva res){
         this.reservaEvento.add(res);
     }
+
+    public Administrador getAdminEvento() {
+        return adminEvento;
+    }
+
+    public void setAdminEvento(Administrador adminEvento) {
+        this.adminEvento = adminEvento;
+    }
+
+    public ArrayList<Reserva> getReservaEvento() {
+        return reservaEvento;
+    }
+
+    public void setReservaEvento(ArrayList<Reserva> reservaEvento) {
+        this.reservaEvento = reservaEvento;
+    }
+    
+    public static boolean controlUbicacion(LocalDate fechaE, LocalTime horaInicio, LocalTime horaFin, String ubicacion){
+        return Evento.comprobarUbicacionDisponible(fechaE, horaInicio, horaFin, ubicacion);
+    }
+    
+    
+    public ArrayList<Mesa> verMesaDisponibleParaEvento(LocalDate fechaEvento, LocalTime horaInicio, LocalTime horaFin) {
+        ArrayList<Reserva> listaReservas = Reserva.getListaReservas();
+        ArrayList<Reserva> reservaDia = new ArrayList<>();
+        ArrayList<Reserva> reservasFechaHora = new ArrayList<>();
+        ArrayList<Mesa> mesasDisponibles = new ArrayList<>();
+        
+        LocalDate fechaActual = LocalDate.now();
+        if (fechaActual.isBefore(fechaEvento)) {
+            return null;
+        }
+        
+        reservaDia = this.filtroDia(listaReservas, fechaEvento);
+        //Si no hay reservas dicho dia, estan todas las mesas y horarios disponibles
+        if (reservaDia.equals(null)){
+            return mesasDisponibles;
+        }
+        
+        reservasFechaHora = this.filtroHora(reservaDia, horaInicio, horaFin);
+        
+        for(Mesa extMesa : Mesa.getMesasTot()){
+            boolean control = true;
+            for (Reserva extReserv : reservasFechaHora){
+                if(extReserv.getMesaReservada().getNumero().equals(extMesa.getNumero())){
+                    control = false;
+                }
+            }
+            if(control){
+                mesasDisponibles.add(extMesa);
+            }
+        }
+        return mesasDisponibles;
+    }
+
+    /**
+     * Metodo que comprueba si hay reservas en una ubicacion con parametros del dia y rango horario
+     * @param fechaE
+     * @param horaInicio
+     * @param horaFin
+     * @param ubicacion
+     * @return 
+     */
+    private static boolean comprobarUbicacionDisponible(LocalDate fechaE, LocalTime horaInicio, LocalTime horaFin, String ubicacion) {
+        
+        ArrayList<Reserva> listaReservas = Reserva.getListaReservas();
+        ArrayList<Reserva> reservaDia = new ArrayList<>();
+        ArrayList<Reserva> reservasFechaHora = new ArrayList<>();
+        
+        LocalDate fechaActual = LocalDate.now();
+        if (fechaActual.isBefore(fechaE)) {
+            return false;
+        }
+        
+        reservaDia = filtroDia(listaReservas, fechaE);
+        //Si no hay reservas dicho dia, estan todas las mesas y horarios disponibles
+        if (reservaDia.equals(null)){
+            return true;
+        }
+        
+        reservasFechaHora = filtroHora(reservaDia, horaInicio, horaFin);
+        //Si no hay reservas en el horario del evento, se pueden reservar todas las mesas
+        if(reservasFechaHora.equals(null)){
+            return true;
+        }
+        //Control que no exista reservas en la mesa de una ubicacion
+        for (Reserva extRes : reservasFechaHora){
+            if(extRes.getMesaReservada().getUbicacion().equals(ubicacion)){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    /**
+     * Metodo para ver filtrar por dia las reservas
+     *
+     * @param ArrayList<Reserva> listaReservas
+     * @param String fecha
+     * @return ArrayList<Reserva>
+     */
+    private static ArrayList<Reserva> filtroDia(ArrayList<Reserva> listaReservas, LocalDate fecha) {
+
+        ArrayList<Reserva> filtroFecha = new ArrayList<>();
+        boolean vacio = true;
+
+        for (Reserva extraer : listaReservas) {
+            if (extraer.getDia().toString().equals(fecha.toString())) {
+                vacio = false;
+                filtroFecha.add(extraer);
+            }
+        }
+        if (vacio) {
+            return null;
+        } else {
+            return filtroFecha;
+        }
+    }
+
+    /**
+     * 
+     * @param ubi
+     * @param listaAux
+     * @param horaDesde
+     * @param horaHasta
+     * @return 
+     */
+    private static ArrayList<Reserva> filtroHora(ArrayList<Reserva> listaAux, LocalTime horaDesde, LocalTime horaHasta) {
+        ArrayList<LocalTime> horariosEspeciales = Reserva.getHorariosEventos();
+        ArrayList<LocalTime> horarioEvento = new ArrayList<>();
+        ArrayList<Reserva> reservasHora = new ArrayList<>();
+        
+        for (LocalTime horaExt : horariosEspeciales){
+            if(!horaExt.isBefore(horaDesde) && !horaExt.isAfter(horaHasta)){
+                horarioEvento.add(horaExt);
+            }
+        }
+
+        for(Reserva extReserva : listaAux) {
+            for (LocalTime extHora : horarioEvento){
+                if(extReserva.getHora().toString().equals(extHora.toString())){
+                    reservasHora.add(extReserva);
+                }    
+            }
+        }
+        return reservasHora;
+    }
+
     
     /**
      * Metodo para crear reservas sobre un evento

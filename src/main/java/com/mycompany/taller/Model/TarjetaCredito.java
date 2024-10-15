@@ -3,6 +3,8 @@ package com.mycompany.taller.Model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 
@@ -19,12 +21,12 @@ public class TarjetaCredito {
     
     public TarjetaCredito(){}
 
-    public TarjetaCredito(String nombre, String emisor, String numeroTarjeta, String codVerificacion, String multa) {
+    public TarjetaCredito(String nombre, String emisor, String numeroTarjeta, String codVerificacion) {
         this.nombre = nombre;
         this.emisor = emisor;
         this.numeroTarjeta = numeroTarjeta;
         this.codVerificacion = codVerificacion;
-        this.multa = multa;
+        this.multa = "$ 0";
     }
 
     
@@ -96,5 +98,28 @@ public class TarjetaCredito {
      */
     public void agregarMulta(){
         this.multa = "u$d 50";
+    }
+    
+    /**
+     * Valida que se introduzcan 16 digitos
+     * @param numeroTarjeta
+     * @param codigoVerif
+     * @return 
+     */
+    public static boolean validarTarjeta(String numeroTarjeta, String codigoVerif){
+        String regex1 = "\\d{16}";
+        String regex2 = "\\d{3}";
+        boolean controlTarjeta = false;
+        Pattern pattern1 = Pattern.compile(regex1);
+        Matcher matcher1 = pattern1.matcher(numeroTarjeta);
+
+        Pattern pattern2 = Pattern.compile(regex2);
+        Matcher matcher2 = pattern2.matcher(codigoVerif);
+        
+        if (matcher1.find() && matcher2.find()){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
