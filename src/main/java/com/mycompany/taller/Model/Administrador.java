@@ -46,9 +46,10 @@ public class Administrador extends Empleado{
         return Reserva.getListaReservas();  
     }
     
+    
     /**
      * 
-     * @param Res 
+     * @param res 
      */
     public void addReservaEvento(Reserva res){
         this.listaEventos.add(res);
