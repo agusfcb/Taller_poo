@@ -16,14 +16,16 @@ public class Evento {
     private LocalDate fechaEvento;
     private LocalTime horarioDesde;
     private LocalTime horarioHasta;
+    private Administrador adminEvento;
     private ArrayList<Reserva> reservaEvento;
     
     public Evento(){}
     
-    public Evento(LocalDate fechaEvento, LocalTime horaInicio, LocalTime horaFin, ArrayList<Reserva> reserEvent) {
+    public Evento(LocalDate fechaEvento, LocalTime horaInicio, LocalTime horaFin, ArrayList<Reserva> reserEvent, Administrador admin) {
         this.fechaEvento = fechaEvento;
         this.horarioDesde = horaInicio;
         this.horarioHasta = horaFin;
+        this.adminEvento = admin;
     }
 
     
@@ -63,7 +65,7 @@ public class Evento {
      * @param ubicacion Ubicacion de las mesas que se bloquearan
      * @return Devuelve la lista de las nuevas reservas creadas para el evento
      */
-    public ArrayList<Reserva> crearEventoPorUbicacion(LocalDate fecha, LocalTime horaI, LocalTime horaF, String ubicacion){
+    public ArrayList<Reserva> crearEventoPorUbicacion(LocalDate fecha, LocalTime horaI, LocalTime horaF, String ubicacion, Administrador admin){
         
         ArrayList<LocalTime> horarioUtil = (ArrayList<LocalTime>) Reserva.getHorariosEventos().clone(); 
 
@@ -85,7 +87,7 @@ public class Evento {
         }
         for (Mesa mesaRes : mesasUbicacion) {
             for (LocalTime horaRes : horarioUtil){
-                Reserva nuevaRes = new Reserva(fecha, horaRes, mesaRes);
+                Reserva nuevaRes = new Reserva(fecha, horaRes, mesaRes, admin);
                 reservasNuevas.add(nuevaRes);
             }
         }
@@ -100,7 +102,7 @@ public class Evento {
      * @param numerosMesa Array de los numeros de cada mesa a reservar
      * @return Devuelve la lista de las nuevas reservas creadas para el evento
      */
-    private ArrayList<Reserva> crearEventoPorMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> numerosMesas){
+    private ArrayList<Reserva> crearEventoPorMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> numerosMesas, Administrador admin){
         ArrayList<Mesa> mesas = Mesa.getMesasTot();
         ArrayList<Mesa> mesasUbicacion = new ArrayList<>();
         ArrayList<LocalTime> horarioUtil = (ArrayList<LocalTime>) Reserva.getHorariosEventos().clone();
@@ -120,7 +122,7 @@ public class Evento {
         }
         for (Mesa mesaRes : mesasUbicacion){
             for(LocalTime horaRes : horarioUtil){
-                Reserva nuevaReserva = new Reserva(fecha, horaRes, mesaRes);
+                Reserva nuevaReserva = new Reserva(fecha, horaRes, mesaRes, admin);
                 reservasNuevas.add(nuevaReserva);
             }
         }
@@ -135,8 +137,8 @@ public class Evento {
      * @param horaF
      * @param NumerosMesas 
      */
-    public void crearEventoConMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, String ubicacion){
-        this.reservaEvento = crearEventoPorUbicacion(fecha, horaI, horaF, ubicacion);
+    public void crearEventoConMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, String ubicacion, Administrador adminE){
+        this.reservaEvento = crearEventoPorUbicacion(fecha, horaI, horaF, ubicacion, adminE);
     }
     
     /**
@@ -146,8 +148,8 @@ public class Evento {
      * @param horaF
      * @param NumerosMesas 
      */
-    public void crearEventoConMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> NumerosMesas){
-        this.reservaEvento = this.crearEventoPorMesas(fecha, horaI, horaF, NumerosMesas);
+    public void crearEventoConMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> NumerosMesas, Administrador adminE){
+        this.reservaEvento = this.crearEventoPorMesas(fecha, horaI, horaF, NumerosMesas, adminE);
     }
 
 }
