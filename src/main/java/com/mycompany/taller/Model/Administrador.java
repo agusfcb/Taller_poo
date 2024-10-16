@@ -1,16 +1,16 @@
+package com.mycompany.taller.Model;
+
 import com.mycompany.taller.Model.Reserva;
-import java.util.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Administrador {
+public class Administrador extends Empleado{
 
-    private String idUsuario;
-    private String rol;
+    private ArrayList<Reserva> listaEventos = new ArrayList<>();
 
-    public Administrador(String idUsuario, String rol) {
-        this.idUsuario = idUsuario;
-        this.rol = rol;
+    public Administrador(ArrayList<Reserva> reservas, String name, String tel, String email, String pass) {
+        super(reservas, name, tel, email, pass, "Administrador");
+        
     }
 
     public boolean cambiarRol(String idUsuario, String nuevoRol) {
@@ -45,20 +45,12 @@ public class Administrador {
     public ArrayList<Reserva> getListaReservas() {
         return Reserva.getListaReservas();  
     }
-
-    public String getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
+    
+    /**
+     * 
+     * @param Res 
+     */
+    public void addReservaEvento(Reserva res){
+        this.listaEventos.add(res);
     }
 }
