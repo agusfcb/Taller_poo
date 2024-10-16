@@ -7,8 +7,7 @@ import java.util.*;
 
 //Formato metodos:
     /**
-     * @param String idReserva 
-     * @return
+     * 
      */
 public class Maitre extends Empleado {
     // Esta es mi clase
@@ -16,7 +15,7 @@ public class Maitre extends Empleado {
     public Maitre() {
         super();
     }
-    public Maitre(ArrayList<Reserva> reservas, String name, String tel, String email, String pass) {
-        super(reservas, "Maitre",  name, tel, email, pass);
+    public Maitre(String name, String tel, String email, String pass) {
+        super(name, tel, email, pass, "Maitre");
     }
 }
