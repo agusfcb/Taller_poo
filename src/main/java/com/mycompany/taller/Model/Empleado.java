@@ -22,17 +22,17 @@ public class Empleado extends Usuario {
     }
     /**
      * 
-     * @param reservas
+     * 
      * @param rol
      * @param name
      * @param tel
      * @param email
      * @param pass
-     * @param permiso 
+     * 
      */
-    public Empleado(ArrayList<Reserva> reservas, String rol, String name, String tel, String email, String pass) {
+    public Empleado(String name, String tel, String email, String pass, String rol) {
         super(name, tel, email, pass, rol);
-        this.reservas = reservas;
+        this.reservas = Reserva.getListaReservas();
 
     }
     
