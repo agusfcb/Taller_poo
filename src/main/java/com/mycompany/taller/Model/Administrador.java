@@ -1,5 +1,4 @@
 package com.mycompany.taller.Model;
-
 import com.mycompany.taller.Model.Reserva;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ public class Administrador extends Empleado{
 
     public Administrador(ArrayList<Reserva> reservas, String name, String tel, String email, String pass) {
         super(reservas, name, tel, email, pass, "Administrador");
-        
     }
 
     public boolean cambiarRol(String idUsuario, String nuevoRol) {
@@ -34,22 +32,21 @@ public class Administrador extends Empleado{
       
     }
 
-    public void configurarFranjaHoraria(LocalDateTime fechaInicio, LocalDateTime fechaFin, LocalDateTime horaInicio, LocalDateTime horaFin) {
+    public void configurarFranjaHoraria() {
      
     }
 
     public void addReserva(Reserva res) {
-     
+        
     }
 
     public ArrayList<Reserva> getListaReservas() {
         return Reserva.getListaReservas();  
     }
     
-    
     /**
      * 
-     * @param res 
+     * @param Res 
      */
     public void addReservaEvento(Reserva res){
         this.listaEventos.add(res);

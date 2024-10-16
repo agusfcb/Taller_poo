@@ -9,8 +9,6 @@ import java.time.format.DateTimeFormatter;
  */
 public class Cliente extends Usuario {
     
-    
-
     private ArrayList<Reserva> agendaReservas;
     
     private static final ArrayList<String> opcionesCambios = new ArrayList<>(Arrays.asList("Nombre","Telefono","Correo","Contrasenia","Genero"));
@@ -29,18 +27,22 @@ public class Cliente extends Usuario {
         this.agendaReservas = new ArrayList<Reserva>();
     }
     
-    /** Metodo para encontrar mesas disponibles
-     * @param String fecha1
-     * @param String hora1
-     * @param String capacidad
-     * @return ArrayList<Mesa>
+    /**
+     * Metodo para agregar una reserva al historial del cliente
+     * @param res Reserva creada recientemente
      */
-    
     public void addReserva(Reserva res){
         this.agendaReservas.add(res);
     }
     
     
+    /**
+     * Metodo publico para ver las mesas disponiles
+     * @param fecha1 Fecha de interes
+     * @param hora1 Hora de interes
+     * @param capacidad Capacidad de la mesa de interes
+     * @return 
+     */
     public ArrayList<Mesa> verMesaDisponible(String fecha1, String hora1, String capacidad){
         //aca debe existir un control de formato de fecha, hora y capacidad
         
