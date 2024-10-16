@@ -10,14 +10,13 @@ public class Mesero extends Empleado {
 
 //Formato metodos:
     /**
-     * @param String idReserva 
-     * @return
+     * 
      */
     public Mesero() {
         super();
     }
-    public Mesero(ArrayList<Reserva> reservas, String name, String tel, String email, String pass) {
-        super(reservas, "Mesero", name, tel, email, pass);
+    public Mesero(String name, String tel, String email, String pass) {
+        super(name, tel, email, pass, "Mesero");
     }
     
 }
