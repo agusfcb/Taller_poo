@@ -1,4 +1,5 @@
 package com.mycompany.taller.Model;
+import java.time.LocalDate;
 import java.util.*;
 import java.time.LocalDateTime;
 
@@ -22,16 +23,14 @@ public class Recepcionista extends Empleado {
      */
     /**
      * 
-     * @param reservas
-     * @param rol
-     * @param permiso
+     * 
      * @param name
      * @param tel
      * @param email
      * @param pass 
      */
-    public Recepcionista(ArrayList<Reserva> reservas, String permiso, String name, String tel, String email, String pass) {
-        super(reservas, "Recepcionista", name, tel, email, pass);
+    public Recepcionista(String name, String tel, String email, String pass) {
+        super(name, tel, email, pass, "Recepcionista");
     }
     //Corregido: saque el parametro String rol, ya que esta escrito "Recepcionista" no lo necesita en el constructor
     
@@ -42,7 +41,7 @@ public class Recepcionista extends Empleado {
      * @param hora
      * @return Array<Reserva>
      */
-    public ArrayList<Reserva> buscarReservas(String fecha, String hora) {
+    public ArrayList<Reserva> buscarReservas(LocalDate fecha, LocalDate hora) {
         ArrayList<Reserva> reservasEncontradas = new ArrayList<>();
         for(Reserva reserva : this.getReservas()) {
             if (reserva.getDia().equals(fecha) && reserva.getHora().equals(hora)) {
@@ -120,16 +119,16 @@ public class Recepcionista extends Empleado {
      * @param listRes
      * @return Reserva
      */
-    public Reserva buscarNom(String nombre, ArrayList<Reserva> listRes) {
+    private Reserva buscarNom(String nombre, ArrayList<Reserva> listRes) {
         for(Reserva reserva : listRes) {
-            if (reserva.getClienteReserva().getNombre().equalsIgnoreCase(nombre)) {
+            if (reserva.getClienteReserva().getNombre().toLowerCase().equalsIgnoreCase(nombre.toLowerCase())) {
                 return reserva;
             }
         }
         return null;
     }
     /**
-     * 
+     * Metodo para tomar un nombre 
      * @param nombre
      * @param listRes
      * @return Reserva
