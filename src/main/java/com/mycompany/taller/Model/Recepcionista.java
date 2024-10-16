@@ -1,8 +1,6 @@
 package com.mycompany.taller.Model;
-import java.time.LocalDate;
+import java.time.*;
 import java.util.*;
-import java.time.LocalDateTime;
-
 /**
  * 
  */
@@ -41,7 +39,7 @@ public class Recepcionista extends Empleado {
      * @param hora
      * @return Array<Reserva>
      */
-    public ArrayList<Reserva> buscarReservas(LocalDate fecha, LocalDate hora) {
+    public ArrayList<Reserva> buscarReservas(LocalDate fecha, LocalTime hora) {
         ArrayList<Reserva> reservasEncontradas = new ArrayList<>();
         for(Reserva reserva : this.getReservas()) {
             if (reserva.getDia().equals(fecha) && reserva.getHora().equals(hora)) {
@@ -50,8 +48,12 @@ public class Recepcionista extends Empleado {
         }
         return reservasEncontradas;
     }
-    
-    public void tomarDatosFecha(String fecha, String hora) {
+    /**
+     * Metodo para tomar los datos de una fecha de la reserva
+     * @param fecha
+     * @param hora 
+     */
+    public void tomarDatosFecha(LocalDate fecha, LocalTime hora) {
         System.out.println("Fecha y hora recibidas: " + fecha + "" + hora);
     }
     /**
@@ -59,7 +61,7 @@ public class Recepcionista extends Empleado {
      * @param idReserva
      * @return Reserva
      */
-    public Reserva buscarId(String idReserva) {
+    private Reserva buscarId(String idReserva) {
         for(Reserva reserva : this.getReservas()) {
             if (reserva.getIdReserva().equals(idReserva)) {
                 return reserva;
@@ -68,7 +70,7 @@ public class Recepcionista extends Empleado {
         return null;
     }
     /**
-     * 
+     * Metodo para tomar el ID de una reserva
      * @param idReserva
      * @return Reserva
      */
@@ -76,7 +78,7 @@ public class Recepcionista extends Empleado {
         return buscarId(idReserva);
     }
     /**
-     * 
+     * Metodo para cambiar el estado de la reserva según el ID
      * @param id
      * @param nuevoEstado 
      */
@@ -102,19 +104,27 @@ public class Recepcionista extends Empleado {
         }
     }
     /**
-     * 
+     * Metodo para confirmar la asistencia por ID
      * @param id 
      */
     public void confirmarAsistencia(String id) {
         Reserva reserva = buscarId(id);
         if (reserva != null) {
-            reserva.setEstado("Completado");
+            String estadoActual = reserva.getEstadoAsist();
+            if (estadoActual.equals("Completado") || estadoActual.equals("Cancelado")) {
+                System.out.println("No se puede confirmar asistencia porque la reserva ya esta completada o fue cancelada");
+            } else if (estadoActual.equals("Pendiente")){
+                reserva.setEstado("Completado");
+                System.out.println("Asistencia confirmada. El estado es ahora: Completado");
+            } else {
+                System.out.println("No se puede confirmar asistencia en el estado: " + estadoActual);
+            }
         } else {
             System.out.println("Reserva no encontrada");
         }
     }
     /**
-     * 
+     * Metodo privado para buscar el nombre del cliente en una lista de reservas
      * @param nombre
      * @param listRes
      * @return Reserva
@@ -128,7 +138,7 @@ public class Recepcionista extends Empleado {
         return null;
     }
     /**
-     * Metodo para tomar un nombre 
+     * Metodo para tomar un nombre de cliente en una lista de reservas
      * @param nombre
      * @param listRes
      * @return Reserva
