@@ -1,6 +1,5 @@
 package com.mycompany.taller.Model;
 
-
 import java.util.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -54,7 +53,6 @@ public class Reserva {
     * Constructor para el cliente que hace la reserva
     */
     public Reserva(LocalDate dia, LocalTime hora, String coment, String comensales ,Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
-
         this.dia = dia;
         this.hora = hora;
         this.estadoAsist = estadosPosibles[0];
@@ -73,8 +71,8 @@ public class Reserva {
     /*
     *Constructor para el administrador que gestiona eventos
     */
-    public Reserva(LocalDate dia, LocalTime hora, Mesa mesa) {
-        this.clienteReserva = null;
+    public Reserva(LocalDate dia, LocalTime hora, Mesa mesa, Administrador admin) {
+        this.clienteReserva = admin;
         this.estadoAsist = this.estadosPosibles[4];
         this.dia = dia;
         this.hora = hora;
@@ -82,6 +80,7 @@ public class Reserva {
         this.cantidadComensales = "Indefinido";
         this.comentarios = "Evento";
         this.idReserva = UUID.randomUUID().toString();
+        admin.addReservaEvento(this);
         Reserva.listaReservas.add(this);
         mesa.agregarReserva(this);
     }
