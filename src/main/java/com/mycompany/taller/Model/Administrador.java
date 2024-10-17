@@ -1,14 +1,24 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.mycompany.taller.Model;
-import com.mycompany.taller.Model.Reserva;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-public class Administrador extends Empleado{
+/**
+ *
+ * @author juanm
+ */
+public class Administrador extends Empleado {
 
     private ArrayList<Reserva> listaEventos = new ArrayList<>();
 
-    public Administrador(ArrayList<Reserva> reservas, String name, String tel, String email, String pass) {
-        super(reservas, name, tel, email, pass, "Administrador");
+    private String idUsuario;
+    private String rol;
+    private ArrayList<Reserva> listaReservas = new ArrayList<>();
+
+    public Administrador(String name, String tel, String email, String pass) {
+        super(name, tel, email, pass, "Administrador");
     }
 
     public boolean cambiarRol(String idUsuario, String nuevoRol) {
@@ -37,7 +47,9 @@ public class Administrador extends Empleado{
     }
 
     public void addReserva(Reserva res) {
-        
+        this.listaReservas.add(res);
+     
+
     }
 
     public ArrayList<Reserva> getListaReservas() {
