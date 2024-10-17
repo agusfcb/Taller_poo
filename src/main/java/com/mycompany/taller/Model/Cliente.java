@@ -43,9 +43,7 @@ public class Cliente extends Usuario {
      * @param capacidad Capacidad de la mesa de interes
      * @return 
      */
-    public ArrayList<Mesa> verMesaDisponible(String fecha1, String hora1, String capacidad){
-        //aca debe existir un control de formato de fecha, hora y capacidad
-        
+    public ArrayList<Mesa> verMesaDisponible(LocalDate fecha1, LocalTime hora1, String capacidad){
         ArrayList<Mesa> coincidenciaBusqueda = this.buscarMesaDisponible(fecha1, hora1, capacidad);
         return coincidenciaBusqueda;
     }
@@ -57,12 +55,10 @@ public class Cliente extends Usuario {
      * @param String capacidad
      * @return ArrayList<Mesa>
      */
-    private ArrayList<Mesa> buscarMesaDisponible(String fecha1, String hora1, String capacidad) {
+    private ArrayList<Mesa> buscarMesaDisponible(LocalDate fecha1, LocalTime hora1, String capacidad) {
         // Control de que no se busque en una fecha anterior al mismo dia que se realiza la reserva
         LocalDate fechaActual = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate fechaAux = LocalDate.parse(fecha1, formatter);
-        if (fechaActual.isBefore(fechaAux)){
+        if (fechaActual.isBefore(fecha1)){
             return null;
         }
         
@@ -73,7 +69,7 @@ public class Cliente extends Usuario {
         ArrayList<Mesa> coincidenciaBusqueda = new ArrayList<>();
         
         reservaDia = this.filtroDia(listaReservas, fecha1);
-        coincidenciaBusqueda = this.filtroHora(mesasTotales, reservaDia, hora1, capacidad);
+        coincidenciaBusqueda = this.filtroHoraMesa(mesasTotales, reservaDia, hora1, capacidad);
         
         return coincidenciaBusqueda;
     }
@@ -84,13 +80,13 @@ public class Cliente extends Usuario {
      * @param String fecha
      * @return ArrayList<Reserva>
      */
-    private ArrayList<Reserva> filtroDia(ArrayList<Reserva> listaReservas, String fecha) {
+    private ArrayList<Reserva> filtroDia(ArrayList<Reserva> listaReservas, LocalDate fecha) {
         
         ArrayList<Reserva> filtroFecha = new ArrayList<>();
         boolean vacio = true;
         
         for (Reserva extraer : listaReservas) {
-            if (extraer.getDia().equals(fecha)) {
+            if (extraer.getDia().toString().equals(fecha.toString())) {
                 vacio = false;
                 filtroFecha.add(extraer);
             }
@@ -110,7 +106,7 @@ public class Cliente extends Usuario {
      * @param String capacidad
      * @return ArrayList<Mesa>
      */
-    private ArrayList<Mesa> filtroHora(ArrayList<Mesa> mesasTotales, ArrayList<Reserva> listaAux, String hora, String capacidad) {
+    private ArrayList<Mesa> filtroHoraMesa(ArrayList<Mesa> mesasTotales, ArrayList<Reserva> listaAux, LocalTime hora, String capacidad) {
         ArrayList<Mesa> mesasCapacidad = new ArrayList<>();
         for (Mesa extraerM : mesasTotales) {
             if (extraerM.getCapacidad().equals(capacidad)){
@@ -119,7 +115,7 @@ public class Cliente extends Usuario {
         }
         
         for (Reserva extraer2 : listaAux) {
-            if (extraer2.getHora().equals(hora)){
+            if (extraer2.getHora().toString().equals(hora.toString())){
                 if (extraer2.getMesaReservada().getCapacidad().equals(capacidad)){
                     mesasCapacidad.remove(extraer2.getMesaReservada());
                 }
@@ -149,6 +145,7 @@ public class Cliente extends Usuario {
         try {for (Reserva ext : this.agendaReservas){
             if (ext.getIdReserva().equals(idReserva)) {
                 ext.setEstado("Cancelado");
+                ext.getMesaReservada().removerReserva(ext);
                 ext.setMesaReservada(null);
                 return true;
             }
@@ -166,10 +163,21 @@ public class Cliente extends Usuario {
      * @param String capacidad se usa para crear una nueva reserva
      * @return boolean
      */
-    public boolean modificarReserva(String idRes, String fecha, String hora, String capacidad) {
-        boolean confirmacion = this.cancelarReserva(idRes);
-        ArrayList<Mesa> disponible = this.buscarMesaDisponible(fecha, hora, capacidad);
-        return confirmacion;
+    public boolean modificarReserva(String option, String argument) {
+        switch (option){
+            case "A":
+                //modificacion de cantidad de comensales
+                break;
+            case "B":
+                //modificacion de fecha, cancela la reserva y crea una reserva nueva
+                break;
+               
+        
+        
+        
+        }
+        
+                
     }
 
     /** 
