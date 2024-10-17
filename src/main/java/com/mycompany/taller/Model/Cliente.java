@@ -132,7 +132,7 @@ public class Cliente extends Usuario {
      * @param Mesa mesa Mesa de la reserva
      * @return void
      */
-    public void crearReserva(LocalDate fecha, LocalTime hora, String coment, String cantidad,  Mesa mesa, TarjetaCredito tarjeta) {
+    public void crearReserva(LocalDate fecha, LocalTime hora, String coment, Integer cantidad,  Mesa mesa, TarjetaCredito tarjeta) {
         Reserva nuevaReserva = new Reserva(fecha, hora, coment, cantidad, mesa, this, tarjeta);
     }
     
@@ -163,21 +163,26 @@ public class Cliente extends Usuario {
      * @param String capacidad se usa para crear una nueva reserva
      * @return boolean
      */
-    public boolean modificarReserva(String option, String argument) {
+    public boolean modificarReserva(Reserva res, String option, ArrayList<Object> argument) {
         switch (option){
             case "A":
-                //modificacion de cantidad de comensales
-                break;
+                //Modificar cantidad de comensales
+                res.setCantidadComensales(argument.indexOf(0));
+                return true;
             case "B":
-                //modificacion de fecha, cancela la reserva y crea una reserva nueva
-                break;
-               
-        
-        
-        
+                LocalDate fechaNueva = argument.indexOf(0);
+                LocalTime horaNueva = argument.indexOf(1);
+                res.setDia(fechaNueva);
+                res.setHora(horaNueva);
+                return true;
+            case "C":
+                Mesa mesaNueva = argument.indexOf(0);
+                res.setMesaReservada(mesaNueva);
+                //Modificar la mesa tiene que buscar mesas disponibles en la misma fecha y hora
+                return true;
+            default:
+                return false;
         }
-        
-                
     }
 
     /** 
@@ -233,6 +238,7 @@ public class Cliente extends Usuario {
         }
         return listadoImprimir;
     }
+    
 
     @Override
     public void validarUsuario(String usuario, String contrasenia) {

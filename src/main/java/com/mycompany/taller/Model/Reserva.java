@@ -2,7 +2,6 @@ package com.mycompany.taller.Model;
 
 import java.util.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -12,20 +11,19 @@ import java.util.UUID;
  */
 public class Reserva {
     
-    
     private LocalDate dia;
     private LocalTime hora;
     private String estadoAsist;
-    private String cantidadComensales;
+    private Integer cantidadComensales;
     private String comentarios;
     private Mesa mesaReservada;
     private Usuario clienteReserva;
     private TarjetaCredito tarjeta;
     private String idReserva;
-    private static ArrayList<Reserva> listaReservas = new ArrayList<>(); 
+    private static ArrayList<Reserva> listaReservas = new ArrayList<>();
     private static final ArrayList<String> ubicacionesDisponibles = new ArrayList<>(Arrays.asList("Interior A", "Interior B", "Interior C", "Patio A", "Patio B"));
     public static final String[] estadosPosibles = new String[] {"Pendiente", "Sin asistir", "Completado", "Cancelado", "Evento"};
-    
+    public static ArrayList<LocalDate> diasEspeciales = new ArrayList<>();
     // Formato de la hora
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     // Parsear el String a LocalTime
@@ -37,8 +35,7 @@ public class Reserva {
         LocalTime.parse("22:00", formatter), 
         LocalTime.parse("00:00", formatter)));
     
-   
-    public static ArrayList<LocalTime> horariosEvento = new ArrayList<>(Arrays.asList(
+    public static ArrayList<LocalTime> horariosDiasEspeciales = new ArrayList<>(Arrays.asList(
         LocalTime.parse("09:00", formatter),
         LocalTime.parse("11:00", formatter), 
         LocalTime.parse("13:00", formatter), 
@@ -46,13 +43,12 @@ public class Reserva {
         LocalTime.parse("20:00", formatter), 
         LocalTime.parse("22:00", formatter), 
         LocalTime.parse("00:00", formatter),
-        LocalTime.parse("02:00", formatter),
-        LocalTime.parse("04:00", formatter)));
+        LocalTime.parse("02:00", formatter)));
     
     /*
     * Constructor para el cliente que hace la reserva
     */
-    public Reserva(LocalDate dia, LocalTime hora, String coment, String comensales ,Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
+    public Reserva(LocalDate dia, LocalTime hora, String coment, Integer comensales ,Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
         this.dia = dia;
         this.hora = hora;
         this.estadoAsist = estadosPosibles[0];
@@ -77,7 +73,7 @@ public class Reserva {
         this.dia = dia;
         this.hora = hora;
         this.mesaReservada = mesa;
-        this.cantidadComensales = "Indefinido";
+        this.cantidadComensales = null;
         this.comentarios = "Evento";
         this.idReserva = UUID.randomUUID().toString();
         admin.addReservaEvento(this);
@@ -111,11 +107,11 @@ public class Reserva {
         this.estadoAsist = estado;
     }
 
-    public String getCantidadComensales() {
+    public Integer getCantidadComensales() {
         return cantidadComensales;
     }
 
-    public void setCantidadComensales(String cantidadComensales) {
+    public void setCantidadComensales(Integer cantidadComensales) {
         this.cantidadComensales = cantidadComensales;
     }
     
@@ -167,7 +163,12 @@ public class Reserva {
         return listaReservas;
     }
     
-    public static ArrayList<LocalTime> getHorarios(){
+    public static ArrayList<LocalTime> getHorarios(LocalDate fecha){
+        for (LocalDate extDia : Reserva.diasEspeciales){
+            if(extDia.toString().equals(fecha.toString())){
+                return Reserva.horariosDiasEspeciales;
+            }
+        }
         return Reserva.horarios;
     }
     
@@ -175,13 +176,13 @@ public class Reserva {
      * Metodo que agrega hora a la lista de horario ordinario
      * @param horaExtra hora a agregar
      */
-    public void agregarHorario(LocalTime horaExtra){
+    public static void agregarHorario(LocalTime horaExtra){
         int index = 0;
-        for (LocalTime compara : getHorarios()){
+        for (LocalTime compara : Reserva.horarios){
             if(horaExtra.toString().equals(compara.toString())){
                 break;
             }
-            if(horaExtra.isBefore(compara)){
+            if(horaExtra.isBefore(compara) | horaExtra.isAfter(compara)){
                 Reserva.horarios.add(index, horaExtra);
                 break;
             }
@@ -195,7 +196,7 @@ public class Reserva {
      */
     public void quitarHorario(LocalTime horaExtra){
         int index = 0;
-        for (LocalTime compara : getHorarios()){
+        for (LocalTime compara : Reserva.getHorarios(dia)){
             if(horaExtra.toString().equals(compara.toString())){
                 Reserva.horarios.remove(index);
                 break;
@@ -205,7 +206,7 @@ public class Reserva {
     }
     
     public static ArrayList<LocalTime> getHorariosEventos(){
-        return Reserva.horariosEvento;
+        return Reserva.horariosDiasEspeciales;
     }
     
     /**
@@ -214,7 +215,6 @@ public class Reserva {
      */
     public static void ordenarFechaReservas(){
         ArrayList<Reserva> listaOrdenar = Reserva.getListaReservas();
-        ArrayList<Reserva> listaAux;
         LocalDate primerRes;
         LocalDate comparaRes;
         Reserva aux1;
@@ -283,6 +283,21 @@ public class Reserva {
                 }
         }
         return listadoImprimir;
+    }
+    
+    /**
+     * Este metodo se debe colocar al inicio del programa cuando inicia sesion el administrador
+     */
+    public static void recordatorio(){
+        ArrayList<Reserva> listaRes = Reserva.getListaReservas();
+        LocalDate fechaActual = LocalDate.now();
+        
+        for (Reserva ext : listaRes){
+            LocalDate fechaRecordatorio = ext.getDia().minusDays(2);
+            if(fechaActual.isEqual(fechaRecordatorio)){
+                //METODO QUE ENVIA EL CORREO
+            }
+        }
     }
     
     @Override

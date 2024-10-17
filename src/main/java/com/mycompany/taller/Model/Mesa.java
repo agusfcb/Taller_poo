@@ -14,7 +14,7 @@ import java.lang.Integer;
      */
 public class Mesa {
     private String numero;
-    private String capacidad;
+    private Integer capacidad;
     private String ubicacion;
     private ArrayList<Reserva> reservasMesa;
     private static ArrayList<Mesa> mesasExistentes = new ArrayList<>();
@@ -23,7 +23,7 @@ public class Mesa {
     public Mesa() {
     }
     
-    public Mesa(String numero, String capacidad, String ubicacion) {
+    public Mesa(String numero, Integer capacidad, String ubicacion) {
         this.numero = numero;
         this.capacidad = capacidad;
         this.ubicacion = ubicacion;
@@ -35,7 +35,7 @@ public class Mesa {
         return numero;
     }
 
-    public String getCapacidad() {
+    public Integer getCapacidad() {
         return capacidad;
     }
 
@@ -47,7 +47,7 @@ public class Mesa {
         this.numero = numero;
     }
 
-    public void setCapacidad(String capacidad) {
+    public void setCapacidad(Integer capacidad) {
         this.capacidad = capacidad;
     }
 
@@ -71,7 +71,7 @@ public class Mesa {
         }
         return true;
     }
-    public void agregarMesa(String num, String cap, String ubi){
+    public void agregarMesa(String num, Integer cap, String ubi){
         if(controlMesa(num)){
             Mesa nuevaMesa = new Mesa(num, cap, ubi);
         }
@@ -84,6 +84,10 @@ public class Mesa {
                 Mesa.mesasExistentes.remove(ext);
             }
         }
-    
     }
+    
+    public void removerReserva(Reserva res){
+        this.reservasMesa.remove(res);
+    }
+    
 }

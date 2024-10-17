@@ -9,5 +9,14 @@ package com.mycompany.taller.Model;
  * @author Agus
  */
 public class Controladora {
+    private Usuario user;
+    
+    public Controladora(Usuario usu){
+        this.user = usu;
+    }
+    
+    public Usuario getUser(){
+        return this.user;
+    }
     
 }
