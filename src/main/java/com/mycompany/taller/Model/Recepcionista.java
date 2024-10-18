@@ -138,7 +138,7 @@ public class Recepcionista extends Empleado {
         return null;
     }
     /**
-     * Metodo para tomar un nombre de cliente en una lista de reservas
+     * Metodo para tomar un nombre del cliente en una lista de reservas
      * @param nombre
      * @param listRes
      * @return Reserva

@@ -6,7 +6,7 @@ package com.mycompany.taller.Model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Administrador extends Empleado{
+public class Administrador extends Empleado {
 
     private ArrayList<Reserva> listaReservaActualizada = new ArrayList<>();
     private ArrayList<Reserva> listaEventos = new ArrayList<>();
@@ -108,7 +108,7 @@ public class Administrador extends Empleado{
     
     /**
      * Metodo que agrega la reserva asociada a un evento
-     * @param Res 
+     * @param res 
      */
     public void addReservaEvento(Reserva res){
         this.listaEventos.add(res);
