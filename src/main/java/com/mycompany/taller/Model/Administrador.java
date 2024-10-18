@@ -1,6 +1,7 @@
 package com.mycompany.taller.Model;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Administrador extends Empleado{
@@ -20,8 +21,15 @@ public class Administrador extends Empleado{
      * @param nuevoRol
      * @return 
      */
-    public boolean cambiarRol(String idUsuario, String nuevoRol) {
-        return true;
+    private boolean cambiarRol(String idUsuario, String nuevoRol) {
+        ArrayList<Empleado> empleados = Empleado.getListaEmpleados();
+        for (Usuario extUsu : empleados){
+            if(extUsu.getIdUsuario().equals(idUsuario)){
+                extUsu.setRol(nuevoRol);
+                return true;
+            }
+        }
+        return false;
     }
     /**
      * 
@@ -30,16 +38,16 @@ public class Administrador extends Empleado{
      * @return 
      */
     public boolean editarRol(String idUsuario, String nuevoRol) {
-        return true;
+        return this.cambiarRol(idUsuario, nuevoRol);
     }
 
+    
     /**
      * 
-     * @param fechaInicio
-     * @param fechaHoraApertura 
+     * @param nuevoHorario 
      */
-    public void actualizarApertura(LocalDateTime fechaInicio, LocalDateTime fechaHoraApertura) {
-       
+    public void actualizarApertura(ArrayList<LocalTime> nuevoHorario) {
+        Reserva.setHorarios(nuevoHorario);
     }
 
     /**
@@ -56,7 +64,7 @@ public class Administrador extends Empleado{
      * @param fechaHoraCierre 
      */
     public void editarCierre(LocalDateTime fechaInicio, LocalDateTime fechaHoraCierre) {
-      
+    
     }
     /**
      * 
@@ -93,7 +101,6 @@ public class Administrador extends Empleado{
         this.listaReservaActualizada = listaReservaActualizada;
     }
     
-    
     /**
      * 
      * @return 
@@ -102,7 +109,6 @@ public class Administrador extends Empleado{
         return listaEventos;
     }
     
-    
     /**
      * Metodo que agrega la reserva asociada a un evento
      * @param Res 
@@ -110,4 +116,23 @@ public class Administrador extends Empleado{
     public void addReservaEvento(Reserva res){
         this.listaEventos.add(res);
     }
+    
+    public boolean crearEmpleado(String name, String tel, String email, String pass, String rol){
+        switch(rol){
+            case "Maitre":
+                Maitre nuevoMaitre = new Maitre(name, tel, email, pass);
+                return true;
+            case "Mesero":
+                Mesero nuevoMesero = new Mesero(name, tel, email, pass);
+                return true;
+            case "Recepcionista":
+                Recepcionista nuevoRecep = new Recepcionista(name, tel, email, pass);
+                return true;
+            case "Administrador":
+                Administrador nuevoAdmin = new Administrador(name, tel, email, pass);
+            default:
+                return false;
+        }
+    }
+    
 }
