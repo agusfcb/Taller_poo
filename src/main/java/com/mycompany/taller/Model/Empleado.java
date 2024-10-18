@@ -4,12 +4,7 @@ import java.util.*;
 /**
  * 
  */
-//Formato metodos:
-    /**
-     * @param String idReserva 
-     * @param String rol
-     * @return
-     */
+
 public class Empleado extends Usuario {
     private ArrayList<Reserva> reservas;
     private static ArrayList<Empleado> listaEmpleados = new ArrayList<>();
@@ -23,7 +18,7 @@ public class Empleado extends Usuario {
     }
     /**
      * 
-     * 
+     * Constructor parametrizado
      * @param rol
      * @param name
      * @param tel
@@ -64,7 +59,7 @@ public class Empleado extends Usuario {
     }
     */
     public String getRolEmpleado() {
-        return this.getIdUsuario();
+        return this.getRol();
     }
     public String getIdEmpleado() {
         return this.getIdUsuario();
