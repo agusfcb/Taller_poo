@@ -22,7 +22,7 @@ public class Reserva {
     private String idReserva;
     private static ArrayList<Reserva> listaReservas = new ArrayList<>();
     private static final ArrayList<String> ubicacionesDisponibles = new ArrayList<>(Arrays.asList("Interior A", "Interior B", "Interior C", "Patio A", "Patio B"));
-    public static final String[] estadosPosibles = new String[] {"Pendiente", "Sin asistir", "Completado", "Cancelado", "Evento"};
+    public static final ArrayList<String> estadosPosibles = new ArrayList<>(Arrays.asList("Pendiente", "Sin asistir", "Completado", "Cancelado", "Evento"));
     public static ArrayList<LocalDate> diasEspeciales = new ArrayList<>();
     // Formato de la hora
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -51,7 +51,7 @@ public class Reserva {
     public Reserva(LocalDate dia, LocalTime hora, String coment, Integer comensales ,Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
         this.dia = dia;
         this.hora = hora;
-        this.estadoAsist = estadosPosibles[0];
+        this.estadoAsist = estadosPosibles.get(0);
         this.comentarios = coment;
         this.cantidadComensales = comensales;
         this.mesaReservada = mesa;
@@ -69,7 +69,7 @@ public class Reserva {
     */
     public Reserva(LocalDate dia, LocalTime hora, Mesa mesa, Administrador admin) {
         this.clienteReserva = admin;
-        this.estadoAsist = this.estadosPosibles[4];
+        this.estadoAsist = this.estadosPosibles.get(4);
         this.dia = dia;
         this.hora = hora;
         this.mesaReservada = mesa;
@@ -155,7 +155,7 @@ public class Reserva {
         this.idReserva = idReserva;
     }
     
-    public static String[] getListaEstados(){
+    public static ArrayList<String> getListaEstados(){
         return estadosPosibles;
     }
     
@@ -171,6 +171,15 @@ public class Reserva {
         }
         return Reserva.horarios;
     }
+
+    public static void setHorarios(ArrayList<LocalTime> horarios) {
+        Reserva.horarios = horarios;
+    }
+
+    public static void setHorariosDiasEspeciales(ArrayList<LocalTime> horariosDiasEspeciales) {
+        Reserva.horariosDiasEspeciales = horariosDiasEspeciales;
+    }
+    
     
     /**
      * Metodo que agrega hora a la lista de horario ordinario
