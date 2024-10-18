@@ -9,9 +9,11 @@ public class Administrador extends Empleado{
     private ArrayList<Reserva> listaReservaActualizada = new ArrayList<>();
     private ArrayList<Reserva> listaEventos = new ArrayList<>();
     private ArrayList<Reserva> listaReservas = new ArrayList<>();
+    private static ArrayList<Empleado> listaEmpleados = Empleado.getListaEmpleados();
 
     public Administrador(String name, String tel, String email, String pass) {
         super(name, tel, email, pass, "Administrador");
+        this.listaReserva = Administrador.aperturaDelDia();
         
     }
 
@@ -133,5 +135,16 @@ public class Administrador extends Empleado{
                 return false;
         }
     }
+
+    /**
+     * Metodo de la persistencia que trae la lista de todas las reservas del dia
+     * de la base de datos
+     */
+    
+    public static ArrayList<Reserva> aperturaDelDia(){
+        //Aca debe resolverse traer todas las reservas y crear los objetos Reserva
+        
+    }
+
     
 }
