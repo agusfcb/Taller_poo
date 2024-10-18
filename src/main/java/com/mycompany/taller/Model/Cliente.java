@@ -69,6 +69,9 @@ public class Cliente extends Usuario {
         ArrayList<Mesa> coincidenciaBusqueda = new ArrayList<>();
         
         reservaDia = this.filtroDia(listaReservas, fecha1);
+        if(reservaDia.isEmpty()){
+            return mesasTotales;
+        }
         coincidenciaBusqueda = this.filtroHoraMesa(mesasTotales, reservaDia, hora1, capacidad);
         
         return coincidenciaBusqueda;
@@ -108,6 +111,8 @@ public class Cliente extends Usuario {
      */
     private ArrayList<Mesa> filtroHoraMesa(ArrayList<Mesa> mesasTotales, ArrayList<Reserva> listaAux, LocalTime hora, String capacidad) {
         ArrayList<Mesa> mesasCapacidad = new ArrayList<>();
+        
+        
         for (Mesa extraerM : mesasTotales) {
             if (extraerM.getCapacidad().equals(capacidad)){
                 mesasCapacidad.add(extraerM);
