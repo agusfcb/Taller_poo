@@ -85,7 +85,7 @@ public class Recepcionista extends Empleado {
     public void cambiarEstadoReserva(String id, String nuevoEstado) {
         Reserva reserva = buscarId(id);
         if (reserva != null) {
-            String[] estadosPosibles = Reserva.getListaEstados();
+            ArrayList<String> estadosPosibles = Reserva.getListaEstados();
             boolean estadoValido = false;
             for(String estado : estadosPosibles) {
                 if(estado.equals(nuevoEstado)) {

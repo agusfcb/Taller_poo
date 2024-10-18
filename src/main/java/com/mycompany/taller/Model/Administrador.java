@@ -43,7 +43,7 @@ public class Administrador extends Empleado{
 
     
     /**
-     * 
+     * Método para actualizar la apertura del restaurante
      * @param nuevoHorario 
      */
     public void actualizarApertura(ArrayList<LocalTime> nuevoHorario) {
@@ -51,12 +51,11 @@ public class Administrador extends Empleado{
     }
 
     /**
-     * 
-     * @param fechaInicio
-     * @param fechaHoraCierre 
+     * Método para actualizar el cierre del restaurante
+     * @param nuevoHorarioCierre
      */
-    public void actualizarCierre(LocalDateTime fechaInicio, LocalDateTime fechaHoraCierre) {
-        
+    public void actualizarCierre(ArrayList<LocalTime> nuevoHorarioCierre) {
+        Reserva.setHorarios(nuevoHorarioCierre);
     }
     /**
      * 
@@ -64,13 +63,13 @@ public class Administrador extends Empleado{
      * @param fechaHoraCierre 
      */
     public void editarCierre(LocalDateTime fechaInicio, LocalDateTime fechaHoraCierre) {
-    
+        
     }
     /**
      * 
      */
     public void configurarFranjaHoraria() {
-    
+        
     }
     /**
      * 
