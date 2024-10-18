@@ -229,18 +229,17 @@ public class Reserva {
         Reserva aux1;
         Reserva aux2;
         int pivote = (listaOrdenar.size()/2);
+        int largo = listaOrdenar.size();
         boolean ordenado = false;
 
         while (pivote > 0) {
             ordenado = true;
-            for (int i = 0; i+pivote < listaOrdenar.size(); i++) {
+            for (int i = 0; i+pivote < largo; i++) {
                 aux1 = listaOrdenar.get(i);
                 aux2 = listaOrdenar.get(i+pivote);
             
-                primerRes = listaOrdenar.get(i).getDia();
-                comparaRes = listaOrdenar.get(i+pivote).getDia();
-            
-                //Parseo a LocalDate (se puede optimizar, esto es a fin de comprension de pasos
+                primerRes = aux1.getDia();
+                comparaRes = aux2.getDia();
             
                 if (primerRes.isAfter(comparaRes)){
                     listaOrdenar.set(i, aux2);
@@ -253,6 +252,40 @@ public class Reserva {
                 break;
             }
         }
+    }
+    
+    private static ArrayList<Reserva> ordenarPorHora(ArrayList<Reserva> reservasDia){
+        ArrayList<Reserva> listaOrdenada = reservasDia;
+        Reserva aux1;
+        Reserva aux2;
+        LocalTime primerRes;
+        LocalTime comparaRes;
+        
+        int pivote = (reservasDia.size()/2);
+        int longitud = reservasDia.size();
+        boolean ordenado = true;
+        
+        while (pivote > 0) {
+            ordenado = true;
+            for (int i = 0; i+pivote < longitud; i++) {
+                aux1 = listaOrdenada.get(i);
+                aux2 = listaOrdenada.get(i+pivote);
+            
+                primerRes = aux1.getHora();
+                comparaRes = aux2.getHora();
+            
+                if (primerRes.isAfter(comparaRes)){
+                    reservasDia.set(i, aux2);
+                    reservasDia.set(i+pivote, aux1);
+                    ordenado = false;
+                }
+            }
+            pivote = pivote / 2;
+            if(ordenado && (pivote == 0)){
+                break;
+            }
+        }
+        return listaOrdenada;
     }
     
     /**
@@ -307,6 +340,24 @@ public class Reserva {
                 //METODO QUE ENVIA EL CORREO
             }
         }
+    }
+    
+    private static ArrayList<Reserva> buscarDia(){
+        ArrayList<Reserva> reservasDelDia = new ArrayList<Reserva>();
+        LocalDate diaActual = LocalDate.now();
+        
+        for(Reserva extRes : Reserva.getListaReservas()){
+            if(extRes.dia.toString().equals(diaActual.toString())){
+                reservasDelDia.add(extRes);
+            }
+        }
+        return reservasDelDia;
+    }
+    
+    public static ArrayList<Reserva> reservasDelDia(){
+        ArrayList<Reserva> listaDelDia = Reserva.buscarDia();
+        listaReservas = Reserva.ordenarPorHora(listaDelDia);
+        return listaReservas;
     }
     
     @Override
