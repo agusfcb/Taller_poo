@@ -12,6 +12,7 @@ import java.util.*;
      */
 public class Empleado extends Usuario {
     private ArrayList<Reserva> reservas;
+    private static ArrayList<Empleado> listaEmpleados = new ArrayList<>();
 
     /**
      * Default constructor
@@ -33,12 +34,14 @@ public class Empleado extends Usuario {
     public Empleado(String name, String tel, String email, String pass, String rol) {
         super(name, tel, email, pass, rol);
         this.reservas = Reserva.getListaReservas();
+        Empleado.listaEmpleados.add(this);
 
     }
     
     public ArrayList<Reserva> getReservas() {
         return reservas;
     }
+    
     public void setReservas(ArrayList<Reserva> reservas) {
         this.reservas = reservas;
     }
@@ -65,6 +68,14 @@ public class Empleado extends Usuario {
     }
     public String getIdEmpleado() {
         return this.getIdUsuario();
+    }
+
+    public static ArrayList<Empleado> getListaEmpleados() {
+        return listaEmpleados;
+    }
+
+    public static void setListaEmpleados(ArrayList<Empleado> listaEmpleados) {
+        Empleado.listaEmpleados = listaEmpleados;
     }
     
     public void agregarReservas(Reserva r) {
