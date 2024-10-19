@@ -13,7 +13,7 @@ public class Administrador extends Empleado{
 
     public Administrador(String name, String tel, String email, String pass) {
         super(name, tel, email, pass, "Administrador");
-        this.listaReserva = Administrador.aperturaDelDia();
+        this.listaReservas = Administrador.aperturaDelDia();
         
     }
 
