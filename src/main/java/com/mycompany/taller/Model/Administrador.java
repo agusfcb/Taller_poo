@@ -144,7 +144,6 @@ public class Administrador extends Empleado{
     
     public static ArrayList<Reserva> aperturaDelDia(){
         //Aca debe resolverse traer todas las reservas y crear los objetos Reserva
-        
     }
 
     
