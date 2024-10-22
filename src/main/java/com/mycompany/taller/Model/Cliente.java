@@ -1,4 +1,5 @@
 package com.mycompany.taller.Model;
+import com.mycompany.taller.Model.Reserva;
 import java.util.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 public class Cliente extends Usuario {
     
     private ArrayList<Reserva> agendaReservas;
+    private String premisos = "Realizar reservas individuales, ver historial de reservas propias, cancelar reservas, editar datos";
     
     private static final ArrayList<String> opcionesCambios = new ArrayList<>(Arrays.asList("Nombre","Telefono","Correo","Contrasenia","Genero"));
     
@@ -26,6 +28,14 @@ public class Cliente extends Usuario {
         super(name, tel, email, pass, "Cliente");
         this.agendaReservas = new ArrayList<Reserva>();
     }
+
+    public String getPremiso() {
+        return premisos;
+    }
+
+    public void setPremiso(String premiso) {
+        this.premisos = premiso;
+    }
     
     /**
      * Metodo para agregar una reserva al historial del cliente
@@ -35,99 +45,6 @@ public class Cliente extends Usuario {
         this.agendaReservas.add(res);
     }
     
-    
-    /**
-     * Metodo publico para ver las mesas disponiles
-     * @param fecha1 Fecha de interes
-     * @param hora1 Hora de interes
-     * @param capacidad Capacidad de la mesa de interes
-     * @return 
-     */
-    public ArrayList<Mesa> verMesaDisponible(LocalDate fecha1, LocalTime hora1, String capacidad){
-        ArrayList<Mesa> coincidenciaBusqueda = this.buscarMesaDisponible(fecha1, hora1, capacidad);
-        return coincidenciaBusqueda;
-    }
-    
-    
-    /** Metodo privado para encontrar mesas disponibles
-     * @param String fecha1
-     * @param String hora1
-     * @param String capacidad
-     * @return ArrayList<Mesa>
-     */
-    private ArrayList<Mesa> buscarMesaDisponible(LocalDate fecha1, LocalTime hora1, String capacidad) {
-        // Control de que no se busque en una fecha anterior al mismo dia que se realiza la reserva
-        LocalDate fechaActual = LocalDate.now();
-        if (fechaActual.isBefore(fecha1)){
-            return null;
-        }
-        
-        // Comienzo del algoritmo de busqueda
-        ArrayList<Reserva> listaReservas = Reserva.getListaReservas();
-        ArrayList<Reserva> reservaDia = new ArrayList<>();
-        ArrayList<Mesa> mesasTotales = Mesa.getMesasTot();
-        ArrayList<Mesa> coincidenciaBusqueda = new ArrayList<>();
-        
-        reservaDia = this.filtroDia(listaReservas, fecha1);
-        if(reservaDia.isEmpty()){
-            return mesasTotales;
-        }
-        coincidenciaBusqueda = this.filtroHoraMesa(mesasTotales, reservaDia, hora1, capacidad);
-        
-        return coincidenciaBusqueda;
-    }
-
-    /**
-     * Metodo para ver filtrar por dia las reservas
-     * @param ArrayList<Reserva> listaReservas
-     * @param String fecha
-     * @return ArrayList<Reserva>
-     */
-    private ArrayList<Reserva> filtroDia(ArrayList<Reserva> listaReservas, LocalDate fecha) {
-        
-        ArrayList<Reserva> filtroFecha = new ArrayList<>();
-        boolean vacio = true;
-        
-        for (Reserva extraer : listaReservas) {
-            if (extraer.getDia().toString().equals(fecha.toString())) {
-                vacio = false;
-                filtroFecha.add(extraer);
-            }
-        }
-        if (vacio){
-            return null;
-        } else {
-        return filtroFecha;
-        }
-    }
-    
-    /**
-     * Metodo para filtrar mesas disponibles por hora y capadidad de la mesa
-     * @param ArrayList<Mesa> mesasTotales
-     * @param ArrayList<Reserva> listaAux
-     * @param String hora
-     * @param String capacidad
-     * @return ArrayList<Mesa>
-     */
-    private ArrayList<Mesa> filtroHoraMesa(ArrayList<Mesa> mesasTotales, ArrayList<Reserva> listaAux, LocalTime hora, String capacidad) {
-        ArrayList<Mesa> mesasCapacidad = new ArrayList<>();
-        
-        
-        for (Mesa extraerM : mesasTotales) {
-            if (extraerM.getCapacidad().equals(capacidad)){
-                mesasCapacidad.add(extraerM);
-            }
-        }
-        
-        for (Reserva extraer2 : listaAux) {
-            if (extraer2.getHora().toString().equals(hora.toString())){
-                if (extraer2.getMesaReservada().getCapacidad().equals(capacidad)){
-                    mesasCapacidad.remove(extraer2.getMesaReservada());
-                }
-            }
-        }
-        return mesasCapacidad;
-    }
     
     /** Metodo para crear la reserva
      * @param String fecha Fecha de la reserva
@@ -242,17 +159,6 @@ public class Cliente extends Usuario {
             listadoImprimir.add(datosReserva);
         }
         return listadoImprimir;
-    }
-    
-
-    @Override
-    public void validarUsuario(String usuario, String contrasenia) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void iniciarSesion(String correo, String contrasenia) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

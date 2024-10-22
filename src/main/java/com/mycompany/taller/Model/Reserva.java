@@ -1,6 +1,9 @@
 package com.mycompany.taller.Model;
 
 import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -23,7 +26,7 @@ public class Reserva {
     private static ArrayList<Reserva> listaReservas = new ArrayList<>();
     private static final ArrayList<String> ubicacionesDisponibles = new ArrayList<>(Arrays.asList("Interior A", "Interior B", "Interior C", "Patio A", "Patio B"));
     public static final ArrayList<String> estadosPosibles = new ArrayList<>(Arrays.asList("Pendiente", "Sin asistir", "Completado", "Cancelado", "Evento"));
-    public static ArrayList<LocalDate> diasEspeciales = new ArrayList<>();
+    private static ArrayList<LocalDate> diasEspeciales = new ArrayList<>();
     // Formato de la hora
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     // Parsear el String a LocalTime
@@ -161,6 +164,14 @@ public class Reserva {
     
     public static ArrayList<Reserva> getListaReservas(){
         return listaReservas;
+    }
+
+    public static ArrayList<LocalDate> getDiasEspeciales() {
+        return diasEspeciales;
+    }
+    
+    public static void addDiaEspecial(LocalDate esp){
+        Reserva.diasEspeciales.add(esp);
     }
     
     public static ArrayList<LocalTime> getHorarios(LocalDate fecha){
@@ -327,21 +338,109 @@ public class Reserva {
         return listadoImprimir;
     }
     
+    // METODOS PARA LA BUSQUEDA DE MESAS LIBRES
+    
+    
     /**
-     * Este metodo se debe colocar al inicio del programa cuando inicia sesion el administrador
+     * Metodo publico para ver las mesas disponiles
+     * @param fecha1 Fecha de interes
+     * @param hora1 Hora de interes
+     * @param capacidad Capacidad de la mesa de interes
+     * @return 
      */
-    public static void recordatorio(){
-        ArrayList<Reserva> listaRes = Reserva.getListaReservas();
+    public static ArrayList<Mesa> verMesaDisponible(LocalDate fecha1, LocalTime hora1, String capacidad){
+        return Reserva.buscarMesaDisponible(fecha1, hora1, capacidad);
+    }
+    
+    
+    /** Metodo privado para encontrar mesas disponibles
+     * @param String fecha1
+     * @param String hora1
+     * @param String capacidad
+     * @return ArrayList<Mesa>
+     */
+    private static ArrayList<Mesa> buscarMesaDisponible(LocalDate fecha1, LocalTime hora1, String capacidad) {
+        // Control de que no se busque en una fecha anterior al mismo dia que se realiza la reserva
         LocalDate fechaActual = LocalDate.now();
+        if (fechaActual.isBefore(fecha1)){
+            return null;
+        }
         
-        for (Reserva ext : listaRes){
-            LocalDate fechaRecordatorio = ext.getDia().minusDays(2);
-            if(fechaActual.isEqual(fechaRecordatorio)){
-                //METODO QUE ENVIA EL CORREO
+        // Comienzo del algoritmo de busqueda
+        
+        ArrayList<Reserva> listaReservas = Reserva.getListaReservas();
+        ArrayList<Reserva> reservaDia = new ArrayList<>();
+        ArrayList<Mesa> mesasTotales = Mesa.getMesasTot();
+        ArrayList<Mesa> coincidenciaBusqueda = new ArrayList<>();
+        
+        reservaDia = filtroDia(listaReservas, fecha1);
+        if(reservaDia.isEmpty()){
+            return mesasTotales;
+        }
+        coincidenciaBusqueda = filtroHoraMesa(mesasTotales, reservaDia, hora1, capacidad);
+        
+        return coincidenciaBusqueda;
+    }
+
+    /**
+     * Metodo para ver filtrar por dia las reservas
+     * @param ArrayList<Reserva> listaReservas
+     * @param String fecha
+     * @return ArrayList<Reserva>
+     */
+    private static ArrayList<Reserva> filtroDia(ArrayList<Reserva> listaReservas, LocalDate fecha) {
+        
+        ArrayList<Reserva> filtroFecha = new ArrayList<>();
+        boolean vacio = true;
+        
+        for (Reserva extraer : listaReservas) {
+            if (extraer.getDia().toString().equals(fecha.toString())) {
+                vacio = false;
+                filtroFecha.add(extraer);
             }
+        }
+        if (vacio){
+            return null;
+        } else {
+        return filtroFecha;
         }
     }
     
+    /**
+     * Metodo para filtrar mesas disponibles por hora y capadidad de la mesa
+     * @param ArrayList<Mesa> mesasTotales
+     * @param ArrayList<Reserva> listaAux
+     * @param String hora
+     * @param String capacidad
+     * @return ArrayList<Mesa>
+     */
+    private static ArrayList<Mesa> filtroHoraMesa(ArrayList<Mesa> mesasTotales, ArrayList<Reserva> listaAux, LocalTime hora, String capacidad) {
+        ArrayList<Mesa> mesasCapacidad = new ArrayList<>();
+        
+        
+        for (Mesa extraerM : mesasTotales) {
+            if (extraerM.getCapacidad().equals(capacidad)){
+                mesasCapacidad.add(extraerM);
+            }
+        }
+        
+        for (Reserva extraer2 : listaAux) {
+            if (extraer2.getHora().toString().equals(hora.toString())){
+                if (extraer2.getMesaReservada().getCapacidad().equals(capacidad)){
+                    mesasCapacidad.remove(extraer2.getMesaReservada());
+                }
+            }
+        }
+        return mesasCapacidad;
+    }
+    
+    
+    
+    
+    /**
+     * 
+     * @return 
+     */
     private static ArrayList<Reserva> buscarDia(){
         ArrayList<Reserva> reservasDelDia = new ArrayList<Reserva>();
         LocalDate diaActual = LocalDate.now();
@@ -365,4 +464,68 @@ public class Reserva {
         return "RESERVA: " + idReserva + "\nCliente: " + clienteReserva.getNombre() + "\nDia: " + dia + "\nHora: " + hora + "\nMesa reservada: " + mesaReservada + "\nCantidadComensales: " + cantidadComensales + "\nEstado de asistencia: " + estadoAsist + "\nComentarios: " + comentarios;
     }
     
+    /**
+     * Metodo para enviar correos de recordatorio
+     * @param listaReservasRecordatorio una lista filtrada por aquellas reservas que le faltan 2 dias para su turno
+     */
+    private static void enviarCorreo(ArrayList<Reserva> listaReservasRecordatorio){
+        // Configuración del servidor de correo (SMTP)
+        String host = "smtp.gmail.com"; // Servidor SMTP de Gmail
+        String port = "587"; // Puerto de salida SMTP
+        String username = "tallerpoo2023@gmail.com"; // Tu cuenta de correo de salida
+        String password = "concordiaFCAD24"; // Contraseña de la cuenta
+        
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.port", port);
+        
+        // Autenticación
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("tallerpoo2023@gmail.com")); // De
+        
+            for (Reserva recordatorio : listaReservasRecordatorio){
+                try {// Crear el mensaje
+                    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recordatorio.getClienteReserva().getCorreo())); // Para
+                    message.setSubject("Recordatorio de reserva");
+                    message.setText("Querido cliente, mediante el siguiente correo se le recuerda"
+                            + " su reserva para Delicias Gourmet el dia" + recordatorio.getDia().toString() + ". Esperamos contar con su presencia."
+                            + "\n En caso de no poder asistir se le recuerda que debe cancelar su reserva con hasta 24 horas de anticipacion."
+                            + "\nSaludos cordiales, Delicias Gourmet.");
+
+                    // Enviar el mensaje
+                    Transport.send(message);
+                } catch (Exception e){
+                    continue;
+                }
+            }
+            
+        } catch (Exception e) {
+            System.out.println("\n  *****  \n  Error en inicio de sesion de correo  \n  *****  \n");
+        }
+    }
+    
+    /**
+     * Metodo que se debe colocar al inicio del programa cuando inicia sesion el administrador para enviar recordatorios
+     */
+    public static void recordatorio(){
+        ArrayList<Reserva> listaRes = Reserva.getListaReservas();
+        ArrayList<Reserva> listaRecordatorio = new ArrayList<>();
+        LocalDate fechaActual = LocalDate.now();
+        
+        for (Reserva ext : listaRes){
+            LocalDate fechaRecordatorio = ext.getDia().minusDays(2);
+            if(fechaActual.isEqual(fechaRecordatorio)){
+                listaRecordatorio.add(ext);
+            }
+        }
+        Reserva.enviarCorreo(listaRecordatorio);
+    }
 }

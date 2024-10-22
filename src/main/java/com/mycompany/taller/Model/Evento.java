@@ -15,16 +15,17 @@ public class Evento {
     private LocalTime horarioDesde;
     private LocalTime horarioHasta;
     private Administrador adminEvento;
-    private ArrayList<Reserva> reservaEvento;
+    private ArrayList<Reserva> reservaEvento = new ArrayList<>();
+    
     
     public Evento(){}
     
-    public Evento(LocalDate fechaEvento, LocalTime horaInicio, LocalTime horaFin, ArrayList<Reserva> reserEvent, Administrador admin) {
+    public Evento(LocalDate fechaEvento, LocalTime horaInicio, LocalTime horaFin, Administrador admin, ArrayList<Reserva> reservasE) {
         this.fechaEvento = fechaEvento;
         this.horarioDesde = horaInicio;
         this.horarioHasta = horaFin;
         this.adminEvento = admin;
-        this.reservaEvento= new ArrayList<>();
+        this.reservaEvento = reservasE;
     }
 
     public LocalDate getFechaEvento() {
@@ -55,12 +56,12 @@ public class Evento {
         this.reservaEvento.add(res);
     }
 
-    public Administrador getAdminEvento() {
+    public String getAdminEvento() {
         return adminEvento;
     }
 
     public void setAdminEvento(Administrador adminEvento) {
-        this.adminEvento = adminEvento;
+        this.adminEvento = adminEvento.getNombre();
     }
 
     public ArrayList<Reserva> getReservaEvento() {
@@ -69,10 +70,6 @@ public class Evento {
 
     public void setReservaEvento(ArrayList<Reserva> reservaEvento) {
         this.reservaEvento = reservaEvento;
-    }
-    
-    public static boolean controlUbicacion(LocalDate fechaE, LocalTime horaInicio, LocalTime horaFin, String ubicacion){
-        return Evento.comprobarUbicacionDisponible(fechaE, horaInicio, horaFin, ubicacion);
     }
     
     
@@ -107,46 +104,6 @@ public class Evento {
             }
         }
         return mesasDisponibles;
-    }
-
-    /**
-     * Metodo que comprueba si hay reservas en una ubicacion con parametros del dia y rango horario
-     * @param fechaE
-     * @param horaInicio
-     * @param horaFin
-     * @param ubicacion
-     * @return 
-     */
-    private static boolean comprobarUbicacionDisponible(LocalDate fechaE, LocalTime horaInicio, LocalTime horaFin, String ubicacion) {
-        
-        ArrayList<Reserva> listaReservas = Reserva.getListaReservas();
-        ArrayList<Reserva> reservaDia = new ArrayList<>();
-        ArrayList<Reserva> reservasFechaHora = new ArrayList<>();
-        
-        LocalDate fechaActual = LocalDate.now();
-        if (fechaActual.isBefore(fechaE)) {
-            return false;
-        }
-        
-        reservaDia = filtroDia(listaReservas, fechaE);
-        //Si no hay reservas dicho dia, estan todas las mesas y horarios disponibles
-        if (reservaDia.equals(null)){
-            return true;
-        }
-        
-        reservasFechaHora = filtroHora(reservaDia, horaInicio, horaFin);
-        //Si no hay reservas en el horario del evento, se pueden reservar todas las mesas
-        if(reservasFechaHora.equals(null)){
-            return true;
-        }
-        //Control que no exista reservas en la mesa de una ubicacion
-        for (Reserva extRes : reservasFechaHora){
-            if(extRes.getMesaReservada().getUbicacion().equals(ubicacion)){
-                return false;
-            }
-        }
-        
-        return true;
     }
 
     /**
@@ -203,6 +160,58 @@ public class Evento {
         return reservasHora;
     }
 
+    
+    //METODOS PARA RESERVAS DE EVENTO POR UBICACION
+    /**
+     * Metodo para comprobar si todas las mesas de una ubicacion estan disponibles en un dia y horario eespecifico
+     * @param fechaE
+     * @param horaInicio
+     * @param horaFin
+     * @param ubicacion
+     * @return 
+     */
+    public static boolean controlUbicacion(LocalDate fechaE, LocalTime horaInicio, LocalTime horaFin, String ubicacion){
+        return Evento.comprobarUbicacionDisponible(fechaE, horaInicio, horaFin, ubicacion);
+    }
+    
+    /**
+     * Metodo que comprueba si hay reservas en una ubicacion con parametros del dia y rango horario
+     * @param fechaE
+     * @param horaInicio
+     * @param horaFin
+     * @param ubicacion
+     * @return 
+     */
+    private static boolean comprobarUbicacionDisponible(LocalDate fechaE, LocalTime horaInicio, LocalTime horaFin, String ubicacion) {
+        
+        ArrayList<Reserva> listaReservas = Reserva.getListaReservas();
+        ArrayList<Reserva> reservaDia = new ArrayList<>();
+        ArrayList<Reserva> reservasFechaHora = new ArrayList<>();
+        
+        LocalDate fechaActual = LocalDate.now();
+        if (fechaActual.isBefore(fechaE)) {
+            return false;
+        }
+        
+        reservaDia = filtroDia(listaReservas, fechaE);
+        //Si no hay reservas dicho dia, estan todas las mesas y horarios disponibles
+        if (reservaDia.equals(null)){
+            return true;
+        }
+        
+        reservasFechaHora = filtroHora(reservaDia, horaInicio, horaFin);
+        //Si no hay reservas en el horario del evento, se pueden reservar todas las mesas
+        if(reservasFechaHora.equals(null)){
+            return true;
+        }
+        //Control que no exista reservas en la mesa de una ubicacion
+        for (Reserva extRes : reservasFechaHora){
+            if(extRes.getMesaReservada().getUbicacion().equals(ubicacion)){
+                return false;
+            }
+        }
+        return true;
+    }
     
     /**
      * Metodo para crear reservas sobre un evento
@@ -284,9 +293,10 @@ public class Evento {
      * @param horaF
      * @param NumerosMesas 
      */
-    public void crearEventoConMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, String ubicacion, Administrador adminE){
+    public void crearEventoUbicacion(LocalDate fecha, LocalTime horaI, LocalTime horaF, String ubicacion, Administrador adminE){
         this.reservaEvento = crearEventoPorUbicacion(fecha, horaI, horaF, ubicacion, adminE);
     }
+    
     
     /**
      * Metodo publico para crear eventos por mesas disponibles
