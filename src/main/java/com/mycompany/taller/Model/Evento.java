@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * @author Agus
  */
 public class Evento {
+    
     private LocalDate fechaEvento;
     private LocalTime horarioDesde;
     private LocalTime horarioHasta;
