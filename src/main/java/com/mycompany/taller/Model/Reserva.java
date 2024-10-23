@@ -80,11 +80,47 @@ public class Reserva {
         this.cantidadComensales = null;
         this.comentarios = "Evento";
         this.idReserva = UUID.randomUUID().toString();
-        admin.addReservaEvento(this);
         Reserva.listaReservas.add(this);
         mesa.agregarReserva(this);
     }
 
+        
+    /*
+    * Constructor para la persistencia
+    */
+    public Reserva(LocalDate dia, LocalTime hora, String coment, Integer comensales ,Mesa mesa, Cliente cliente, String idReserva, TarjetaCredito tarjeta) {
+        this.dia = dia;
+        this.hora = hora;
+        this.estadoAsist = estadosPosibles.get(0);
+        this.comentarios = coment;
+        this.cantidadComensales = comensales;
+        this.mesaReservada = mesa;
+        this.clienteReserva = cliente;
+        this.tarjeta = tarjeta;
+        this.idReserva = idReserva;
+        Reserva.listaReservas.add(this);
+        cliente.addReserva(this);
+        mesa.agregarReserva(this);
+        tarjeta.agregarReser(this);
+    }
+    
+    /*
+    *Constructor para la persistencia
+    */
+    public Reserva(LocalDate dia, LocalTime hora, Mesa mesa, Administrador admin, String idReserva) {
+        this.clienteReserva = admin;
+        this.estadoAsist = this.estadosPosibles.get(0);
+        this.dia = dia;
+        this.hora = hora;
+        this.mesaReservada = mesa;
+        this.cantidadComensales = null;
+        this.comentarios = "Evento";
+        this.idReserva = idReserva;
+        Reserva.listaReservas.add(this);
+        mesa.agregarReserva(this);
+    }
+
+    
     
     public LocalDate getDia() {
         return dia;

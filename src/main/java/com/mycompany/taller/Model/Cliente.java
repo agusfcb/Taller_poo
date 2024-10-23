@@ -24,10 +24,19 @@ public class Cliente extends Usuario {
     /*
      * Constructor parametrizado
      */
-    public Cliente(String name, String tel, String email, String pass){
-        super(name, tel, email, pass, "Cliente");
+    public Cliente(String name, String tel, String email, String pass, String genero){
+        super(name, tel, email, pass, "Cliente", genero);
         this.agendaReservas = new ArrayList<Reserva>();
     }
+    
+    /*
+     * Constructor para la persistencia
+     */
+    public Cliente(String name, String tel, String email, String pass, String genero, String idUser){
+        super(name, tel, email, pass, "Cliente", genero, idUser);
+        this.agendaReservas = new ArrayList<Reserva>();
+    }
+    
     
     public String getPremiso() {
         return premisos;
@@ -88,17 +97,20 @@ public class Cliente extends Usuario {
     public boolean modificarReserva(Reserva res, String option, ArrayList<Object> argument) {
         switch (option){
             case "A":
-                //Modificar cantidad de comensales
-                res.setCantidadComensales(argument.indexOf(0));
+                //Modificar cantidad de comensales, el limite es el limite de la misma mesa
+                if (res.getMesaReservada().getCapacidad().equals(argument.get(0))){
+                    res.setCantidadComensales((Integer) argument.get(0));
+                } else if (argument.get(0) < res.getMesaReservada().getCapacidad()){
+                    res.setCantidadComensales((Integer) argument.get(0));
+                }
                 return true;
             case "B":
-                LocalDate fechaNueva = argument.indexOf(0);
-                LocalTime horaNueva = argument.indexOf(1);
-                res.setDia(fechaNueva);
-                res.setHora(horaNueva);
+                //Modificador de comentarios
+                String comentarioNuevo = argument.get(0).toString();
+                res.setComentarios(comentarioNuevo);
                 return true;
             case "C":
-                Mesa mesaNueva = argument.indexOf(0);
+                Mesa mesaNueva = argument.get(0);
                 res.setMesaReservada(mesaNueva);
                 //Modificar la mesa tiene que buscar mesas disponibles en la misma fecha y hora
                 return true;

@@ -9,16 +9,18 @@ public class Administrador extends Empleado{
 
     private String permisos = "Ver historial; Definir horario; Crear evento; Definir dias especiales; Ver reservas.";
     private ArrayList<Reserva> listaReservaActualizada = new ArrayList<>();
-    private ArrayList<Reserva> listaEventos = new ArrayList<>();
+    private static ArrayList<Evento> listaEventos = new ArrayList<>();
     private ArrayList<Reserva> listaReservas = new ArrayList<>();
-    private ArrayList<Empleado> listaEmpleados = new ArrayList<>();
-
-    public Administrador(String name, String tel, String email, String pass) {
-        super(name, tel, email, pass, "Administrador");
-        Administrador.aperturaDelDia();
-        
-        Reserva.recordatorio();
-        
+    private static ArrayList<Empleado> listaEmpleados = new ArrayList<>();
+    
+    
+    public Administrador(String name, String tel, String email, String pass, String genero) {
+        super(name, tel, email, pass, "Administrador", genero);
+    }
+    
+    
+    public Administrador(String name, String tel, String email, String pass, String genero, String idUs) {
+        super(name, tel, email, pass, "Administrador", genero, idUs);
     }
 
     public String getPermisos() {
@@ -122,16 +124,16 @@ public class Administrador extends Empleado{
      * 
      * @return lista de eventos
      */
-    public ArrayList<Reserva> getListaEventos() {
-        return listaEventos;
+    public static ArrayList<Reserva> getListaEventos() {
+        return Administrador.getListaEventos();
     }
     
     /**
      * Metodo que agrega la reserva asociada a un evento
-     * @param Res 
+     * @param evento es un objeto del tipo evento
      */
-    public void addReservaEvento(Reserva res){
-        this.listaEventos.add(res);
+    public static void addEvento(Evento evento){
+        Administrador.listaEventos.add(evento);
     }
     
     /**
@@ -142,33 +144,59 @@ public class Administrador extends Empleado{
         Reserva.getDiasEspeciales().add(fechaEsp);
     }
     
-    public static void crearEmpleado(String name, String tel, String email, String pass, String rol){
+    /**
+     * Metodo para crear objetos empleados
+     * @param name
+     * @param tel
+     * @param email
+     * @param pass
+     * @param rol
+     * @param gen
+     * @return 
+     */
+    public void crearEmpleado(String name, String tel, String email, String pass, String rol, String gen){
         switch(rol){
             case "Maitre":
-                Maitre nuevoMaitre = new Maitre(name, tel, email, pass);
-                Administrador.listaEmpleados.add(nuevoMaitre);
+                Maitre nuevoMaitre = new Maitre(name, tel, email, pass, gen);
+                Administrador.listaEmpleados.addLast(nuevoMaitre);
                 break;
             case "Mesero":
-                Mesero nuevoMesero = new Mesero(name, tel, email, pass);
-                Administrador.listaEmpleados.add(nuevoMesero);
+                Mesero nuevoMesero = new Mesero(name, tel, email, pass, gen);
+                Administrador.listaEmpleados.addLast(nuevoMesero);
                 break;
             case "Recepcionista":
-                Recepcionista nuevoRecep = new Recepcionista(name, tel, email, pass);
-                Administrador.listaEmpleados.add(nuevoRecep);
+                Recepcionista nuevoRecep = new Recepcionista(name, tel, email, pass, gen);
+                Administrador.listaEmpleados.addLast(nuevoRecep);
                 break;
             case "Administrador":
-                Administrador nuevoAdmin = new Administrador(name, tel, email, pass);
-                Administrador.listaEmpleados.add(nuevoAdmin);
+                Administrador nuevoAdmin = new Administrador(name, tel, email, pass, gen);
+                Administrador.listaEmpleados.addLast(nuevoAdmin);
                 break;
             default:
                 break;
         }
-
     }
 
-    public void crearEvento(LocalDate dia, LocalTime horaInicio, LocalTime horaFin){
-        Evento nEvento = new Evento(dia, horaInicio, horaFin, this);
+    /**
+     * Metodo para que los objetos credos por la persistencia sean agregados a la lista de empleados
+     */
+    public static void agregarEmpleado(Empleado emplea){
+        Administrador.listaEmpleados.addLast(emplea);
+    }
+    
+    /**
+     * Metodo para crear evento
+     * @param dia
+     * @param horaInicio
+     * @param horaFin 
+     */
+    public void crearEventoUbic(LocalDate dia, LocalTime horaInicio, LocalTime horaFin, String ubic){
+        Evento nuevoEvento = new Evento(dia, horaInicio, horaFin, ubic, this);
     }
     
     
+    public void crearEventoMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> numerosMesas){
+        Evento nuevoEvento = new Evento(fecha, horaI, horaF, numerosMesas, this);
+    }
+     
 }

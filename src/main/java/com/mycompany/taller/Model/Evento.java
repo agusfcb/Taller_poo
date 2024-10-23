@@ -12,22 +12,40 @@ import java.util.ArrayList;
  */
 public class Evento {
     
+    private String nombreEvento;
     private LocalDate fechaEvento;
     private LocalTime horarioDesde;
     private LocalTime horarioHasta;
     private Administrador adminEvento;
+    private ArrayList<String> mesasEvento = new ArrayList<>();
     private ArrayList<Reserva> reservaEvento = new ArrayList<>();
     
     
     public Evento(){}
     
-    public Evento(LocalDate fechaEvento, LocalTime horaInicio, LocalTime horaFin, Administrador admin, ArrayList<Reserva> reservasE) {
+    
+    public Evento(String nombre, LocalDate fechaEvento, LocalTime horaInicio, LocalTime horaFin, String ubic, Administrador admin) {
+        this.nombreEvento = nombre;
         this.fechaEvento = fechaEvento;
         this.horarioDesde = horaInicio;
         this.horarioHasta = horaFin;
         this.adminEvento = admin;
-        this.reservaEvento = reservasE;
+        
+        this.crearEventoPorUbicacion(fechaEvento, horaFin, horaFin, ubic, admin);
     }
+    
+    public Evento(String nombre, LocalDate fechaEvento, LocalTime horaInicio, LocalTime horaFin) {
+        this.nombreEvento = nombre;
+        this.fechaEvento = fechaEvento;
+        this.horarioDesde = horaInicio;
+        this.horarioHasta = horaFin;
+    }
+    
+
+    //AGREGAR METODO PARA LA PERSISTENCIA
+    
+    
+
 
     public LocalDate getFechaEvento() {
         return fechaEvento;
@@ -57,12 +75,12 @@ public class Evento {
         this.reservaEvento.add(res);
     }
 
-    public String getAdminEvento() {
+    public Administrador getAdminEvento() {
         return adminEvento;
     }
 
     public void setAdminEvento(Administrador adminEvento) {
-        this.adminEvento = adminEvento.getNombre();
+        this.adminEvento = adminEvento;
     }
 
     public ArrayList<Reserva> getReservaEvento() {
@@ -71,6 +89,14 @@ public class Evento {
 
     public void setReservaEvento(ArrayList<Reserva> reservaEvento) {
         this.reservaEvento = reservaEvento;
+    }
+
+    public String getUbicacionEvento() {
+        return ubicacionEvento;
+    }
+
+    public void setUbicacionEvento(String ubicacionEvento) {
+        this.ubicacionEvento = ubicacionEvento;
     }
     
     
@@ -306,8 +332,8 @@ public class Evento {
      * @param horaF
      * @param NumerosMesas 
      */
-    public void crearEventoConMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> NumerosMesas, Administrador adminE){
-        this.reservaEvento = this.crearEventoPorMesas(fecha, horaI, horaF, NumerosMesas, adminE);
+    public void crearEventoConMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> numerosMesas, Administrador adminE){
+        this.reservaEvento = this.crearEventoPorMesas(fecha, horaI, horaF, numerosMesas, adminE);
     }
 
 }
