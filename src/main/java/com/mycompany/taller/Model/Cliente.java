@@ -28,7 +28,7 @@ public class Cliente extends Usuario {
         super(name, tel, email, pass, "Cliente");
         this.agendaReservas = new ArrayList<Reserva>();
     }
-
+    
     public String getPremiso() {
         return premisos;
     }

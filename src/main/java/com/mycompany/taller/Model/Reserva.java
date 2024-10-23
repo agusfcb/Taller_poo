@@ -66,7 +66,8 @@ public class Reserva {
         mesa.agregarReserva(this);
         tarjeta.agregarReser(this);
     }
-
+    
+    
     /*
     *Constructor para el administrador que gestiona eventos
     */
