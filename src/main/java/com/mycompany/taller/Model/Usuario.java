@@ -16,17 +16,6 @@ public abstract class Usuario {
     
     public Usuario() {
     }
-
-    public Usuario(String nombre, String telefono, String correo, String contrasenia, String rolU) {
-        this.nombre = nombre;
-        this.telefono = telefono;
-        this.correo = correo;
-        this.contrasenia = contrasenia;
-        this.rol = rolU;
-        this.genero = "S/D";
-        this.idUsuario = UUID.randomUUID().toString();
-
-    }
     
     public Usuario(String nombre, String telefono, String correo, String contrasenia, String genero, String rolU) {
         this.nombre = nombre;
@@ -38,22 +27,32 @@ public abstract class Usuario {
         this.idUsuario = UUID.randomUUID().toString();
     }
     
-    private void setNombre(String nombre) {
+    public Usuario(String nombre, String telefono, String correo, String contrasenia, String genero, String rolU, String idUsuario) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+        this.genero = genero;
+        this.rol = rolU;
+        this.idUsuario = idUsuario;
+    }
+    
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    private void setTelefono(String telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    private void setCorreo(String correo) {
+    public void setCorreo(String correo) {
         this.correo = correo;
     }
-    private void setContrasenia(String contrasenia) {
+    public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
-    private void setGenero(String genero) {
+    public void setGenero(String genero) {
         this.genero = genero;
     }
-    private void setIdUsuario(String idUsuario) {
+    public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
     }
 

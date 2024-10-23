@@ -26,11 +26,15 @@ public class Empleado extends Usuario {
      * @param pass
      * 
      */
-    public Empleado(String name, String tel, String email, String pass, String rol) {
-        super(name, tel, email, pass, rol);
+    public Empleado(String name, String tel, String email, String pass, String rol, String genero) {
+        super(name, tel, email, pass, rol, genero);
         this.reservas = Reserva.getListaReservas();
         Empleado.listaEmpleados.add(this);
 
+    }
+    public Empleado(String name, String tel, String email, String pass, String rol, String idUsuario, String genero){
+        super(name, tel, email, pass, rol, idUsuario, genero);
+        
     }
     
     public ArrayList<Reserva> getReservas() {

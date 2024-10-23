@@ -266,7 +266,7 @@ public class Reserva {
         }
     }
     
-    private static ArrayList<Reserva> ordenarPorHora(ArrayList<Reserva> reservasDia){
+    public static ArrayList<Reserva> ordenarPorHora(ArrayList<Reserva> reservasDia){
         ArrayList<Reserva> listaOrdenada = reservasDia;
         Reserva aux1;
         Reserva aux2;
