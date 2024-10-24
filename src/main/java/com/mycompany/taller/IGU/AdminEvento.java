@@ -72,7 +72,7 @@ public class AdminEvento extends javax.swing.JFrame {
 
         jComboBox2.setBackground(new java.awt.Color(204, 204, 204));
         jComboBox2.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11:00", "13:00", "15:00", "19:00", "21:00", "23:00", "01:00" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "09:00", "11:00", "13:00", "15:00", "18:00", "20:00", "22:00", "00:00", "02:00" }));
 
         jPanel2.setBackground(new java.awt.Color(255, 206, 156));
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -213,7 +213,7 @@ public class AdminEvento extends javax.swing.JFrame {
 
         jComboBox4.setBackground(new java.awt.Color(204, 204, 204));
         jComboBox4.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11:00", "13:00", "15:00", "19:00", "21:00", "23:00", "01:00" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11:00", "13:00", "15:00", "20:00", "22:00", "00:00", "02:00", "04:00" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

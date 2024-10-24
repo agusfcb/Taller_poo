@@ -18,7 +18,7 @@ public class Mesa {
     private String ubicacion;
     private ArrayList<Reserva> reservasMesa;
     private static ArrayList<Mesa> mesasExistentes = new ArrayList<>();
-    private static ArrayList<String> capacidadEstandar = new ArrayList<>(Arrays.asList("4", "4-8", "+8"));
+    private static ArrayList<Integer> capacidadEstandar = new ArrayList<>(Arrays.asList(4, 8, 12));
 
     public Mesa() {
     }
