@@ -2,7 +2,10 @@ package com.mycompany.taller.Model;
 
 import java.util.*;
 
-//hola
+/**
+ * 
+ * @author Agustin, Juan y Ana
+ */
 public abstract class Usuario {
     
     private String idUsuario;
@@ -114,7 +117,9 @@ public abstract class Usuario {
         return roles;
     }
     
-    public abstract void validarUsuario(String usuario, String contrasenia);
+    @Override
+    public String toString() {
+        return "Usuario: " + "\nID Usuario: " + idUsuario + "\nNombre: " + nombre + "\nTelefono: " + telefono + "\nCorreo: " + correo + "\nContraseña: " + contrasenia + "\nGenero: " + genero + "\nRol: " + rol;
+    }
 
-    public abstract void iniciarSesion(String correo, String contrasenia);
 }

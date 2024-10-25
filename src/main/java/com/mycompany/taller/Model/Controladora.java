@@ -53,11 +53,11 @@ public class Controladora {
         for (int i = 0 ; presistenceUsuarios.size(); i++){
             admin.crearEmpleado(DATOS);
         }
-        
         //SETEAR LAS RESERVAS CON LA PERSISTENCIA
         for (int h = 0; pesistenceReservas.size() ; i++){
             Reserva nuevaReserva = new Reserva(datos);
         }
+        
         admin.setReservas(Reserva.getListaReservas());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         for (int h = 0; pesistenceReservasEvento.size() ; i++){
