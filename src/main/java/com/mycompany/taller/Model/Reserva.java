@@ -11,9 +11,11 @@ import java.util.UUID;
 
 /**
  * 
+ * @author Agustin y Juan
  */
 public class Reserva {
     
+    private String idReserva;
     private LocalDate dia;
     private LocalTime hora;
     private String estadoAsist;
@@ -22,7 +24,6 @@ public class Reserva {
     private Mesa mesaReservada;
     private Usuario clienteReserva;
     private TarjetaCredito tarjeta;
-    private String idReserva;
     private static ArrayList<Reserva> listaReservas = new ArrayList<>();
     private static final ArrayList<String> ubicacionesDisponibles = new ArrayList<>(Arrays.asList("Interior A", "Interior B", "Interior C", "Patio A", "Patio B"));
     public static final ArrayList<String> estadosPosibles = new ArrayList<>(Arrays.asList("Pendiente", "Sin asistir", "Completado", "Cancelado", "Evento"));
@@ -38,7 +39,7 @@ public class Reserva {
         LocalTime.parse("22:00", formatter), 
         LocalTime.parse("00:00", formatter)));
     
-    public static ArrayList<LocalTime> horariosDiasEspeciales = new ArrayList<>(Arrays.asList(
+    private static ArrayList<LocalTime> horariosDiasEspeciales = new ArrayList<>(Arrays.asList(
         LocalTime.parse("09:00", formatter),
         LocalTime.parse("11:00", formatter), 
         LocalTime.parse("13:00", formatter), 
@@ -52,6 +53,7 @@ public class Reserva {
     * Constructor para el cliente que hace la reserva
     */
     public Reserva(LocalDate dia, LocalTime hora, String coment, Integer comensales ,Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
+        this.idReserva = UUID.randomUUID().toString();
         this.dia = dia;
         this.hora = hora;
         this.estadoAsist = estadosPosibles.get(0);
@@ -60,7 +62,6 @@ public class Reserva {
         this.mesaReservada = mesa;
         this.clienteReserva = cliente;
         this.tarjeta = tarjeta;
-        this.idReserva = UUID.randomUUID().toString();
         Reserva.listaReservas.add(this);
         cliente.addReserva(this);
         mesa.agregarReserva(this);
@@ -72,6 +73,7 @@ public class Reserva {
     *Constructor para el administrador que gestiona eventos
     */
     public Reserva(LocalDate dia, LocalTime hora, Mesa mesa, Administrador admin) {
+        this.idReserva = UUID.randomUUID().toString();
         this.clienteReserva = admin;
         this.estadoAsist = this.estadosPosibles.get(4);
         this.dia = dia;
@@ -79,7 +81,6 @@ public class Reserva {
         this.mesaReservada = mesa;
         this.cantidadComensales = null;
         this.comentarios = "Evento";
-        this.idReserva = UUID.randomUUID().toString();
         Reserva.listaReservas.add(this);
         mesa.agregarReserva(this);
     }
@@ -88,16 +89,16 @@ public class Reserva {
     /*
     * Constructor para la persistencia
     */
-    public Reserva(LocalDate dia, LocalTime hora, String coment, Integer comensales ,Mesa mesa, Cliente cliente, String idReserva, TarjetaCredito tarjeta) {
+    public Reserva(String idReserva, LocalDate dia, LocalTime hora, String estado, String coment, Integer comensales, Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
+        this.idReserva = idReserva;
         this.dia = dia;
         this.hora = hora;
-        this.estadoAsist = estadosPosibles.get(0);
+        this.estadoAsist = estado;
         this.comentarios = coment;
         this.cantidadComensales = comensales;
         this.mesaReservada = mesa;
         this.clienteReserva = cliente;
         this.tarjeta = tarjeta;
-        this.idReserva = idReserva;
         Reserva.listaReservas.add(this);
         cliente.addReserva(this);
         mesa.agregarReserva(this);
@@ -107,19 +108,19 @@ public class Reserva {
     /*
     *Constructor para la persistencia
     */
-    public Reserva(LocalDate dia, LocalTime hora, Mesa mesa, Administrador admin, String idReserva) {
-        this.clienteReserva = admin;
-        this.estadoAsist = this.estadosPosibles.get(0);
+    public Reserva(String idReserva, LocalDate dia, LocalTime hora, String estado, Mesa mesa, Administrador admin) {
+        this.idReserva = idReserva;
         this.dia = dia;
         this.hora = hora;
+        this.estadoAsist = estado;
         this.mesaReservada = mesa;
+        this.clienteReserva = admin;
         this.cantidadComensales = null;
         this.comentarios = "Evento";
-        this.idReserva = idReserva;
+        mesa.agregarReserva(this);
         Reserva.listaReservas.add(this);
         mesa.agregarReserva(this);
     }
-
     
     
     public LocalDate getDia() {
@@ -203,6 +204,12 @@ public class Reserva {
         return listaReservas;
     }
 
+    public static void setListaReservas(ArrayList<Reserva> listaReservas) {
+        Reserva.listaReservas = listaReservas;
+    }
+    
+    
+
     public static ArrayList<LocalDate> getDiasEspeciales() {
         return diasEspeciales;
     }
@@ -224,6 +231,10 @@ public class Reserva {
         Reserva.horarios = horarios;
     }
 
+    /**
+     * Metodo para cambiar los horarios en tiempo de ejecucion. Pendiente de mejorar paga guardar en persistencia los horarios
+     * @param horariosDiasEspeciales 
+     */
     public static void setHorariosDiasEspeciales(ArrayList<LocalTime> horariosDiasEspeciales) {
         Reserva.horariosDiasEspeciales = horariosDiasEspeciales;
     }
@@ -262,9 +273,16 @@ public class Reserva {
         }
     }
     
+    /**
+     * 
+     * @return 
+     */
     public static ArrayList<LocalTime> getHorariosEventos(){
         return Reserva.horariosDiasEspeciales;
     }
+    
+    
+    //Metodos de ordenamiento
     
     /**
      * Metodo de ordenamiento por fecha. Este metodo debe inicirse cada dia de forma automatica
@@ -336,6 +354,10 @@ public class Reserva {
         return listaOrdenada;
     }
     
+    
+    // Metodos de busqueda de reservas creadas
+    
+    
     /**
      * Metodo para buscar todas las reservas de una hora
      * @param reservasFecha Lista de todas las reservas de una fecha determinada
@@ -375,9 +397,9 @@ public class Reserva {
         return listadoImprimir;
     }
     
+    
+    
     // METODOS PARA LA BUSQUEDA DE MESAS LIBRES
-    
-    
     /**
      * Metodo publico para ver las mesas disponiles
      * @param fecha1 Fecha de interes
@@ -472,10 +494,8 @@ public class Reserva {
     }
     
     
-    
-    
     /**
-     * 
+     * Metodo que busca todas las reservas del dia actual
      * @return 
      */
     private static ArrayList<Reserva> buscarDia(){
@@ -490,6 +510,10 @@ public class Reserva {
         return reservasDelDia;
     }
     
+    /**
+     * Metodo publico que llama la logica para buscar las reservas del dia actual
+     * @return 
+     */
     public static ArrayList<Reserva> reservasDelDia(){
         ArrayList<Reserva> listaDelDia = Reserva.buscarDia();
         listaReservas = Reserva.ordenarPorHora(listaDelDia);

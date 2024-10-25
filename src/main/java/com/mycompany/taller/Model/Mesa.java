@@ -6,12 +6,8 @@ import java.lang.Integer;
 
 /**
  * 
+ * @author Agus y Juan
  */
-//Formato metodos:
-    /**
-     * @param String idReserva 
-     * @return
-     */
 public class Mesa {
     private String numero;
     private Integer capacidad;
@@ -30,7 +26,9 @@ public class Mesa {
         this.reservasMesa = new ArrayList<Reserva>();
         Mesa.mesasExistentes.add(this);
     }
-
+    
+            
+            
     public String getNumero() {
         return numero;
     }

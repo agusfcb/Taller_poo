@@ -5,23 +5,18 @@ import java.util.*;
  * 
  */
 public class Recepcionista extends Empleado {
-//Formato metodos:
-    /**
-     * @param String idReserva 
-     * @return
-     */
+
+    private String permisos = "Ver reservas del dia, Ver comentarios de reservas.";
+    
     /**
      * Default Constructor
      */
     public Recepcionista() {
         super();
     }
+
     /**
      * Constructor parametrizado
-     */
-    /**
-     * 
-     * 
      * @param name
      * @param tel
      * @param email
@@ -34,6 +29,15 @@ public class Recepcionista extends Empleado {
     public Recepcionista(String name, String tel, String email, String pass, String genero, String idUsuario) {
         super(name, tel, email, pass, "Recepcionista", genero, idUsuario);
     }
+
+    public String getPermisos() {
+        return permisos;
+    }
+
+    public void setPermisos(String permisos) {
+        this.permisos = permisos;
+    }
+    
     
     /**
      * Metodo para buscar listas de reservas por una fecha y hora especifica

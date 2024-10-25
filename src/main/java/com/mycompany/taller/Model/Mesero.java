@@ -6,12 +6,8 @@ import java.util.*;
  */
 public class Mesero extends Empleado {
     
-    
+    private String permisos = "Ver comentarios de las reservas que puede atender";
 
-//Formato metodos:
-    /**
-     * 
-     */
     public Mesero() {
         super();
     }
@@ -21,4 +17,13 @@ public class Mesero extends Empleado {
     public Mesero(String name, String tel, String email, String pass, String genero, String idUsuario){
         super(name, tel, email, pass, "Maitre", genero, idUsuario);
     }
+
+    public String getPermisos() {
+        return permisos;
+    }
+
+    public void setPermisos(String permisos) {
+        this.permisos = permisos;
+    }
+    
 }

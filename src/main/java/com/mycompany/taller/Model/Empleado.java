@@ -1,11 +1,13 @@
 package com.mycompany.taller.Model;
 import java.util.*;
 
+
 /**
  * 
+ * @author Agustin y Juan
  */
-
 public class Empleado extends Usuario {
+    
     private ArrayList<Reserva> reservas;
     private static ArrayList<Empleado> listaEmpleados = new ArrayList<>();
 
@@ -32,8 +34,8 @@ public class Empleado extends Usuario {
         Empleado.listaEmpleados.add(this);
 
     }
-    public Empleado(String name, String tel, String email, String pass, String rol, String idUsuario, String genero){
-        super(name, tel, email, pass, rol, idUsuario, genero);
+    public Empleado(String name, String tel, String email, String pass, String rol, String genero, String idUsuario){
+        super(name, tel, email, pass, rol, genero, idUsuario);
         
     }
     
@@ -103,18 +105,5 @@ public class Empleado extends Usuario {
         }
         return "Reserva con ID " + idReserva + " no encontrada.";
     }
-
-    @Override
-    public void validarUsuario(String usuario, String contrasenia) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void iniciarSesion(String correo, String contrasenia) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    
-    
     
 }

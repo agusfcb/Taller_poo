@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * 
+ * @author Agustin y Juan
  */
 public class Cliente extends Usuario {
     
@@ -100,7 +101,7 @@ public class Cliente extends Usuario {
                 //Modificar cantidad de comensales, el limite es el limite de la misma mesa
                 if (res.getMesaReservada().getCapacidad().equals(argument.get(0))){
                     res.setCantidadComensales((Integer) argument.get(0));
-                } else if (argument.get(0) < res.getMesaReservada().getCapacidad()){
+                } else if ((Integer)argument.get(0) < res.getMesaReservada().getCapacidad()){
                     res.setCantidadComensales((Integer) argument.get(0));
                 }
                 return true;
@@ -110,9 +111,9 @@ public class Cliente extends Usuario {
                 res.setComentarios(comentarioNuevo);
                 return true;
             case "C":
-                Mesa mesaNueva = argument.get(0);
-                res.setMesaReservada(mesaNueva);
                 //Modificar la mesa tiene que buscar mesas disponibles en la misma fecha y hora
+                Mesa mesaNueva = (Mesa) argument.get(0);
+                res.setMesaReservada(mesaNueva);
                 return true;
             default:
                 return false;

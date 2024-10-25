@@ -5,20 +5,47 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+
+/**
+ * 
+ * @author Agustin y Juan
+ */
 public class Administrador extends Empleado{
 
     private String permisos = "Ver historial; Definir horario; Crear evento; Definir dias especiales; Ver reservas.";
     private ArrayList<Reserva> listaReservaActualizada = new ArrayList<>();
     private static ArrayList<Evento> listaEventos = new ArrayList<>();
-    private ArrayList<Reserva> listaReservas = new ArrayList<>();
+    public ArrayList<Reserva> listaReservas = new ArrayList<>();
     private static ArrayList<Empleado> listaEmpleados = new ArrayList<>();
     
+    /**
+     * Constructor por defecto
+     */
+    public Administrador(){
+        super();
+    }
     
+    /**
+     * Constructor parametrizado
+     * @param name
+     * @param tel
+     * @param email
+     * @param pass
+     * @param genero 
+     */
     public Administrador(String name, String tel, String email, String pass, String genero) {
         super(name, tel, email, pass, "Administrador", genero);
     }
     
-    
+    /**
+     * Constructor para la persistencia
+     * @param name
+     * @param tel
+     * @param email
+     * @param pass
+     * @param genero
+     * @param idUs 
+     */
     public Administrador(String name, String tel, String email, String pass, String genero, String idUs) {
         super(name, tel, email, pass, "Administrador", genero, idUs);
     }
@@ -31,6 +58,12 @@ public class Administrador extends Empleado{
         this.permisos = permisos;
     }
     
+    /**
+     * Metodo para que los objetos credos por la persistencia sean agregados a la lista de empleados
+     */
+    public static void setListaEmpleado(ArrayList<Empleado> empleados){
+        Administrador.listaEmpleados = empleados;
+    }
     
     /**
      * 
@@ -49,7 +82,7 @@ public class Administrador extends Empleado{
         return false;
     }
     /**
-     * 
+     * Metodo para cambiar el rol de un empleado
      * @param idUsuario
      * @param nuevoRol
      * @return 
@@ -66,6 +99,7 @@ public class Administrador extends Empleado{
         Reserva.setHorarios(horarios);
     }
     
+    
     /**
      * 
      * @param horaExt 
@@ -75,27 +109,19 @@ public class Administrador extends Empleado{
     }
     
     /**
-     * Metodo para designar dias donde el restaurante cerrara antes
-     * Precondicion: que no haya reservas en ese dia y horario
-     * @param fecha
-     * @param hora 
-     */
-    public void cierreEspecial(LocalDate fecha, LocalTime hora){
-        try {
-            for(Mesa mesaExt : Mesa.getMesasTot()){
-                Reserva newReserva = new Reserva(fecha, hora, mesaExt, this);
-            }
-        }catch (Exception e) {
-            System.out.println("\n Error al definir cierre anticipado \n");
-        }
-    }
-    
-    /**
      * 
      * @param res 
      */
     public void addReserva(Reserva res) {
-        this.listaReservas.add(res);
+        this.listaReservas.addLast(res);
+    }
+    
+    /**
+     * 
+     * @param empleado 
+     */
+    public static void addEmpleado(Empleado empleado){
+        Administrador.listaEmpleados.addLast(empleado);    
     }
     
     /**
@@ -124,8 +150,8 @@ public class Administrador extends Empleado{
      * 
      * @return lista de eventos
      */
-    public static ArrayList<Reserva> getListaEventos() {
-        return Administrador.getListaEventos();
+    public static ArrayList<Evento> getListaEventos() {
+        return Administrador.listaEventos;
     }
     
     /**
@@ -136,12 +162,29 @@ public class Administrador extends Empleado{
         Administrador.listaEventos.add(evento);
     }
     
+        
+    /**
+     * Metodo para designar dias donde el restaurante cerrara antes
+     * Precondicion: que no haya reservas en ese dia y horario
+     * @param fecha
+     * @param hora 
+     */
+    public void cierreEspecial(LocalDate fecha, LocalTime hora){
+        try {
+            for(Mesa mesaExt : Mesa.getMesasTot()){
+                Reserva nuevaReserva = new Reserva(fecha, hora, mesaExt, this);
+            }
+        }catch (Exception e) {
+            System.out.println("\n Error al definir cierre anticipado \n");
+        }
+    }
+    
     /**
      * Metodo para guardar dias especiales, util para ver horarios especiales
      * @param fechaEsp 
      */
-    public void designarHorarioEspecial(LocalDate fechaEsp){
-        Reserva.getDiasEspeciales().add(fechaEsp);
+    public void agregarDiaEspecial(LocalDate fechaEsp){
+        Reserva.getDiasEspeciales().addLast(fechaEsp);
     }
     
     /**
@@ -158,31 +201,94 @@ public class Administrador extends Empleado{
         switch(rol){
             case "Maitre":
                 Maitre nuevoMaitre = new Maitre(name, tel, email, pass, gen);
-                Administrador.listaEmpleados.addLast(nuevoMaitre);
+                Administrador.addEmpleado(nuevoMaitre);
                 break;
             case "Mesero":
                 Mesero nuevoMesero = new Mesero(name, tel, email, pass, gen);
-                Administrador.listaEmpleados.addLast(nuevoMesero);
+                Administrador.addEmpleado(nuevoMesero);
                 break;
             case "Recepcionista":
                 Recepcionista nuevoRecep = new Recepcionista(name, tel, email, pass, gen);
-                Administrador.listaEmpleados.addLast(nuevoRecep);
+                Administrador.addEmpleado(nuevoRecep);
                 break;
             case "Administrador":
                 Administrador nuevoAdmin = new Administrador(name, tel, email, pass, gen);
-                Administrador.listaEmpleados.addLast(nuevoAdmin);
+                Administrador.addEmpleado(nuevoAdmin);
                 break;
             default:
                 break;
         }
     }
-
-    /**
-     * Metodo para que los objetos credos por la persistencia sean agregados a la lista de empleados
-     */
-    public static void agregarEmpleado(Empleado emplea){
-        Administrador.listaEmpleados.addLast(emplea);
+    
+    public Empleado buscarEmpleado(String idEmpleado){
+        for(Empleado extEmpleado : Administrador.getListaEmpleados()){
+            if(extEmpleado.getIdUsuario().equals(idEmpleado)){
+                return extEmpleado;
+            }
+        }
+        return null;
     }
+    
+    public boolean eliminarEmpleado(String idEmpleado){
+        for(Empleado extEmpleado : Administrador.getListaEmpleados()){
+            if(extEmpleado.getIdUsuario().equals(idEmpleado)){
+                Administrador.getListaEmpleados().remove(extEmpleado);
+                return true;
+            }
+        }
+        return false;
+    
+    }
+
+    
+    // METODO BASICOS PARA GESTIONAR EVENTOS
+    
+    /**
+     * Metodo que agrega a la lista de eventos cada evento creado
+     * @param evento 
+     */
+    public static void agregarEvento(Evento evento){
+        Administrador.listaEventos.addLast(evento);    
+    }
+    
+    /**
+     * Metodo para eliminar un evento
+     * @param evento 
+     */
+    public static void eliminarEvento(Evento evento){
+        Administrador.listaEventos.remove(evento);
+    }
+    
+    /**
+     * Metodo para buscar un evento
+     * @param nombre
+     * @return 
+     */
+    public Evento buscarEvento(String nombre){
+        for (Evento extEv : Administrador.getListaEventos()){
+            if(extEv.getNombreEvento().equals(nombre)){
+                return extEv;           
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Meotodo publico para cancelar eventos
+     * @param evento
+     * @return 
+     */
+    public boolean cancelarEvento(Evento evento){
+        try {
+            evento.eliminarEvento();
+            Administrador.eliminarEvento(evento);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+    
+    //OPCIONES DE CREACION DE EVENTOS, POR UBICACIONES COMPLETAS O POR LISTA DE MESAS
     
     /**
      * Metodo para crear evento
@@ -190,13 +296,22 @@ public class Administrador extends Empleado{
      * @param horaInicio
      * @param horaFin 
      */
-    public void crearEventoUbic(LocalDate dia, LocalTime horaInicio, LocalTime horaFin, String ubic){
-        Evento nuevoEvento = new Evento(dia, horaInicio, horaFin, ubic, this);
+    public void crearEventoUbic(String nombre, LocalDate dia, LocalTime horaInicio, LocalTime horaFin, String ubic){
+        Evento nuevoEvento = new Evento(nombre, dia, horaInicio, horaFin, ubic, this);
+        Administrador.agregarEvento(nuevoEvento);
     }
     
-    
-    public void crearEventoMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> numerosMesas){
-        Evento nuevoEvento = new Evento(fecha, horaI, horaF, numerosMesas, this);
+    /**
+     * Metodo publico para crear eventos
+     * @param nombre
+     * @param fecha
+     * @param horaI
+     * @param horaF
+     * @param numerosMesas 
+     */
+    public void crearEventoMesas(String nombre, LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> numerosMesas){
+        Evento nuevoEvento = new Evento(nombre, fecha, horaI, horaF, numerosMesas, this);
+        Administrador.agregarEvento(nuevoEvento);
     }
-     
+    
 }
