@@ -379,6 +379,9 @@ public class Evento {
         this.crearEventoPorMesas(fecha, horaI, horaF, numerosMesas, adminE);
     }
 
+    /**
+     * Metodo que libera las mesas asociadas
+     */
     private void elimEvento(){
         for (Reserva extRes : this.getReservaEvento()){
             extRes.setComentarios("Eliminado/Cancelado");
@@ -391,6 +394,9 @@ public class Evento {
         }
     }
     
+    /**
+     * Metodo publico para eliminar eventos
+     */
     public void eliminarEvento(){
         this.elimEvento();
     }
