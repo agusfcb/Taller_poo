@@ -3,32 +3,53 @@ package com.mycompany.taller.Model;
 
 import java.util.*;
 import java.lang.Integer;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * 
  * @author Agus y Juan
  */
+@Entity
 public class Mesa {
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private String numero;
+    @Basic
     private Integer capacidad;
     private String ubicacion;
+    
     private ArrayList<Reserva> reservasMesa;
+    private static final ArrayList<String> ubicacionesDisponibles = new ArrayList<>(Arrays.asList("Interior A", "Interior B", "Interior C", "Patio A", "Patio B"));
     private static ArrayList<Mesa> mesasExistentes = new ArrayList<>();
     private static ArrayList<Integer> capacidadEstandar = new ArrayList<>(Arrays.asList(4, 8, 12));
 
     public Mesa() {
     }
     
-    public Mesa(String numero, Integer capacidad, String ubicacion) {
-        this.numero = numero;
+    public Mesa(Integer capacidad, String ubicacion) {
+        this.numero = String.valueOf(Mesa.getMesasExistentes().size() + 1);
         this.capacidad = capacidad;
         this.ubicacion = ubicacion;
         this.reservasMesa = new ArrayList<Reserva>();
         Mesa.mesasExistentes.add(this);
     }
     
-            
-            
+    public Mesa(String numMesa, Integer capacidad, String ubicacion) {
+        this.numero = numMesa;
+        this.capacidad = capacidad;
+        this.ubicacion = ubicacion;
+        this.reservasMesa = new ArrayList<Reserva>();
+        Mesa.mesasExistentes.add(this);
+    }
+    
+    
     public String getNumero() {
         return numero;
     }
@@ -52,31 +73,41 @@ public class Mesa {
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
-    
-    public static ArrayList<Mesa> getMesasTot(){
-        return mesasExistentes;
+
+    public ArrayList<Reserva> getReservasMesa() {
+        return reservasMesa;
+    }
+
+    public void setReservasMesa(ArrayList<Reserva> reservasMesa) {
+        this.reservasMesa = reservasMesa;
+    }
+
+    public static ArrayList<Mesa> getMesasExistentes() {
+        return Mesa.mesasExistentes;
+    }
+
+    public static void setMesasExistentes(ArrayList<Mesa> mesasExistentes) {
+        Mesa.mesasExistentes = mesasExistentes;
+    }
+
+    public static ArrayList<Integer> getCapacidadEstandar() {
+        return capacidadEstandar;
+    }
+
+    public static void setCapacidadEstandar(ArrayList<Integer> capacidadEstandar) {
+        Mesa.capacidadEstandar = capacidadEstandar;
+    }
+
+    public static ArrayList<String> getUbicacionesDisponibles() {
+        return ubicacionesDisponibles;
     }
     
     public void agregarReserva(Reserva resv){
         this.reservasMesa.add(resv);
     }
-    
-    public boolean controlMesa(String num){
-        for(Mesa mesaNum : Mesa.getMesasTot()){
-            if(mesaNum.getNumero().equals(num)){
-                return false;
-            }
-        }
-        return true;
-    }
-    public void agregarMesa(String num, Integer cap, String ubi){
-        if(controlMesa(num)){
-            Mesa nuevaMesa = new Mesa(num, cap, ubi);
-        }
-    }
-    
+
     public void removerMesa(String num){
-        ArrayList<Mesa> mesasTotales = Mesa.getMesasTot();
+        ArrayList<Mesa> mesasTotales = Mesa.getMesasExistentes();
         for(Mesa ext : mesasTotales){
             if(ext.getNumero().equals(num)){
                 Mesa.mesasExistentes.remove(ext);

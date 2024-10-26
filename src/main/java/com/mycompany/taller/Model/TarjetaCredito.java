@@ -5,30 +5,50 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 /**
  * 
  */
+@Entity
 public class TarjetaCredito {
     
+    @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    private String idTarjeta;
+    @Basic
     private String nombre;
     private String emisor;
     private String numeroTarjeta;
     private String codVerificacion;
     private String multa;
-    private Reserva reservaT;
+    
+    private ArrayList<Reserva> reservaT = new ArrayList<>();
     
     
     public TarjetaCredito(){}
 
-    public TarjetaCredito(String nombre, String emisor, String numeroTarjeta, String codVerificacion) {
+    public TarjetaCredito(String nombre, String emisor, String numeroTarjeta, String codVerificacion, Reserva reser) {
         this.nombre = nombre;
         this.emisor = emisor;
         this.numeroTarjeta = numeroTarjeta;
         this.codVerificacion = codVerificacion;
         this.multa = "$ 0";
+        this.agregarReser(reser);
     }
 
+    public String getIdTarjeta() {
+        return idTarjeta;
+    }
+
+    public void setIdTarjeta(String idTarjeta) {
+        this.idTarjeta = idTarjeta;
+    }
     
     public String getNombre() {
         return nombre;
@@ -69,11 +89,19 @@ public class TarjetaCredito {
     public void setMulta(String multa) {
         this.multa = multa;
     }
-    
-    public void agregarReser(Reserva res){
-        this.reservaT = res;
-    }
 
+    public ArrayList<Reserva> getReservaT() {
+        return reservaT;
+    }
+    
+    public void setReservaT(ArrayList<Reserva> reservaT) {
+        this.reservaT = reservaT;
+    }
+    
+    public void agregarReser(Reserva reser){
+        this.reservaT.addLast(reser);
+    }
+    
     @Override
     public String toString() {
         return "TarjetaCredito: " + "\nNombre: " + nombre + "\nEmisor: " + emisor + "\nNumero de tarjeta: " + numeroTarjeta;
@@ -83,12 +111,6 @@ public class TarjetaCredito {
     //QUE LA TARJETA TENGA 16 DIGITOS NUMERICOS XXXX XXXX XXXX XXXX
     
     //VALIDAR CODIGO DE VERIFICACION DEBE SER UN METODO QUE VALIDE 3 DIGITOS NUMERICOS
-//Formato metodos:
-    /**
-     * @param String idReserva 
-     * @return
-     */
-    
     
     /**
      * Este es un metodo que se colocara directamente luego del loggin de forma que tome la fecha cada dia

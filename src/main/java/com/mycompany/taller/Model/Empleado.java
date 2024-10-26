@@ -1,4 +1,5 @@
 package com.mycompany.taller.Model;
+import java.time.LocalTime;
 import java.util.*;
 
 
@@ -28,14 +29,24 @@ public class Empleado extends Usuario {
      * @param pass
      * 
      */
-    public Empleado(String name, String tel, String email, String pass, String rol, String genero) {
-        super(name, tel, email, pass, rol, genero);
+    public Empleado(String name, String tel, LocalTime fechaCumple, String email, String pass, String rol, String genero) {
+        super(name, tel, fechaCumple, email, pass, rol, genero);
         this.reservas = Reserva.getListaReservas();
         Empleado.listaEmpleados.add(this);
 
     }
-    public Empleado(String name, String tel, String email, String pass, String rol, String genero, String idUsuario){
-        super(name, tel, email, pass, rol, genero, idUsuario);
+    /**
+     * 
+     * @param name
+     * @param tel
+     * @param email
+     * @param pass
+     * @param rol
+     * @param genero
+     * @param idUsuario 
+     */
+    public Empleado(String name, String tel, LocalTime fechaCumple, String email, String pass, String rol, String genero, String idUsuario){
+        super(name, tel, fechaCumple, email, pass, rol, genero, idUsuario);
         
     }
     

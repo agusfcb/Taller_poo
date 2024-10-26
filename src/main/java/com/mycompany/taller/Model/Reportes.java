@@ -105,7 +105,7 @@ public class Reportes {
     
     public String mostrarReservasSemana(LocalDate fecha) {
         Integer totalReservas = contarReservasSemana(fecha);
-        String detalles = "Reservas para la semana del día " + fecha + ":\n";
+        String detalles = "Reservas para la semana " + fecha + ":\n";
         detalles += "Total de reservas: " + totalReservas + "\n";
 
         // Obtener el inicio de la semana

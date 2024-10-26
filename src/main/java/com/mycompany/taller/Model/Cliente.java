@@ -4,6 +4,14 @@ import java.util.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 
 /**
  * 
@@ -25,16 +33,16 @@ public class Cliente extends Usuario {
     /*
      * Constructor parametrizado
      */
-    public Cliente(String name, String tel, String email, String pass, String genero){
-        super(name, tel, email, pass, "Cliente", genero);
+    public Cliente(String name, String tel, LocalTime fechaCumple, String email, String pass, String genero){
+        super(name, tel, fechaCumple, email, pass, "Cliente", genero);
         this.agendaReservas = new ArrayList<Reserva>();
     }
     
     /*
      * Constructor para la persistencia
      */
-    public Cliente(String name, String tel, String email, String pass, String genero, String idUser){
-        super(name, tel, email, pass, "Cliente", genero, idUser);
+    public Cliente(String name, String tel, LocalTime fechaCumple, String email, String pass, String genero, String idUser){
+        super(name, tel, fechaCumple, email, pass, "Cliente", genero, idUser);
         this.agendaReservas = new ArrayList<Reserva>();
     }
     
@@ -129,20 +137,20 @@ public class Cliente extends Usuario {
     public boolean actualizarInformacion(String option, String argumento) {
         switch (String.valueOf(option)) {
             case "Nombre":
-                this.cambiarNombre(argumento);
+                this.setNombre(argumento);
                 break;
             case "Telefono":
-                this.cambiarCorreo(argumento);
+                this.setCorreo(argumento);
                 break;
             case "Correo":
-                this.cambiarTelefono(argumento);
+                this.setTelefono(argumento);
                 break;
             case "Contrasenia":
                 //Falta un metodo para validar la contrasenia
-                this.cambiarContrasenia(argumento);
+                this.setContrasenia(argumento);
                 break;
             case "Genero":
-                this.cambiarGenero(argumento);
+                this.setGenero(argumento);
                 break;
             default:
                 break;

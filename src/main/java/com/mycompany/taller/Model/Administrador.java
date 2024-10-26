@@ -4,6 +4,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -13,6 +20,7 @@ import java.util.ArrayList;
 public class Administrador extends Empleado{
 
     private String permisos = "Ver historial; Definir horario; Crear evento; Definir dias especiales; Ver reservas.";
+    
     private ArrayList<Reserva> listaReservaActualizada = new ArrayList<>();
     private static ArrayList<Evento> listaEventos = new ArrayList<>();
     public ArrayList<Reserva> listaReservas = new ArrayList<>();
@@ -33,8 +41,8 @@ public class Administrador extends Empleado{
      * @param pass
      * @param genero 
      */
-    public Administrador(String name, String tel, String email, String pass, String genero) {
-        super(name, tel, email, pass, "Administrador", genero);
+    public Administrador(String name, String tel, LocalTime fechaCumple, String email, String pass, String genero) {
+        super(name, tel, fechaCumple, email, pass, "Administrador", genero);
     }
     
     /**
@@ -46,8 +54,8 @@ public class Administrador extends Empleado{
      * @param genero
      * @param idUs 
      */
-    public Administrador(String name, String tel, String email, String pass, String genero, String idUs) {
-        super(name, tel, email, pass, "Administrador", genero, idUs);
+    public Administrador(String name, String tel, LocalTime fechaCumple, String email, String pass, String genero, String idUs) {
+        super(name, tel, fechaCumple, email, pass, "Administrador", genero, idUs);
     }
 
     public String getPermisos() {
@@ -138,6 +146,7 @@ public class Administrador extends Empleado{
     public ArrayList<Reserva> getListaReservaActualizada() {
         return listaReservaActualizada;
     }
+    
     /**
      * La lista de reservas se debe actualizar cuando lo solicite el Administrador (conectado a la persistencia)
      * @param listaReservaActualizada 
@@ -153,6 +162,15 @@ public class Administrador extends Empleado{
     public static ArrayList<Evento> getListaEventos() {
         return Administrador.listaEventos;
     }
+
+    public static ArrayList<Empleado> getListaEmpleados() {
+        return listaEmpleados;
+    }
+
+    public static void setListaEmpleados(ArrayList<Empleado> listaEmpleados) {
+        Administrador.listaEmpleados = listaEmpleados;
+    }
+    
     
     /**
      * Metodo que agrega la reserva asociada a un evento
@@ -162,7 +180,10 @@ public class Administrador extends Empleado{
         Administrador.listaEventos.add(evento);
     }
     
-        
+    public void crearMesa(String numero, Integer capacidad, String ubicacion){
+        Mesa nuevaMesa = new Mesa(capacidad, ubicacion);
+    }
+    
     /**
      * Metodo para designar dias donde el restaurante cerrara antes
      * Precondicion: que no haya reservas en ese dia y horario
@@ -171,7 +192,7 @@ public class Administrador extends Empleado{
      */
     public void cierreEspecial(LocalDate fecha, LocalTime hora){
         try {
-            for(Mesa mesaExt : Mesa.getMesasTot()){
+            for(Mesa mesaExt : Mesa.getMesasExistentes()){
                 Reserva nuevaReserva = new Reserva(fecha, hora, mesaExt, this);
             }
         }catch (Exception e) {
@@ -197,22 +218,22 @@ public class Administrador extends Empleado{
      * @param gen
      * @return 
      */
-    public void crearEmpleado(String name, String tel, String email, String pass, String rol, String gen){
+    public void crearEmpleado(String name, String tel, LocalTime fechaCumple, String email, String pass, String rol, String gen){
         switch(rol){
             case "Maitre":
-                Maitre nuevoMaitre = new Maitre(name, tel, email, pass, gen);
+                Maitre nuevoMaitre = new Maitre(name, tel, fechaCumple, email, pass, gen);
                 Administrador.addEmpleado(nuevoMaitre);
                 break;
             case "Mesero":
-                Mesero nuevoMesero = new Mesero(name, tel, email, pass, gen);
+                Mesero nuevoMesero = new Mesero(name, tel, fechaCumple, email, pass, gen);
                 Administrador.addEmpleado(nuevoMesero);
                 break;
             case "Recepcionista":
-                Recepcionista nuevoRecep = new Recepcionista(name, tel, email, pass, gen);
+                Recepcionista nuevoRecep = new Recepcionista(name, tel, fechaCumple, email, pass, gen);
                 Administrador.addEmpleado(nuevoRecep);
                 break;
             case "Administrador":
-                Administrador nuevoAdmin = new Administrador(name, tel, email, pass, gen);
+                Administrador nuevoAdmin = new Administrador(name, tel, fechaCumple, email, pass, gen);
                 Administrador.addEmpleado(nuevoAdmin);
                 break;
             default:

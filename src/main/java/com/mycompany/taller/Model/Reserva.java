@@ -8,24 +8,36 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
-
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 /**
  * 
  * @author Agustin y Juan
  */
+@Entity
 public class Reserva {
     
+    @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private String idReserva;
+    @Temporal(TemporalType.DATE)
     private LocalDate dia;
+    @Temporal(TemporalType.TIME)
     private LocalTime hora;
+    @Basic
     private String estadoAsist;
     private Integer cantidadComensales;
     private String comentarios;
+    
     private Mesa mesaReservada;
     private Usuario clienteReserva;
     private TarjetaCredito tarjeta;
     private static ArrayList<Reserva> listaReservas = new ArrayList<>();
-    private static final ArrayList<String> ubicacionesDisponibles = new ArrayList<>(Arrays.asList("Interior A", "Interior B", "Interior C", "Patio A", "Patio B"));
     public static final ArrayList<String> estadosPosibles = new ArrayList<>(Arrays.asList("Pendiente", "Sin asistir", "Completado", "Cancelado", "Evento"));
     private static ArrayList<LocalDate> diasEspeciales = new ArrayList<>();
     // Formato de la hora
@@ -429,7 +441,7 @@ public class Reserva {
         
         ArrayList<Reserva> listaReservas = Reserva.getListaReservas();
         ArrayList<Reserva> reservaDia = new ArrayList<>();
-        ArrayList<Mesa> mesasTotales = Mesa.getMesasTot();
+        ArrayList<Mesa> mesasTotales = Mesa.getMesasExistentes();
         ArrayList<Mesa> coincidenciaBusqueda = new ArrayList<>();
         
         reservaDia = filtroDia(listaReservas, fecha1);

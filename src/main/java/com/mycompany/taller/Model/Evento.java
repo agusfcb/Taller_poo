@@ -5,16 +5,31 @@ import com.mycompany.taller.Model.Reserva;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 /**
  *
  * @author Agus
  */
+@Entity
 public class Evento {
     
+    @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    private String idReserva;
+    @Basic
     private String nombreEvento;
+    @Temporal(TemporalType.DATE)
     private LocalDate fechaEvento;
+    @Temporal(TemporalType.TIME)
     private LocalTime horarioDesde;
+    @Temporal(TemporalType.TIME)
+    
     private LocalTime horarioHasta;
     private Administrador adminEvento;
     private ArrayList<Reserva> reservaEvento = new ArrayList<>();
@@ -167,7 +182,7 @@ public class Evento {
         
         reservasFechaHora = this.filtroHora(reservaDia, horaInicio, horaFin);
         
-        for(Mesa extMesa : Mesa.getMesasTot()){
+        for(Mesa extMesa : Mesa.getMesasExistentes()){
             boolean control = true;
             for (Reserva extReserv : reservasFechaHora){
                 if(extReserv.getMesaReservada().getNumero().equals(extMesa.getNumero())){
@@ -299,7 +314,7 @@ public class Evento {
         
         ArrayList<LocalTime> horarioUtil = (ArrayList<LocalTime>) Reserva.getHorariosEventos().clone(); 
 
-        ArrayList<Mesa> mesas = Mesa.getMesasTot();
+        ArrayList<Mesa> mesas = Mesa.getMesasExistentes();
         ArrayList<Mesa> mesasUbicacion = new ArrayList<>();
         
         //Se filtran todas las mesas de una ubicacion
@@ -331,7 +346,7 @@ public class Evento {
      * @return Devuelve la lista de las nuevas reservas creadas para el evento
      */
     private void crearEventoPorMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> numerosMesas, Administrador admin){
-        ArrayList<Mesa> mesas = Mesa.getMesasTot();
+        ArrayList<Mesa> mesas = Mesa.getMesasExistentes();
         ArrayList<Mesa> mesasUbicacion = new ArrayList<>();
         ArrayList<LocalTime> horarioUtil = (ArrayList<LocalTime>) Reserva.getHorariosEventos().clone();
         

@@ -1,4 +1,5 @@
 package com.mycompany.taller.Model;
+import java.time.LocalTime;
 import java.util.*;
 
 /**
@@ -13,11 +14,11 @@ public class Maitre extends Empleado {
         super();
     }
     
-    public Maitre(String name, String tel, String email, String pass, String genero) {
-        super(name, tel, email, pass, "Maitre", genero);
+    public Maitre(String name, String tel, LocalTime fechaCumple, String email, String pass, String genero) {
+        super(name, tel, fechaCumple, email, pass, "Maitre", genero);
     }
-    public Maitre(String name, String tel, String email, String pass, String genero, String idUsuario){
-        super(name, tel, email, pass, "Maitre", genero, idUsuario);
+    public Maitre(String name, String tel, LocalTime fechaCumple, String email, String pass, String genero, String idUsuario){
+        super(name, tel, fechaCumple, email, pass, "Maitre", genero, idUsuario);
     }
 
     public String getPermisos() {
