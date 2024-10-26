@@ -33,7 +33,7 @@ public class Cliente extends Usuario {
     /*
      * Constructor parametrizado
      */
-    public Cliente(String name, String tel, LocalTime fechaCumple, String email, String pass, String genero){
+    public Cliente(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero){
         super(name, tel, fechaCumple, email, pass, "Cliente", genero);
         this.agendaReservas = new ArrayList<Reserva>();
     }
@@ -41,7 +41,7 @@ public class Cliente extends Usuario {
     /*
      * Constructor para la persistencia
      */
-    public Cliente(String name, String tel, LocalTime fechaCumple, String email, String pass, String genero, String idUser){
+    public Cliente(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, long idUser){
         super(name, tel, fechaCumple, email, pass, "Cliente", genero, idUser);
         this.agendaReservas = new ArrayList<Reserva>();
     }

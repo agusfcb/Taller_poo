@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 /**
  * 
  */
@@ -28,8 +29,8 @@ public class TarjetaCredito {
     private String codVerificacion;
     private String multa;
     
+    @Transient
     private ArrayList<Reserva> reservaT = new ArrayList<>();
-    
     
     public TarjetaCredito(){}
 
@@ -99,7 +100,7 @@ public class TarjetaCredito {
     }
     
     public void agregarReser(Reserva reser){
-        this.reservaT.addLast(reser);
+        this.reservaT.add(reser);
     }
     
     @Override

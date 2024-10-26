@@ -1,5 +1,7 @@
 package com.mycompany.taller.Model;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 import javax.persistence.Basic;
@@ -9,23 +11,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  * 
  * @author Agustin, Juan y Ana
  */
 @Entity
-public abstract class Usuario {
+public class Usuario implements Serializable {
     
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    private String idUsuario;
+    private long idUsuario;
     @Basic
     private String nombre;
     private String telefono;
-    
-    @Temporal(TemporalType.DATE)
-    private LocalTime fechaCumpleanios;
+    private LocalDate fechaCumpleanios;
     
     @Basic
     private String correo;
@@ -33,12 +34,13 @@ public abstract class Usuario {
     private String genero;
     private String rol;
     
+    @Transient
     private static final String[] roles = {"Administrador", "Maitre", "Mesero", "Recepcionista", "Usuario"};
     
     public Usuario() {
     }
     
-    public Usuario(String nombre, String telefono, LocalTime fechaCumple, String correo, String contrasenia, String genero, String rolU) {
+    public Usuario(String nombre, String telefono, LocalDate fechaCumple, String correo, String contrasenia, String genero, String rolU) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.fechaCumpleanios = fechaCumple;
@@ -46,10 +48,9 @@ public abstract class Usuario {
         this.contrasenia = contrasenia;
         this.genero = genero;
         this.rol = rolU;
-        this.idUsuario = UUID.randomUUID().toString();
     }
     
-    public Usuario(String nombre, String telefono, LocalTime fechaCumple, String correo, String contrasenia, String genero, String rolU, String idUsuario) {
+    public Usuario(String nombre, String telefono, LocalDate fechaCumple, String correo, String contrasenia, String genero, String rolU, long idUsuario) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.fechaCumpleanios = fechaCumple;
@@ -75,11 +76,11 @@ public abstract class Usuario {
     public void setGenero(String genero) {
         this.genero = genero;
     }
-    public void setIdUsuario(String idUsuario) {
+    public void setIdUsuario(long idUsuario) {
         this.idUsuario = idUsuario;
     }
     
-    public void setFechaCumpleanios(LocalTime fechaCumpleanios) {
+    public void setFechaCumpleanios(LocalDate fechaCumpleanios) {
         this.fechaCumpleanios = fechaCumpleanios;
     }
 
@@ -95,7 +96,7 @@ public abstract class Usuario {
         return telefono;
     }
 
-    public LocalTime getFechaCumpleanios() {
+    public LocalDate getFechaCumpleanios() {
         return fechaCumpleanios;
     }
 
@@ -111,7 +112,7 @@ public abstract class Usuario {
         return genero;
     }
 
-    public String getIdUsuario() {
+    public long getIdUsuario() {
         return idUsuario;
     }
 

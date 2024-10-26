@@ -1,4 +1,5 @@
 package com.mycompany.taller.Model;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -29,7 +30,7 @@ public class Empleado extends Usuario {
      * @param pass
      * 
      */
-    public Empleado(String name, String tel, LocalTime fechaCumple, String email, String pass, String rol, String genero) {
+    public Empleado(String name, String tel, LocalDate fechaCumple, String email, String pass, String rol, String genero) {
         super(name, tel, fechaCumple, email, pass, rol, genero);
         this.reservas = Reserva.getListaReservas();
         Empleado.listaEmpleados.add(this);
@@ -45,7 +46,7 @@ public class Empleado extends Usuario {
      * @param genero
      * @param idUsuario 
      */
-    public Empleado(String name, String tel, LocalTime fechaCumple, String email, String pass, String rol, String genero, String idUsuario){
+    public Empleado(String name, String tel, LocalDate fechaCumple, String email, String pass, String rol, String genero, long idUsuario){
         super(name, tel, fechaCumple, email, pass, rol, genero, idUsuario);
         
     }
@@ -78,7 +79,7 @@ public class Empleado extends Usuario {
     public String getRolEmpleado() {
         return this.getRol();
     }
-    public String getIdEmpleado() {
+    public long getIdEmpleado() {
         return this.getIdUsuario();
     }
 

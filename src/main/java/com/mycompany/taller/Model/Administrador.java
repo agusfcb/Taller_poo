@@ -41,7 +41,7 @@ public class Administrador extends Empleado{
      * @param pass
      * @param genero 
      */
-    public Administrador(String name, String tel, LocalTime fechaCumple, String email, String pass, String genero) {
+    public Administrador(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero) {
         super(name, tel, fechaCumple, email, pass, "Administrador", genero);
     }
     
@@ -54,7 +54,7 @@ public class Administrador extends Empleado{
      * @param genero
      * @param idUs 
      */
-    public Administrador(String name, String tel, LocalTime fechaCumple, String email, String pass, String genero, String idUs) {
+    public Administrador(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, long idUs) {
         super(name, tel, fechaCumple, email, pass, "Administrador", genero, idUs);
     }
 
@@ -79,10 +79,10 @@ public class Administrador extends Empleado{
      * @param nuevoRol
      * @return 
      */
-    private boolean cambiarRol(String idUsuario, String nuevoRol) {
+    private boolean cambiarRol(long idUsuario, String nuevoRol) {
         ArrayList<Empleado> empleados = Empleado.getListaEmpleados();
         for (Usuario extUsu : empleados){
-            if(extUsu.getIdUsuario().equals(idUsuario)){
+            if(String.valueOf(extUsu.getIdUsuario()).equals(String.valueOf(idUsuario))){
                 extUsu.setRol(nuevoRol);
                 return true;
             }
@@ -95,7 +95,7 @@ public class Administrador extends Empleado{
      * @param nuevoRol
      * @return 
      */
-    public boolean editarRol(String idUsuario, String nuevoRol) {
+    public boolean editarRol(long idUsuario, String nuevoRol) {
         return this.cambiarRol(idUsuario, nuevoRol);
     }
 
@@ -121,7 +121,7 @@ public class Administrador extends Empleado{
      * @param res 
      */
     public void addReserva(Reserva res) {
-        this.listaReservas.addLast(res);
+        this.listaReservas.add(res);
     }
     
     /**
@@ -129,7 +129,7 @@ public class Administrador extends Empleado{
      * @param empleado 
      */
     public static void addEmpleado(Empleado empleado){
-        Administrador.listaEmpleados.addLast(empleado);    
+        Administrador.listaEmpleados.add(empleado);    
     }
     
     /**
@@ -205,7 +205,7 @@ public class Administrador extends Empleado{
      * @param fechaEsp 
      */
     public void agregarDiaEspecial(LocalDate fechaEsp){
-        Reserva.getDiasEspeciales().addLast(fechaEsp);
+        Reserva.getDiasEspeciales().add(fechaEsp);
     }
     
     /**
@@ -218,7 +218,7 @@ public class Administrador extends Empleado{
      * @param gen
      * @return 
      */
-    public void crearEmpleado(String name, String tel, LocalTime fechaCumple, String email, String pass, String rol, String gen){
+    public void crearEmpleado(String name, String tel, LocalDate fechaCumple, String email, String pass, String rol, String gen){
         switch(rol){
             case "Maitre":
                 Maitre nuevoMaitre = new Maitre(name, tel, fechaCumple, email, pass, gen);
@@ -241,18 +241,18 @@ public class Administrador extends Empleado{
         }
     }
     
-    public Empleado buscarEmpleado(String idEmpleado){
+    public Empleado buscarEmpleado(long idEmpleado){
         for(Empleado extEmpleado : Administrador.getListaEmpleados()){
-            if(extEmpleado.getIdUsuario().equals(idEmpleado)){
+            if(String.valueOf(extEmpleado.getIdUsuario()).equals(String.valueOf(idEmpleado))){
                 return extEmpleado;
             }
         }
         return null;
     }
     
-    public boolean eliminarEmpleado(String idEmpleado){
+    public boolean eliminarEmpleado(long idEmpleado){
         for(Empleado extEmpleado : Administrador.getListaEmpleados()){
-            if(extEmpleado.getIdUsuario().equals(idEmpleado)){
+            if(String.valueOf(extEmpleado.getIdUsuario()).equals(String.valueOf(idEmpleado))){
                 Administrador.getListaEmpleados().remove(extEmpleado);
                 return true;
             }
@@ -269,7 +269,7 @@ public class Administrador extends Empleado{
      * @param evento 
      */
     public static void agregarEvento(Evento evento){
-        Administrador.listaEventos.addLast(evento);    
+        Administrador.listaEventos.add(evento);    
     }
     
     /**

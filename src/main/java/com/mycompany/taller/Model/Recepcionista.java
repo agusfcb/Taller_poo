@@ -22,11 +22,11 @@ public class Recepcionista extends Empleado {
      * @param email
      * @param pass 
      */
-    public Recepcionista(String name, String tel, LocalTime fechaCumple, String email, String pass, String genero) {
+    public Recepcionista(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero) {
         super(name, tel, fechaCumple, email, pass, "Recepcionista", genero);
     }
     //Corregido: saque el parametro String rol, ya que esta escrito "Recepcionista" no lo necesita en el constructor
-    public Recepcionista(String name, String tel, LocalTime fechaCumple, String email, String pass, String genero, String idUsuario) {
+    public Recepcionista(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, long idUsuario) {
         super(name, tel, fechaCumple, email, pass, "Recepcionista", genero, idUsuario);
     }
 

@@ -1,4 +1,5 @@
 package com.mycompany.taller.Model;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -12,10 +13,10 @@ public class Mesero extends Empleado {
     public Mesero() {
         super();
     }
-    public Mesero(String name, String tel, LocalTime fechaCumple, String email, String pass, String genero) {
+    public Mesero(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero) {
         super(name, tel, fechaCumple, email, pass, "Mesero", genero);
     }
-    public Mesero(String name, String tel, LocalTime fechaCumple, String email, String pass, String genero, String idUsuario){
+    public Mesero(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, long idUsuario){
         super(name, tel, fechaCumple, email, pass, "Maitre", genero, idUsuario);
     }
 

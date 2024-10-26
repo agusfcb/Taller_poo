@@ -211,6 +211,7 @@ public class Reportes {
             // Suponiendo que tu método toString() de Reserva incluye el nombre del cliente
             if (reservaString.contains(clie.getNombre())) { // Comprobar si el nombre del cliente está en la cadena
                 historialReservas.add(reservaString); // Agregar la representación en cadena de la reserva
+            }
         }
         return historialReservas;
     }
@@ -226,6 +227,7 @@ public class Reportes {
         if(historialReservas.isEmpty()) {
            return "No hay reservas en el historial para el cliente " + clie.getNombre() + ".";
         }
+        
         String detalles = "Historial de reservas para el cliente " + clie.getNombre() + ":\n";
         
         for(String reservaString : historialReservas){
@@ -374,6 +376,7 @@ public class Reportes {
                 invierno += 1;
             } else if (mes == Month.SEPTEMBER || mes == Month.OCTOBER || mes == Month.NOVEMBER) {
                 primavera += 1;
+            }
         }
         // Determinar la estación con más clientes
         int maxClientes = Math.max(Math.max(primavera, verano), Math.max(otoño, invierno));

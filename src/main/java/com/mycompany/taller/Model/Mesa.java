@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  * 
@@ -25,9 +26,13 @@ public class Mesa {
     private Integer capacidad;
     private String ubicacion;
     
+    @Transient
     private ArrayList<Reserva> reservasMesa;
+    @Transient
     private static final ArrayList<String> ubicacionesDisponibles = new ArrayList<>(Arrays.asList("Interior A", "Interior B", "Interior C", "Patio A", "Patio B"));
+    @Transient
     private static ArrayList<Mesa> mesasExistentes = new ArrayList<>();
+    @Transient
     private static ArrayList<Integer> capacidadEstandar = new ArrayList<>(Arrays.asList(4, 8, 12));
 
     public Mesa() {

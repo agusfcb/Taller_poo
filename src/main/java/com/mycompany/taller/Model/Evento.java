@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 /**
  *
  * @author Agus
@@ -29,9 +30,9 @@ public class Evento {
     @Temporal(TemporalType.TIME)
     private LocalTime horarioDesde;
     @Temporal(TemporalType.TIME)
-    
     private LocalTime horarioHasta;
     private Administrador adminEvento;
+    @Transient
     private ArrayList<Reserva> reservaEvento = new ArrayList<>();
     
     
@@ -145,7 +146,7 @@ public class Evento {
      * @param res objeto del tipo Reserva para agregar a la lista de reservas del evento
      */
     public void agregarReservaEvento(Reserva res){
-        this.reservaEvento.addLast(res);
+        this.reservaEvento.add(res);
     }
     
     /**
@@ -353,7 +354,7 @@ public class Evento {
         for (Mesa copiar : mesas) {
             for (String num : numerosMesas){
                 if (copiar.getNumero().equals(num)){
-                    mesasUbicacion.addLast(copiar);
+                    mesasUbicacion.add(copiar);
                 }
             }
         }
