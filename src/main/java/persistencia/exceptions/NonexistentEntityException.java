@@ -1,4 +1,4 @@
-package com.mycompany.taller.IGU.exceptions;
+package persistencia.exceptions;
 
 public class NonexistentEntityException extends Exception {
     public NonexistentEntityException(String message, Throwable cause) {
