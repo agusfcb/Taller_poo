@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Agus
+ * @author Agustin y Juan
  */
 public class Controladora {
     private Usuario user;

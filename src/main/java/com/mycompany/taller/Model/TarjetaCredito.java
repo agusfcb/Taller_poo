@@ -113,11 +113,9 @@ public class TarjetaCredito {
     
     //VALIDAR CODIGO DE VERIFICACION DEBE SER UN METODO QUE VALIDE 3 DIGITOS NUMERICOS
     
+
     /**
-     * Este es un metodo que se colocara directamente luego del loggin de forma que tome la fecha cada dia
-     * Al iniciar este metodo buscara todas las reservas del dia anterior que no tuvieron asistencia y les asignara una multa
-     * @param ArrayList<Reserva> la lista de todas las reservas del dia anterior al dia actual
-     * @return void
+     * 
      */
     public void agregarMulta(){
         this.multa = "u$d 50";

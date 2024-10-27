@@ -34,10 +34,13 @@ public class Usuario implements Serializable {
     private String genero;
     private String rol;
     
+    public static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+    
     @Transient
     private static final String[] roles = {"Administrador", "Maitre", "Mesero", "Recepcionista", "Usuario"};
     
     public Usuario() {
+        Usuario.listaUsuarios.add(this);
     }
     
     public Usuario(String nombre, String telefono, LocalDate fechaCumple, String correo, String contrasenia, String genero, String rolU) {
@@ -48,6 +51,7 @@ public class Usuario implements Serializable {
         this.contrasenia = contrasenia;
         this.genero = genero;
         this.rol = rolU;
+        Usuario.listaUsuarios.add(this);
     }
     
     public Usuario(String nombre, String telefono, LocalDate fechaCumple, String correo, String contrasenia, String genero, String rolU, long idUsuario) {
@@ -59,6 +63,15 @@ public class Usuario implements Serializable {
         this.genero = genero;
         this.rol = rolU;
         this.idUsuario = idUsuario;
+        Usuario.listaUsuarios.add(this);
+    }
+
+    public static ArrayList<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public static void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
+        Usuario.listaUsuarios = listaUsuarios;
     }
     
     public void setNombre(String nombre) {

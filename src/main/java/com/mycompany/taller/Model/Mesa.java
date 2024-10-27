@@ -15,7 +15,7 @@ import javax.persistence.Transient;
 
 /**
  * 
- * @author Agus y Juan
+ * @author Agustin y Juan
  */
 @Entity
 public class Mesa implements Serializable {
@@ -112,10 +112,10 @@ public class Mesa implements Serializable {
         this.reservasMesa.add(resv);
     }
 
-    public void removerMesa(String num){
+    public void removerMesa(long num){
         ArrayList<Mesa> mesasTotales = Mesa.getMesasExistentes();
         for(Mesa ext : mesasTotales){
-            if(ext.getNumero().equals(num)){
+            if(String.valueOf(ext.getNumero()).equals(String.valueOf(num))){
                 Mesa.mesasExistentes.remove(ext);
             }
         }

@@ -1,8 +1,10 @@
 package com.mycompany.taller.Model;
 import java.time.*;
 import java.util.*;
+
 /**
  * 
+ * @author Agustin y Juan
  */
 public class Recepcionista extends Empleado {
 
@@ -15,17 +17,10 @@ public class Recepcionista extends Empleado {
         super();
     }
 
-    /**
-     * Constructor parametrizado
-     * @param name
-     * @param tel
-     * @param email
-     * @param pass 
-     */
     public Recepcionista(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero) {
         super(name, tel, fechaCumple, email, pass, "Recepcionista", genero);
     }
-    //Corregido: saque el parametro String rol, ya que esta escrito "Recepcionista" no lo necesita en el constructor
+
     public Recepcionista(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, long idUsuario) {
         super(name, tel, fechaCumple, email, pass, "Recepcionista", genero, idUsuario);
     }
@@ -39,10 +34,10 @@ public class Recepcionista extends Empleado {
     }
     
     /**
-     * Metodo para buscar listas de reservas por una fecha y hora especifica
-     * @param fecha
-     * @param hora
-     * @return Array<Reserva>
+     * Metodo para buscar las reservas por una fecha y hora especifica
+     * @param fecha fecha de las reservas
+     * @param hora hora de las reservas
+     * @return array de las reservas de una fecha y hora
      */
     public ArrayList<Reserva> buscarReservas(LocalDate fecha, LocalTime hora) {
         // Ordena las reservas por fecha
@@ -69,41 +64,44 @@ public class Recepcionista extends Empleado {
         return reservasEncontradas;
 
     }
+    
     /**
      * Metodo para tomar los datos de una fecha de la reserva
-     * @param fecha
-     * @param hora 
+     * @param fecha fecha
+     * @param hora hora
      */
     public void tomarDatosFecha(LocalDate fecha, LocalTime hora) {
         System.out.println("Fecha y hora recibidas: " + fecha + "" + hora);
     }
     /**
      * Metodo para buscar las reservas por ID
-     * @param idReserva
-     * @return Reserva
+     * @param idReserva id de la reserva a buscar
+     * @return objeto del tipo Reserva
      */
-    private Reserva buscarId(String idReserva) {
+    private Reserva buscarId(long idReserva) {
         for(Reserva reserva : this.getReservas()) {
-            if (reserva.getIdReserva().equals(idReserva)) {
+            if (String.valueOf(reserva.getIdReserva()).equals(String.valueOf(idReserva))) {
                 return reserva;
             }
         }
         return null;
     }
+    
     /**
      * Metodo para tomar el ID de una reserva
-     * @param idReserva
-     * @return Reserva
+     * @param idReserva id de la reserva
+     * @return objeto del tipo Reserva
      */
-    public Reserva tomarID(String idReserva) {
+    public Reserva tomarID(long idReserva) {
         return buscarId(idReserva);
     }
+    
     /**
      * Metodo para cambiar el estado de la reserva según el ID
-     * @param id
-     * @param nuevoEstado 
+     * @param id id de la reserva
+     * @param nuevoEstado nuevo estado de la reserva
      */
-    public void cambiarEstadoReserva(String id, String nuevoEstado) {
+    public void cambiarEstadoReserva(long id, String nuevoEstado) {
         Reserva reserva = buscarId(id);
         if (reserva != null) {
             ArrayList<String> estadosPosibles = Reserva.getListaEstados();
@@ -126,9 +124,9 @@ public class Recepcionista extends Empleado {
     }
     /**
      * Metodo para confirmar la asistencia por ID
-     * @param id 
+     * @param id id de la reserva
      */
-    public void confirmarAsistencia(String id) {
+    public void confirmarAsistencia(long id) {
         Reserva reserva = buscarId(id);
         if (reserva != null) {
             String estadoActual = reserva.getEstadoAsist();
@@ -146,9 +144,9 @@ public class Recepcionista extends Empleado {
     }
     /**
      * Metodo privado para buscar el nombre del cliente en una lista de reservas
-     * @param nombre
-     * @param listRes
-     * @return Reserva
+     * @param nombre nombre del cliente11
+     * @param listRes array de reservas filtrada por dia y hora para realizar la busqueda
+     * @return objeto de tipo Reserva que se encontro asociado al cliente
      */
     private Reserva buscarNom(String nombre, ArrayList<Reserva> listRes) {
         for(Reserva reserva : listRes) {
@@ -160,20 +158,20 @@ public class Recepcionista extends Empleado {
     }
     /**
      * Metodo para tomar un nombre del cliente en una lista de reservas
-     * @param nombre
-     * @param listRes
-     * @return Reserva
+     * @param nombre nombre del cliente
+     * @param listRes array filtrado por dia y hora
+     * @return objeto del tipo Reserva asociado al cliente
      */
     public Reserva tomarNombre(String nombre, ArrayList<Reserva> listRes) {
         return buscarNom(nombre, listRes);
     }
     /**
      * Metodo para ver los comentarios de las reservas con respecto al ID
-     * @param idReserva
-     * @return String
+     * @param idReserva id de la reserva
+     * @return String del comentario de la reserva
     */
     @Override
-    public String verComentarios(String idReserva) {
+    public String verComentarios(long idReserva) {
         for(Reserva reserva : getReservas()) {
             if (reserva.getIdReserva().equals(idReserva)) {
                 return "Comentarios de la reserva " + idReserva + ": " + reserva.getComentarios();

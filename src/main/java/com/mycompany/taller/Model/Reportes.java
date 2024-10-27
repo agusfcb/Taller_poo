@@ -2,19 +2,16 @@ package com.mycompany.taller.Model;
 import java.util.*;
 import java.time.*;
 import java.time.temporal.TemporalAdjusters;
+
 /**
  * 
+ * @author Agustin y Juan
  */
 public class Reportes {
     private ArrayList<Reserva> reservas;
     private ArrayList<Administrador> administradores;
     private ESTACION estacion;
     
-    //Formato metodos:
-    /**
-     * @param String idReserva 
-     * @return
-     */
     public Reportes(){
         this.reservas = new ArrayList<>();
         this.administradores = new ArrayList<>();
@@ -47,10 +44,11 @@ public class Reportes {
     public void setEstacion(ESTACION estacion) {
         this.estacion = estacion;
     }
+    
     /**
      * Metodo privado para contar las reservas de un dia especifico
-     * @param fecha
-     * @return Integer el numero de reservas en esa fecha
+     * @param fecha fecha de interes
+     * @return devuelve el numero de reservas en esa fecha
      */
     private Integer contarReservasDia(LocalDate fecha) {
         int contador = 0;
@@ -63,8 +61,8 @@ public class Reportes {
     }
     /**
      * Metodo para mostrar las reservas 
-     * @param fecha
-     * @return String
+     * @param fecha fecha de interes
+     * @return devuelve la cantidad de reservas en formato String para presentar
      */
     public String mostrarReservasDia(LocalDate fecha) {
         Integer totalReservas = contarReservasDia(fecha);
@@ -76,13 +74,13 @@ public class Reportes {
                 detalles += reserva.toString() + "\n";
             }
         }
-        
         return detalles;
     }
+    
     /**
-     * 
-     * @param fecha
-     * @return 
+     * Metodo para contar reservas de toda una semana
+     * @param fecha fecha de algun dia de la semana de interes
+     * @return devuelve el resultado del conteo de las reservas de la semana de interes
      */
     private Integer contarReservasSemana(LocalDate fecha) {
         int contador = 0;
@@ -102,7 +100,11 @@ public class Reportes {
         
     }
     
-    
+    /**
+     * Metodo para mostrar las reservas de la semana
+     * @param fecha fecha de un dia de la semana de interes
+     * @return devuelve un String para presentar los resultados del conteo
+     */
     public String mostrarReservasSemana(LocalDate fecha) {
         Integer totalReservas = contarReservasSemana(fecha);
         String detalles = "Reservas para la semana " + fecha + ":\n";
@@ -122,10 +124,11 @@ public class Reportes {
 
         return detalles;
     }
+    
     /**
      * Metodo para contar las reservas por mes
-     * @param fecha
-     * @return Integer
+     * @param fecha fecha de un dia cualquiera del mes de interes
+     * @return devuelve un entero resultado del conteo
      */
     private Integer contarReservasMes(LocalDate fecha) {
         int contador = 0;
@@ -141,9 +144,9 @@ public class Reportes {
         return contador;  
     }
     /**
-     * 
-     * @param fecha
-     * @return 
+     * Metodo para mostrar las reservas del mes
+     * @param fecha fecha de un dia cualquiera del mes de interes
+     * @return devuelve un String en formato para presentar los resultados del conteo
      */
     public String mostrarReservasMes(LocalDate fecha) {
         Integer totalReservas = contarReservasMes(fecha);
@@ -160,8 +163,8 @@ public class Reportes {
     
     /**
      * Metodo privado para buscar las reservas futuras de un cliente
-     * @param clie
-     * @return ArrayList<Reserva>
+     * @param clie objeto de tipo Cliente
+     * @return devuelve un array de las reservas futuras del cliente
      */
     private ArrayList<Reserva> buscarReservasFuturasCliente(Cliente clie) {
         ArrayList<Reserva> reservasFuturas = new ArrayList<>();
@@ -177,8 +180,8 @@ public class Reportes {
     
     /**
      * Metodo para mostrar las reservas futuras de un cliente si es que tiene
-     * @param clie
-     * @return String
+     * @param clie objeto del tipo Cliente
+     * @return devuelve un String en formato para presentar el resutlado del conteo
      */
     public String mostrarReservasFuturasCliente(Cliente clie) {
         ArrayList<Reserva> reservasFuturas = buscarReservasFuturasCliente(clie);
@@ -190,10 +193,11 @@ public class Reportes {
         // Operador ternario 
         return reservasFuturas.isEmpty() ? "No hay reservas futuras para este cliente" : detalles;
     }
+    
     /**
      * Metodo privado para buscar el historial de reservas de un cliente
-     * @param clie
-     * @return 
+     * @param clie objeto del tipo cliente
+     * @return devuelve un array con las reservas en formato String de un cliente en el año en transcurso
      */
     private ArrayList<String> buscarHistorialReservas(Cliente clie) {
         ArrayList<String> historialReservas = new ArrayList<>();
@@ -216,12 +220,18 @@ public class Reportes {
         return historialReservas;
     }
     /**
-     * 
-     * @param clie
-     * @return String
+     * Metodo publico para mostrar el historial de reservas de un cliente
+     * @param idClie id del cliente
+     * @return devuelve un String para presentar las reservas del cliente
      */
-    public String mostrarHistorialReservas(Cliente clie){
-
+    public String mostrarHistorialReservas(long idClie){
+        Cliente clie = null;
+        for (Usuario extCliente : Usuario.getListaUsuarios()){
+            if(String.valueOf(extCliente.getIdUsuario()).equals(String.valueOf(idClie))){
+                clie = (Cliente) extCliente;
+                break;
+            }
+        }
         ArrayList<String> historialReservas = buscarHistorialReservas(clie);
         
         if(historialReservas.isEmpty()) {
@@ -237,8 +247,8 @@ public class Reportes {
     }
         
     /**
-     * 
-     * @return 
+     * Metodo privado para encontrar al cliente con mas asistencias
+     * @return devuelve un objeto del tipo Cliente resultado de la busqueda
      */
     private Cliente clienteMasAsistencia() {
         ArrayList<Cliente> clientes = new ArrayList<>();
@@ -267,8 +277,8 @@ public class Reportes {
         return clienteMasAsistente;
     }
     /**
-     * 
-     * @return 
+     * Metodo publico para buscar al cliente con mas asistencia
+     * @return devuelve un String para presentar al cliente con mas asistencia
      */
     public String mostrarClienteMasAsistencia() {
         Cliente cliente = clienteMasAsistencia();
@@ -284,9 +294,10 @@ public class Reportes {
         }
         return "El cliente con más asistencias es: " + cliente.getNombre() + " con " + reservasDelCliente + " reservas.";
     }
+    
     /**
      * Metodo privado que devuelve a los clientes que han realizado reservas pero no han asistido en el ultimo año
-     * @return 
+     * @return devuelve un array de objetos de tipo Cliente
      */
     private ArrayList<Cliente> clientesSinAsistenciaAño() {
         ArrayList<Cliente> clientesSinAsistencia = new ArrayList<>();
@@ -306,6 +317,10 @@ public class Reportes {
         return clientesSinAsistencia;   
     }
     
+    /**
+     * Metodo publico para mostrar a los clientes sin asistencias confimadas aun en el transcurso del año
+     * @return devuelve un String para presentar la lista de clientes sin asistencias confirmadas
+     */
     public String mostrarClientesSinAsistencia() {
         ArrayList<Cliente> clientes = clientesSinAsistenciaAño();
         String detalles = "Clientes sin asistencia en el ultimo año:\n";
@@ -315,11 +330,12 @@ public class Reportes {
         }
         return detalles;
     }
+    
     /**
-     * 
-     * @param desde
-     * @param hasta
-     * @return 
+     * Metodo privado para buscar las reservas en un rango de fecha
+     * @param desde fecha de inicio de la busqueda
+     * @param hasta fecha de finalizacion de la busqueda
+     * @return devuelve un array de las reservas en el rango de fechas
      */
     private ArrayList<Reserva> buscarListaReservasRango(LocalDate desde, LocalDate hasta) {
         ArrayList<Reserva> reservasEnRango = new ArrayList<>();
@@ -331,11 +347,12 @@ public class Reportes {
         }
         return reservasEnRango;
     }
+    
     /**
-     * 
-     * @param desde
-     * @param hasta
-     * @return 
+     *Metodo publico para buscar las reservas en un rango de fechas
+     * @param desde fecha limite inferior
+     * @param hasta fecha limite superior
+     * @return devuelve un array de String en formato para presentar las reservas en el rango de fechas
      */
     public ArrayList<String> mostrarListaReservasRango(LocalDate desde, LocalDate hasta) {
         ArrayList<Reserva> reservasEnRango = buscarListaReservasRango(desde, hasta);
@@ -352,9 +369,10 @@ public class Reportes {
         }
         return detallesReservas;
     }
+    
     /**
-     * 
-     * @return String
+     * Metodo publico para presentar la estacion con mas clientes
+     * @return devuelve un String con formato para presentar la estacion con mas clientes
      */
     public String MostrarEstacionConMasClientes() {
         int primavera = 0;

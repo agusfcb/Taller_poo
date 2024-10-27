@@ -15,14 +15,14 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 /**
  *
- * @author Agus
+ * @author Agustin y Juan
  */
 @Entity
 public class Evento {
     
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    private String idReserva;
+    private long idEvento;
     @Basic
     private String nombreEvento;
     @Temporal(TemporalType.DATE)
@@ -40,12 +40,12 @@ public class Evento {
     
     /**
      * Constructor con mesas de una misma ubicacion
-     * @param nombre
-     * @param fechaEvento
-     * @param horaInicio
-     * @param horaFin
-     * @param ubic
-     * @param adminEv 
+     * @param nombre nombre del evento
+     * @param fechaEvento fecha del evento
+     * @param horaInicio hora del primer turno
+     * @param horaFin hora del ultimo turno
+     * @param ubic ubicacion de las mesas
+     * @param adminEv administrador que creo el evento
      */
     public Evento(String nombre, LocalDate fechaEvento, LocalTime horaInicio, LocalTime horaFin, String ubic, Administrador adminEv) {
         this.nombreEvento = nombre;
@@ -58,12 +58,12 @@ public class Evento {
     
     /**
      * Constructor por lista de mesas de diferentes ubicaciones
-     * @param nombre
-     * @param fechaEvento
-     * @param horaInicio
-     * @param horaFin
-     * @param adminEv
-     * @param numerosMesas 
+     * @param nombre nombre del evento
+     * @param fechaEvento fecha del evento
+     * @param horaInicio hora del primer turno
+     * @param horaFin hora del ultimo turno
+     * @param mesasElegidas array de las mesas elegidas
+     * @param adminEv administrador que creo el evento
      */
     public Evento(String nombre, LocalDate fechaEvento, LocalTime horaInicio, LocalTime horaFin, ArrayList<String> mesasElegidas ,Administrador adminEv) {
         this.nombreEvento = nombre;
@@ -76,13 +76,12 @@ public class Evento {
     
     /**
      * Constructor para la persistencia
-     * @param nombre
-     * @param fechaEvento
-     * @param horaInicio
-     * @param horaFin
-     * @param adminEv
-     * @param listaReservasEvento
-     * @param listaMesasEvento 
+     * @param nombre del evento
+     * @param fechaEvento fecha del evento
+     * @param horaInicio hora del primer turno
+     * @param horaFin hora del ultimo turno
+     * @param adminEv administrador que creo el evento
+     * @param listaReservasEvento lista de las reservas asociadas al evento
      */
     public Evento(String nombre, LocalDate fechaEvento, LocalTime horaInicio, LocalTime horaFin,Administrador adminEv, ArrayList<Reserva> listaReservasEvento){
         this.nombreEvento = nombre;
@@ -92,7 +91,15 @@ public class Evento {
         this.adminEvento = adminEv;
         this.setReservas(listaReservasEvento);
     }    
+    
+    public long getIdReserva() {
+        return idEvento;
+    }
 
+    public void setIdReserva(long idReserva) {
+        this.idEvento = idReserva;
+    }
+    
     public String getNombreEvento() {
         return nombreEvento;
     }
@@ -199,10 +206,9 @@ public class Evento {
 
     /**
      * Metodo para ver filtrar por dia las reservas
-     *
-     * @param ArrayList<Reserva> listaReservas
-     * @param String fecha
-     * @return ArrayList<Reserva>
+     * @param listaReservas lista de todas las reservas
+     * @param String fecha para filtrar reservas
+     * @return array de objetos Reserva
      */
     private static ArrayList<Reserva> filtroDia(ArrayList<Reserva> listaReservas, LocalDate fecha) {
 
@@ -223,12 +229,11 @@ public class Evento {
     }
 
     /**
-     * 
-     * @param ubi
-     * @param listaAux
-     * @param horaDesde
-     * @param horaHasta
-     * @return 
+     * Metodo para filtrar por hora
+     * @param listaAux lista de reservas filtradas por fecha
+     * @param horaDesde horario del primero turno que se quiere reservar
+     * @param horaHasta horario del ultimo turno que se quiere reservar
+     * @return array de objetos Reserva entre las horas especificadas
      */
     private static ArrayList<Reserva> filtroHora(ArrayList<Reserva> listaAux, LocalTime horaDesde, LocalTime horaHasta) {
         ArrayList<LocalTime> horariosEspeciales = Reserva.getHorariosEventos();
@@ -252,25 +257,26 @@ public class Evento {
     }
     
     //METODOS PARA RESERVAS DE EVENTO POR UBICACION
+    
     /**
-     * Metodo para comprobar si todas las mesas de una ubicacion estan disponibles en un dia y horario eespecifico
-     * @param fechaE
-     * @param horaInicio
-     * @param horaFin
-     * @param ubicacion
-     * @return 
+     * Metodo publico para comprobar si todas las mesas de una ubicacion estan disponibles en un dia y horario eespecifico
+     * @param fechaE fecha del evento
+     * @param horaInicio hora del primer turno
+     * @param horaFin hora de ultimo turno
+     * @param ubicacion ubicacion que se busca si estan sus mesas disponibles
+     * @return true si todas las mesas de la ubicacion estan disponibles, en caso contrario false
      */
     public static boolean controlUbicacion(LocalDate fechaE, LocalTime horaInicio, LocalTime horaFin, String ubicacion){
         return Evento.comprobarUbicacionDisponible(fechaE, horaInicio, horaFin, ubicacion);
     }
     
     /**
-     * Metodo que comprueba si hay reservas en una ubicacion con parametros del dia y rango horario
-     * @param fechaE
-     * @param horaInicio
-     * @param horaFin
-     * @param ubicacion
-     * @return 
+     * Metodo privado para comprobar si todas las mesas de una ubicacion estan disponibles en un dia y horario eespecifico
+     * @param fechaE fecha del evento
+     * @param horaInicio hora del primer turno
+     * @param horaFin hora de ultimo turno
+     * @param ubicacion ubicacion que se busca si estan sus mesas disponibles
+     * @return true si todas las mesas de la ubicacion estan disponibles, en caso contrario false
      */
     private static boolean comprobarUbicacionDisponible(LocalDate fechaE, LocalTime horaInicio, LocalTime horaFin, String ubicacion) {
         
@@ -304,14 +310,13 @@ public class Evento {
     }
     
     /**
-     * Metodo para crear reservas sobre un evento
+     * Metodo privado para crear reservas para un evento con toda una ubicacion disponible
      * @param fecha Fecha del evento
      * @param horaI Hora de inicio del evento
      * @param horaF Hora de fin del evento
      * @param ubicacion Ubicacion de las mesas que se bloquearan
-     * @return Devuelve la lista de las nuevas reservas creadas para el evento
      */
-    public void crearEventoPorUbicacion(LocalDate fecha, LocalTime horaI, LocalTime horaF, String ubicacion, Administrador admin){
+    private void crearEventoPorUbicacion(LocalDate fecha, LocalTime horaI, LocalTime horaF, String ubicacion, Administrador admin){
         
         ArrayList<LocalTime> horarioUtil = (ArrayList<LocalTime>) Reserva.getHorariosEventos().clone(); 
 
@@ -339,12 +344,11 @@ public class Evento {
     }
     
     /**
-     * Metodo para crear reservas sobre un evento
+     * Metodo privado para crear reservas sobre un evento por array de mesas elegidas
      * @param fecha Fecha del evento
      * @param horaI Hora de inicio del evento
      * @param horaF Hora de fin del evento
      * @param numerosMesa Array de los numeros de cada mesa a reservar
-     * @return Devuelve la lista de las nuevas reservas creadas para el evento
      */
     private void crearEventoPorMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> numerosMesas, Administrador admin){
         ArrayList<Mesa> mesas = Mesa.getMesasExistentes();
@@ -374,10 +378,11 @@ public class Evento {
     
     /**
      * Metodo publico para crear eventos por ubicaciones completas disponibles
-     * @param fecha
-     * @param horaI
-     * @param horaF
-     * @param NumerosMesas 
+     * @param fecha fecha del evento
+     * @param horaI hora del primer turno
+     * @param horaF hora del ultimo turno
+     * @param ubicacion ubicacion de las mesas a reservar
+     * @param adminE administrador que crea el evento
      */
     public void crearEventoUbicacion(LocalDate fecha, LocalTime horaI, LocalTime horaF, String ubicacion, Administrador adminE){
         this.crearEventoPorUbicacion(fecha, horaI, horaF, ubicacion, adminE);
@@ -386,17 +391,18 @@ public class Evento {
     
     /**
      * Metodo publico para crear eventos por mesas disponibles
-     * @param fecha
-     * @param horaI
-     * @param horaF
-     * @param NumerosMesas 
+     * @param fecha fecha del evento
+     * @param horaI hora del primer turno
+     * @param horaF hora del ultimo turno
+     * @param NumerosMesas array de mesas a reservar
+     * @param adminE administrador que crea el evento
      */
     public void crearEventoMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> numerosMesas, Administrador adminE){
         this.crearEventoPorMesas(fecha, horaI, horaF, numerosMesas, adminE);
     }
 
     /**
-     * Metodo que libera las mesas asociadas
+     * Metodo privado que libera los recursos asociados al evento
      */
     private void elimEvento(){
         for (Reserva extRes : this.getReservaEvento()){
@@ -416,5 +422,10 @@ public class Evento {
     public void eliminarEvento(){
         this.elimEvento();
     }
-    
+
+    @Override
+    public String toString() {
+        return "Evento: " + "ID del evento: " + idEvento + "\nNombre del evento: " + nombreEvento + "\nFecha de evento: " + fechaEvento + "\nHorario de inicio" + horarioDesde + "\nUltimo turno: " + horarioHasta + "\nCreado por: " + adminEvento;
+    }
+
 }

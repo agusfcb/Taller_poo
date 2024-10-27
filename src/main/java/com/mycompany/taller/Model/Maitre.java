@@ -33,13 +33,13 @@ public class Maitre extends Empleado {
 
     /**
      * Metodo para ver los comentarios de las reservas con respecto al ID
-     * @param idReserva
-     * @return String
+     * @param idReserva id de la reserva de la cual se quiere ver el comentario
+     * @return String del comentario de la reserva
     */
     @Override
-    public String verComentarios(String idReserva) {
+    public String verComentarios(long idReserva) {
         for(Reserva reserva : getReservas()) {
-            if (reserva.getIdReserva().equals(idReserva)) {
+            if (String.valueOf(reserva.getIdReserva()).equals(String.valueOf(idReserva))) {
                 return "Comentarios de la reserva " + idReserva + ": " + reserva.getComentarios();
             }
         }

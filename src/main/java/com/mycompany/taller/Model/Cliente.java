@@ -24,23 +24,17 @@ public class Cliente extends Usuario {
     
     private static final ArrayList<String> opcionesCambios = new ArrayList<>(Arrays.asList("Nombre","Telefono","Correo","Contrasenia","Genero"));
     
-    /**
-     * Default constructor
-     */
+
     public Cliente() {
         super();
     }
-    /*
-     * Constructor parametrizado
-     */
+
     public Cliente(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero){
         super(name, tel, fechaCumple, email, pass, "Cliente", genero);
         this.agendaReservas = new ArrayList<Reserva>();
     }
     
-    /*
-     * Constructor para la persistencia
-     */
+    
     public Cliente(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, long idUser){
         super(name, tel, fechaCumple, email, pass, "Cliente", genero, idUser);
         this.agendaReservas = new ArrayList<Reserva>();
@@ -70,7 +64,6 @@ public class Cliente extends Usuario {
      * @param String coment Comentarios de la reserva
      * @param String cantidad Cantidad de comensales
      * @param Mesa mesa Mesa de la reserva
-     * @return void
      */
     public void crearReserva(LocalDate fecha, LocalTime hora, String coment, Integer cantidad,  Mesa mesa, TarjetaCredito tarjeta) {
         Reserva nuevaReserva = new Reserva(fecha, hora, coment, cantidad, mesa, this, tarjeta);
@@ -78,10 +71,10 @@ public class Cliente extends Usuario {
     
     /**
      * Metodo para cancelar una reserva determinada
-     * @param idReserva 
-     * @return boolean
+     * @param idReserva id de la reserva
+     * @return true si se cancelo con exito o false si no se cancelo la reserva
      */
-    public boolean cancelarReserva(String idReserva) {
+    public boolean cancelarReserva(long idReserva) {
         try {for (Reserva ext : this.agendaReservas){
             if (ext.getIdReserva().equals(idReserva)) {
                 ext.setEstado("Cancelado");
@@ -101,7 +94,7 @@ public class Cliente extends Usuario {
      * @param String fecha fecha de la nueva reserva se usa para crear una nueva reserva
      * @param String hora de la nueva reserva se usa para crear una nueva reserva
      * @param String capacidad se usa para crear una nueva reserva
-     * @return boolean
+     * @return boolean true si se modifico con exitos o false si no se modifico
      */
     public boolean modificarReserva(Reserva res, String option, ArrayList<Object> argument) {
         switch (option){
@@ -130,36 +123,35 @@ public class Cliente extends Usuario {
 
     /** 
      * Metodo para actualizar los datos del cliente
-     * @param String option
-     * @param String argumento
-     * @return
+     * @param option opcion elegida para realizar el cambio
+     * @param argument argumento con el cual se realiza el cambio
+     * @return true si se realizo con un cambio, en caso contrario false
      */
     public boolean actualizarInformacion(String option, String argumento) {
         switch (String.valueOf(option)) {
             case "Nombre":
                 this.setNombre(argumento);
-                break;
+                return true;
             case "Telefono":
                 this.setCorreo(argumento);
-                break;
+                return true;
             case "Correo":
                 this.setTelefono(argumento);
-                break;
+                return true;
             case "Contrasenia":
                 //Falta un metodo para validar la contrasenia
                 this.setContrasenia(argumento);
-                break;
+                return true;
             case "Genero":
                 this.setGenero(argumento);
-                break;
+                return true;
             default:
-                break;
+                return false;
         }
-        return true;
     }
     
     /** Devuelve el historial de reservas del cliente
-     * @return ArrayList<Reservas>
+     * @return array de arrays con la informacion de cada reserva del cliente lista para presentar
      */
     public ArrayList<ArrayList<String>> verHistorial() {
         ArrayList<String> datosReserva = new ArrayList<>();

@@ -15,8 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 /**
- * 
  * @author Agustin y Juan
  */
 @Entity
@@ -60,10 +60,12 @@ public class Reserva {
         LocalTime.parse("22:00", formatter), 
         LocalTime.parse("00:00", formatter),
         LocalTime.parse("02:00", formatter)));
+
+
+    public Reserva(){
+        Reserva.listaReservas.add(this);
+    }
     
-    /*
-    * Constructor para el cliente que hace la reserva
-    */
     public Reserva(LocalDate dia, LocalTime hora, String coment, Integer comensales ,Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
         this.idReserva = UUID.randomUUID().toString();
         this.dia = dia;
@@ -80,10 +82,6 @@ public class Reserva {
         tarjeta.agregarReser(this);
     }
     
-    
-    /*
-    *Constructor para el administrador que gestiona eventos
-    */
     public Reserva(LocalDate dia, LocalTime hora, Mesa mesa, Administrador admin) {
         this.idReserva = UUID.randomUUID().toString();
         this.clienteReserva = admin;
@@ -97,10 +95,6 @@ public class Reserva {
         mesa.agregarReserva(this);
     }
 
-        
-    /*
-    * Constructor para la persistencia
-    */
     public Reserva(String idReserva, LocalDate dia, LocalTime hora, String estado, String coment, Integer comensales, Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
         this.idReserva = idReserva;
         this.dia = dia;
@@ -117,9 +111,6 @@ public class Reserva {
         tarjeta.agregarReser(this);
     }
     
-    /*
-    *Constructor para la persistencia
-    */
     public Reserva(String idReserva, LocalDate dia, LocalTime hora, String estado, Mesa mesa, Administrador admin) {
         this.idReserva = idReserva;
         this.dia = dia;
@@ -226,10 +217,19 @@ public class Reserva {
         return diasEspeciales;
     }
     
+    /**
+     * Metodo para agregar una fecha como dia especial para habilitar extension de horarios
+     * @param esp fecha
+     */
     public static void addDiaEspecial(LocalDate esp){
         Reserva.diasEspeciales.add(esp);
     }
     
+    /**
+     * Metodo que devuelve los horarios ya sea dia ordinario o especial
+     * @param fecha fecha
+     * @return array de horarios en funcion de la fecha
+     */
     public static ArrayList<LocalTime> getHorarios(LocalDate fecha){
         for (LocalDate extDia : Reserva.diasEspeciales){
             if(extDia.toString().equals(fecha.toString())){
@@ -245,7 +245,7 @@ public class Reserva {
 
     /**
      * Metodo para cambiar los horarios en tiempo de ejecucion. Pendiente de mejorar paga guardar en persistencia los horarios
-     * @param horariosDiasEspeciales 
+     * @param horariosDiasEspeciales  array de horarios para setear los horarios disponibles en dias especiales
      */
     public static void setHorariosDiasEspeciales(ArrayList<LocalTime> horariosDiasEspeciales) {
         Reserva.horariosDiasEspeciales = horariosDiasEspeciales;
@@ -286,8 +286,8 @@ public class Reserva {
     }
     
     /**
-     * 
-     * @return 
+     * Metodo que devuelve el array de los horarios para eventos
+     * @return array de horarios de dias especiales
      */
     public static ArrayList<LocalTime> getHorariosEventos(){
         return Reserva.horariosDiasEspeciales;
@@ -332,6 +332,11 @@ public class Reserva {
         }
     }
     
+    /**
+     * Metodo que ordena un array de todas las reservas del dia en funcion de la hora
+     * @param reservasDia array con las reservas del dia
+     * @return devuelve un array ordenado de reservas
+     */
     public static ArrayList<Reserva> ordenarPorHora(ArrayList<Reserva> reservasDia){
         ArrayList<Reserva> listaOrdenada = reservasDia;
         Reserva aux1;
@@ -369,7 +374,6 @@ public class Reserva {
     
     // Metodos de busqueda de reservas creadas
     
-    
     /**
      * Metodo para buscar todas las reservas de una hora
      * @param reservasFecha Lista de todas las reservas de una fecha determinada
@@ -392,7 +396,6 @@ public class Reserva {
     * @param fechaDesde fecha limite inferior
     * @param fechaHasta fecha limite superior
     * @return devuelve un arraylist con formatos para imprimir todos los detalles de la reserva
-    * 
     */
     public static ArrayList<String> historialReservas(LocalDate fechaDesde, LocalDate fechaHasta) {
         
@@ -410,25 +413,24 @@ public class Reserva {
     }
     
     
-    
     // METODOS PARA LA BUSQUEDA DE MESAS LIBRES
     /**
      * Metodo publico para ver las mesas disponiles
      * @param fecha1 Fecha de interes
      * @param hora1 Hora de interes
      * @param capacidad Capacidad de la mesa de interes
-     * @return 
+     * @return devuelve un array de objetos Mesa
      */
     public static ArrayList<Mesa> verMesaDisponible(LocalDate fecha1, LocalTime hora1, String capacidad){
         return Reserva.buscarMesaDisponible(fecha1, hora1, capacidad);
     }
     
     
-    /** Metodo privado para encontrar mesas disponibles
+    /** Metodo privado para encontrar mesas disponibles en funcion de la fecha, hora y capacidad maxima de la mesa
      * @param String fecha1
      * @param String hora1
      * @param String capacidad
-     * @return ArrayList<Mesa>
+     * @return devuelve un array de las mesas disponibles en funcion de los parametros
      */
     private static ArrayList<Mesa> buscarMesaDisponible(LocalDate fecha1, LocalTime hora1, String capacidad) {
         // Control de que no se busque en una fecha anterior al mismo dia que se realiza la reserva
@@ -454,10 +456,10 @@ public class Reserva {
     }
 
     /**
-     * Metodo para ver filtrar por dia las reservas
-     * @param ArrayList<Reserva> listaReservas
-     * @param String fecha
-     * @return ArrayList<Reserva>
+     * Metodo para filtrar las reservas por dia
+     * @param listaReservas array de todas las reservas
+     * @param fecha fecha de filtro
+     * @return devuelve un array de reservas asociadas a una fecha
      */
     private static ArrayList<Reserva> filtroDia(ArrayList<Reserva> listaReservas, LocalDate fecha) {
         
@@ -478,12 +480,12 @@ public class Reserva {
     }
     
     /**
-     * Metodo para filtrar mesas disponibles por hora y capadidad de la mesa
-     * @param ArrayList<Mesa> mesasTotales
-     * @param ArrayList<Reserva> listaAux
-     * @param String hora
-     * @param String capacidad
-     * @return ArrayList<Mesa>
+     * Metodo para filtrar las mesas disponibles
+     * @param mesasTotales array de todas las mesas
+     * @param listaAux array de reservas filtradas previamente por dia
+     * @param hora hora de busqueda
+     * @param capacidad capacidad requerida de la mesa
+     * @return devuelve un array de objetos Mesa que pueden ser usados para una nueva reserva
      */
     private static ArrayList<Mesa> filtroHoraMesa(ArrayList<Mesa> mesasTotales, ArrayList<Reserva> listaAux, LocalTime hora, String capacidad) {
         ArrayList<Mesa> mesasCapacidad = new ArrayList<>();
@@ -507,8 +509,8 @@ public class Reserva {
     
     
     /**
-     * Metodo que busca todas las reservas del dia actual
-     * @return 
+     * Metodo privado que busca todas las reservas del dia actual
+     * @return devuelve un array de objetos Reserva asociados dia en transcurso
      */
     private static ArrayList<Reserva> buscarDia(){
         ArrayList<Reserva> reservasDelDia = new ArrayList<Reserva>();
@@ -524,7 +526,7 @@ public class Reserva {
     
     /**
      * Metodo publico que llama la logica para buscar las reservas del dia actual
-     * @return 
+     * @return devuelve un array de objetos Reserva asociados al dia en transcurso
      */
     public static ArrayList<Reserva> reservasDelDia(){
         ArrayList<Reserva> listaDelDia = Reserva.buscarDia();
