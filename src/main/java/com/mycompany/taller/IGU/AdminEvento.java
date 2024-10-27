@@ -9,7 +9,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-
+/**
+ * Interfaz grafica del adminsitrador para crear eventos
+ * @author Agustin y Juan
+ */
 public class AdminEvento extends javax.swing.JFrame {
 
     /**

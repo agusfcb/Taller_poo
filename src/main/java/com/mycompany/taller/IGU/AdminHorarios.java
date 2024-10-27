@@ -5,6 +5,10 @@
 package com.mycompany.taller.IGU;
 
 
+/**
+ * Interfaz grafica del administrador para editar los horarios
+ * @author Agustin y Juan
+ */
 public class AdminHorarios extends javax.swing.JFrame {
 
     /**

@@ -23,7 +23,7 @@ public class Administrador extends Empleado{
     
     private ArrayList<Reserva> listaReservaActualizada = new ArrayList<>();
     private static ArrayList<Evento> listaEventos = new ArrayList<>();
-    public ArrayList<Reserva> listaReservas = new ArrayList<>();
+    public ArrayList<Reserva> listaReservas;
     private static ArrayList<Empleado> listaEmpleados = new ArrayList<>();
     
     /**
@@ -31,6 +31,7 @@ public class Administrador extends Empleado{
      */
     public Administrador(){
         super();
+        this.listaReservas = new ArrayList<>();
     }
     
     /**
@@ -44,6 +45,7 @@ public class Administrador extends Empleado{
      */
     public Administrador(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero) {
         super(name, tel, fechaCumple, email, pass, "Administrador", genero);
+        this.listaReservas = new ArrayList<>();
     }
     
     /**
@@ -58,6 +60,7 @@ public class Administrador extends Empleado{
      */
     public Administrador(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, long idUs) {
         super(name, tel, fechaCumple, email, pass, "Administrador", genero, idUs);
+        this.listaReservas = new ArrayList<>();
     }
 
     public String getPermisos() {
@@ -223,13 +226,14 @@ public class Administrador extends Empleado{
     }
     
     /**
-     * Metodo para crear objetos empleados
-     * @param name nombre del empleado
-     * @param tel telefono del empleado
-     * @param email email del empleado
-     * @param pass contrasenia para el empleado
-     * @param rol rol del empleado
-     * @param gen genero del empleado
+     * Metodo para crear empleados
+     * @param name nombre
+     * @param tel telefono
+     * @param fechaCumple fecha de cumpleaños
+     * @param email email
+     * @param pass contraseña
+     * @param rol rol
+     * @param gen genero
      */
     public void crearEmpleado(String name, String tel, LocalDate fechaCumple, String email, String pass, String rol, String gen){
         switch(rol){
@@ -339,6 +343,7 @@ public class Administrador extends Empleado{
      * @param dia Fecha del evento
      * @param horaInicio hora del primer turno
      * @param horaFin hora del ultimo turno
+     * @param ubic ubicacion de las mesas
      */
     public void crearEventoUbic(String nombre, LocalDate dia, LocalTime horaInicio, LocalTime horaFin, String ubic){
         Evento nuevoEvento = new Evento(nombre, dia, horaInicio, horaFin, ubic, this);

@@ -57,15 +57,16 @@ public class Cliente extends Usuario {
         this.agendaReservas.add(res);
     }
     
-    
-    /** Metodo para crear la reserva
-     * @param String fecha Fecha de la reserva
-     * @param String hora Hora de la reserva
-     * @param String coment Comentarios de la reserva
-     * @param String cantidad Cantidad de comensales
-     * @param Mesa mesa Mesa de la reserva
+    /** 
+     * Metodo para crear la reserva
+     * @param fecha fecha Fecha de la reserva
+     * @param hora hora Hora de la reserva
+     * @param coment Comentarios de la reserva
+     * @param cantidad Cantidad de comensales
+     * @param mesa es la mesa de la reserva
+     * @param tarjeta tarjeta de credito
      */
-    public void crearReserva(LocalDate fecha, LocalTime hora, String coment, Integer cantidad,  Mesa mesa, TarjetaCredito tarjeta) {
+    public void crearReserva(LocalDate fecha, LocalTime hora, String coment, Integer cantidad, Mesa mesa, TarjetaCredito tarjeta) {
         Reserva nuevaReserva = new Reserva(fecha, hora, coment, cantidad, mesa, this, tarjeta);
     }
     
@@ -76,7 +77,7 @@ public class Cliente extends Usuario {
      */
     public boolean cancelarReserva(long idReserva) {
         try {for (Reserva ext : this.agendaReservas){
-            if (ext.getIdReserva().equals(idReserva)) {
+            if (String.valueOf(ext.getIdReserva()).equals(String.valueOf(idReserva))) {
                 ext.setEstado("Cancelado");
                 ext.getMesaReservada().removerReserva(ext);
                 ext.setMesaReservada(null);
@@ -90,11 +91,11 @@ public class Cliente extends Usuario {
     }
 
     /**
-     * @param String idRes es la id de la reserva
-     * @param String fecha fecha de la nueva reserva se usa para crear una nueva reserva
-     * @param String hora de la nueva reserva se usa para crear una nueva reserva
-     * @param String capacidad se usa para crear una nueva reserva
-     * @return boolean true si se modifico con exitos o false si no se modifico
+     * Metodo para modificar una reserva
+     * @param res reserva a modificar
+     * @param option opcion de modificacion
+     * @param argument argumento o argumentos
+     * @return true si se logra modificar, de lo contrario false
      */
     public boolean modificarReserva(Reserva res, String option, ArrayList<Object> argument) {
         switch (option){
@@ -124,7 +125,7 @@ public class Cliente extends Usuario {
     /** 
      * Metodo para actualizar los datos del cliente
      * @param option opcion elegida para realizar el cambio
-     * @param argument argumento con el cual se realiza el cambio
+     * @param argumento argumento con el cual se realiza el cambio
      * @return true si se realizo con un cambio, en caso contrario false
      */
     public boolean actualizarInformacion(String option, String argumento) {
