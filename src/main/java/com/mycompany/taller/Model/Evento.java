@@ -1,5 +1,6 @@
 package com.mycompany.taller.Model;
 
+import com.mycompany.taller.Model.Administrador;
 import java.io.Serializable;
 import com.mycompany.taller.Model.Mesa;
 import com.mycompany.taller.Model.Reserva;
@@ -7,35 +8,25 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Basic;
-import jakarta.persistence.Transient;
 /**
  *Clase para representar al Evento y las funciones asociadas
  * @author Agustin y Juan
  */
-@Entity
+
 public class Evento implements Serializable {
-    @Id
-<<<<<<< OURS
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+
     private long idEvento;
-=======
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+
     private String idReserva;
->>>>>>> THEIRS
-    @Basic
+
     private String nombreEvento;
     private LocalDate fechaEvento;
     private LocalTime horarioDesde;
     private LocalTime horarioHasta;
     
-    @Transient
+
     private Administrador adminEvento;
-    @Transient
+
     private ArrayList<Reserva> reservaEvento = new ArrayList<>();
     
     
@@ -96,14 +87,10 @@ public class Evento implements Serializable {
         this.setReservas(listaReservasEvento);
     }    
 
-<<<<<<< OURS
-    
-    
     public long getIdEvento() {
         return idEvento;
     }
-=======
->>>>>>> THEIRS
+
     public String getNombreEvento() {
         return nombreEvento;
     }
@@ -428,12 +415,7 @@ public class Evento implements Serializable {
         this.elimEvento();
     }
     
-}
-<<<<<<< OURS
     public void setIdEvento(long idReserva) {
         this.idEvento = idReserva;
     }
-    
-=======
-
->>>>>>> THEIRS
+}
