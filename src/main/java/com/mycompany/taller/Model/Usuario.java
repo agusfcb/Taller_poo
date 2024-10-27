@@ -33,7 +33,8 @@ public class Usuario implements Serializable {
     private String contrasenia;
     private String genero;
     private String rol;
-
+    
+    @Transient
     public static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
 
     @Transient

@@ -17,23 +17,22 @@ import javax.persistence.Transient;
  * Clase para representar a las mesas y las funciones asociadas
  * @author Agustin y Juan
  */
-@Entity
+
 public class Mesa implements Serializable {
     
-    @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+
     private String numero;
-    @Basic
+
     private Integer capacidad;
     private String ubicacion;
     
-    @Transient
+
     private ArrayList<Reserva> reservasMesa;
-    @Transient
+
     private static final ArrayList<String> ubicacionesDisponibles = new ArrayList<>(Arrays.asList("Interior A", "Interior B", "Interior C", "Patio A", "Patio B"));
-    @Transient
+
     private static ArrayList<Mesa> mesasExistentes = new ArrayList<>();
-    @Transient
+
     private static ArrayList<Integer> capacidadEstandar = new ArrayList<>(Arrays.asList(4, 8, 12));
 
     public Mesa() {
