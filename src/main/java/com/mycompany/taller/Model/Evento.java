@@ -1,17 +1,18 @@
 package com.mycompany.taller.Model;
 
+import java.io.Serializable;
 import com.mycompany.taller.Model.Mesa;
 import com.mycompany.taller.Model.Reserva;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Transient;
 /**
  *Clase para representar al Evento y las funciones asociadas
  * @author Agustin y Juan

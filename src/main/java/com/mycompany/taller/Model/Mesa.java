@@ -4,14 +4,12 @@ package com.mycompany.taller.Model;
 import java.io.Serializable;
 import java.util.*;
 import java.lang.Integer;
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Transient;
 
 /**
  * Clase para representar a las mesas y las funciones asociadas

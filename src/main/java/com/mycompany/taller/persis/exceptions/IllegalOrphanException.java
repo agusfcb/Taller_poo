@@ -1,4 +1,4 @@
-package com.mycompany.taller.IGU.exceptions;
+package com.mycompany.taller.persis.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;
