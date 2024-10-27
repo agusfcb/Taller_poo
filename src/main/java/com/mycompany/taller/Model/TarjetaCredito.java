@@ -13,8 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
 /**
- * 
+ * Clase para representar la tarjetas de credito y las funciones asociadas
+ * @author Agustin y Juan
  */
 @Entity
 public class TarjetaCredito {

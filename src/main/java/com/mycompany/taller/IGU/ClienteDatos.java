@@ -5,8 +5,8 @@
 package com.mycompany.taller.IGU;
 
 /**
- *
- * @author Agus
+ * Interfaz grafica para ver datos propios de un cliente
+ * @author Agustin y Juan
  */
 public class ClienteDatos extends javax.swing.JFrame {
 

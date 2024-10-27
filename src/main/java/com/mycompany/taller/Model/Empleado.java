@@ -5,7 +5,7 @@ import java.util.*;
 
 
 /**
- * 
+ * Clase para representar al empleado y las funciones que puede realizar
  * @author Agustin y Juan
  */
 public class Empleado extends Usuario {

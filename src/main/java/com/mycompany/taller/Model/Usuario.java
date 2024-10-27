@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 /**
- * 
+ * Clase para representar al usuarios y las funciones que puede realizar
  * @author Agustin, Juan y Ana
  */
 @Entity

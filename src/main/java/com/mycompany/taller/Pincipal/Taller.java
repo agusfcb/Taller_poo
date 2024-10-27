@@ -5,7 +5,7 @@
 package com.mycompany.taller.Pincipal;
 
 /**
- *
+ * Clase principal
  * @author Agus
  */
 public class Taller {

@@ -4,7 +4,7 @@ import java.time.*;
 import java.time.temporal.TemporalAdjusters;
 
 /**
- * 
+ * Clase para representar los reportes y las funciones asociadas
  * @author Agustin y Juan
  */
 public class Reportes {

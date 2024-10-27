@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- *
+ * Clase para controlar las relaciones entre logica y persistencia
  * @author Agustin y Juan
  */
 public class Controladora {

@@ -5,8 +5,8 @@
 package com.mycompany.taller.IGU;
 
 /**
- *
- * @author Agus
+ * Interfaz grafica para editar datos de reservas propias del cliente
+ * @author Agustin y Juan
  */
 public class EditarReserva extends javax.swing.JFrame {
 

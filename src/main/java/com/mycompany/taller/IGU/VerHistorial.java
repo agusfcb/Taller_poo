@@ -5,8 +5,8 @@
 package com.mycompany.taller.IGU;
 
 /**
- *
- * @author Agus
+ * Interfaz grafica para ver el historial de reservas
+ * @author Agustin y Juan
  */
 public class VerHistorial extends javax.swing.JFrame {
 

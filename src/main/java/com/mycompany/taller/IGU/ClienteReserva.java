@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
- *
+ *Interfaz grafica para realizar reservas
  * @author Agus
  */
 public class ClienteReserva extends javax.swing.JFrame {

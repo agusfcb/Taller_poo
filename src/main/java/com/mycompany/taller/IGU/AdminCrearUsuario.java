@@ -5,14 +5,11 @@
 package com.mycompany.taller.IGU;
 
 /**
- *
- * @author juanm
+ * Interfaz grafica del administrador para crear usuarios
+ * @author Agustin y Juan
  */
 public class AdminCrearUsuario extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AdminCrearUsuario
-     */
     public AdminCrearUsuario() {
         initComponents();
     }

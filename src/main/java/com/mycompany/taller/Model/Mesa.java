@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 /**
- * 
+ * Clase para representar a las mesas y las funciones asociadas
  * @author Agustin y Juan
  */
 @Entity

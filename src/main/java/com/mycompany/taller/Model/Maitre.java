@@ -4,7 +4,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 /**
- * 
+ * Clase para representar al maitre y las funciones que puede realizar
  * @author Agustin y Juan
  */
 public class Maitre extends Empleado {

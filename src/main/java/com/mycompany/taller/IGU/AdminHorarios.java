@@ -4,10 +4,7 @@
  */
 package com.mycompany.taller.IGU;
 
-/**
- *
- * @author Agus
- */
+
 public class AdminHorarios extends javax.swing.JFrame {
 
     /**

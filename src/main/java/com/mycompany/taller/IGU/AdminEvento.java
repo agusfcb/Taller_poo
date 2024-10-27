@@ -9,10 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-/**
- *
- * @author Agus
- */
+
 public class AdminEvento extends javax.swing.JFrame {
 
     /**

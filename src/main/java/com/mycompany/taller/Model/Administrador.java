@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 
 
 /**
- * 
+ * Clase para representar al administrador y lo las funciones que puede realizar
  * @author Agustin y Juan
  */
 public class Administrador extends Empleado{

@@ -5,15 +5,15 @@
 package com.mycompany.taller.IGU;
 
 /**
- *
+ *Interfaz del menu del cliente
  * @author Agus
  */
-public class Cliente extends javax.swing.JFrame {
+public class ClienteMenu extends javax.swing.JFrame {
 
     /**
      * Creates new form NewJFrame2
      */
-    public Cliente() {
+    public ClienteMenu() {
         initComponents();
     }
 

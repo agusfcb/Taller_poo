@@ -3,7 +3,7 @@ import java.time.*;
 import java.util.*;
 
 /**
- * 
+ * Clase para representar al recepcionista y las funciones que puede realizar
  * @author Agustin y Juan
  */
 public class Recepcionista extends Empleado {

@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 
 
 /**
- * 
+ * Clase para representar al cliente y las funciones que puede realizar
  * @author Agustin y Juan
  */
 public class Cliente extends Usuario {

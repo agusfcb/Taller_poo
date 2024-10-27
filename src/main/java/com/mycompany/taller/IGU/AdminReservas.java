@@ -5,8 +5,8 @@
 package com.mycompany.taller.IGU;
 
 /**
- *
- * @author Agus
+ *Interfaz grafica del administrador para ver datos relacionados a las reservas
+ * @author Agustin y Juan
  */
 public class AdminReservas extends javax.swing.JFrame {
 

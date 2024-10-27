@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 /**
+ * Clase para representar al mesero y las funciones que puede realizar
  * @author Agustin y Juan
  */
 public class Mesero extends Empleado {

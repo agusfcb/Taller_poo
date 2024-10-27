@@ -5,8 +5,8 @@
 package com.mycompany.taller.IGU;
 
 /**
- *
- * @author Agus
+ * Interfaz grafica para el registro de un nuevo cliente
+ * @author Agustin y Juan
  */
 public class Registrarse extends javax.swing.JFrame {
 

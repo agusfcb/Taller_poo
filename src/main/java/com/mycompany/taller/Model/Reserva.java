@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
+ * Clase para representar la reserva y las funciones asociadas
  * @author Agustin y Juan
  */
 @Entity

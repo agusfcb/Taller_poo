@@ -5,8 +5,8 @@
 package com.mycompany.taller.IGU;
 
 /**
- *
- * @author juanm
+ * Interfaz grafica del menu principal del administrador
+ * @author Agustin y Juan
  */
 public class AdminMenu extends javax.swing.JFrame {
 

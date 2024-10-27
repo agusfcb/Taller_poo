@@ -5,7 +5,7 @@
 package com.mycompany.taller.IGU;
 
 /**
- *
+ * Interfaz grafica del Loggin
  * @author Agus
  */
 public class Loggin extends javax.swing.JFrame {
