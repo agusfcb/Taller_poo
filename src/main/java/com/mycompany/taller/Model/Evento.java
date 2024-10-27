@@ -374,6 +374,7 @@ public class Evento implements Serializable {
         }
     }
 
+    
     /**
      * Metodo publico para crear eventos por ubicaciones completas disponibles
      * @param fecha fecha del evento
@@ -392,7 +393,7 @@ public class Evento implements Serializable {
      * @param fecha fecha del evento
      * @param horaI hora del primer turno
      * @param horaF hora del ultimo turno
-     * @param numerosMesas array de mesas a reservar
+     * @param NumerosMesas array de mesas a reservar
      * @param adminE administrador que crea el evento
      */
     public void crearEventoMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> numerosMesas, Administrador adminE){
