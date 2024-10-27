@@ -40,7 +40,6 @@ public class Usuario implements Serializable {
      * Default constructor
      */
     public Usuario() {
-        Usuario.listaUsuarios.add(this);
     }
 
     /**
@@ -61,7 +60,6 @@ public class Usuario implements Serializable {
         this.contrasenia = contrasenia;
         this.genero = genero;
         this.rol = rolU;
-        Usuario.listaUsuarios.add(this);
     }
 
     /**

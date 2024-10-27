@@ -16,17 +16,23 @@ public class Cliente extends Usuario {
     
     private static final ArrayList<String> opcionesCambios = new ArrayList<>(Arrays.asList("Nombre","Telefono","Correo","Contrasenia","Genero"));
     
-
+    /**
+     * Default constructor
+     */
     public Cliente() {
         super();
     }
-
+    /*
+     * Constructor parametrizado
+     */
     public Cliente(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero){
         super(name, tel, fechaCumple, email, pass, "Cliente", genero);
         this.agendaReservas = new ArrayList<Reserva>();
     }
     
-    
+    /*
+     * Constructor para la persistencia
+     */
     public Cliente(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, long idUser){
         super(name, tel, fechaCumple, email, pass, "Cliente", genero, idUser);
         this.agendaReservas = new ArrayList<Reserva>();
@@ -64,10 +70,10 @@ public class Cliente extends Usuario {
     
     /**
      * Metodo para cancelar una reserva determinada
-     * @param idReserva id de la reserva
-     * @return true si se cancelo con exito o false si no se cancelo la reserva
+     * @param idReserva 
+     * @return boolean
      */
-    public boolean cancelarReserva(long idReserva) {
+    public boolean cancelarReserva(String idReserva) {
         try {for (Reserva ext : this.agendaReservas){
             if (String.valueOf(ext.getIdReserva()).equals(String.valueOf(idReserva))) {
                 ext.setEstado("Cancelado");
@@ -124,27 +130,28 @@ public class Cliente extends Usuario {
         switch (String.valueOf(option)) {
             case "Nombre":
                 this.setNombre(argumento);
-                return true;
+                break;
             case "Telefono":
                 this.setCorreo(argumento);
-                return true;
+                break;
             case "Correo":
                 this.setTelefono(argumento);
-                return true;
+                break;
             case "Contrasenia":
                 //Falta un metodo para validar la contrasenia
                 this.setContrasenia(argumento);
-                return true;
+                break;
             case "Genero":
                 this.setGenero(argumento);
-                return true;
+                break;
             default:
-                return false;
+                break;
         }
+        return true;
     }
     
     /** Devuelve el historial de reservas del cliente
-     * @return array de arrays con la informacion de cada reserva del cliente lista para presentar
+     * @return ArrayList<Reservas>
      */
     public ArrayList<ArrayList<String>> verHistorial() {
         ArrayList<String> datosReserva = new ArrayList<>();

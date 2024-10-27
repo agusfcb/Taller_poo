@@ -110,10 +110,10 @@ public class Mesa implements Serializable {
         this.reservasMesa.add(resv);
     }
 
-    public void removerMesa(long num){
+    public void removerMesa(String num){
         ArrayList<Mesa> mesasTotales = Mesa.getMesasExistentes();
         for(Mesa ext : mesasTotales){
-            if(String.valueOf(ext.getNumero()).equals(String.valueOf(num))){
+            if(ext.getNumero().equals(num)){
                 Mesa.mesasExistentes.remove(ext);
             }
         }
