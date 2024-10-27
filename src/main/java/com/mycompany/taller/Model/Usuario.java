@@ -3,25 +3,17 @@ package com.mycompany.taller.Model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Basic;
-import jakarta.persistence.Transient;
 
 /**
  * Clase para representar al usuarios y las funciones que puede realizar
  *
  * @author Agustin, Juan y Ana
  */
-@Entity
+
 public class Usuario implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long idUsuario;
-    @Basic
+
     private String nombre;
     private String telefono;
     private LocalDate fechaCumpleanios;
@@ -30,10 +22,9 @@ public class Usuario implements Serializable {
     private String genero;
     private String rol;
     
-    @Transient
+
     public static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
 
-    @Transient
     private static final String[] roles = {"Administrador", "Maitre", "Mesero", "Recepcionista", "Usuario"};
 
     /**

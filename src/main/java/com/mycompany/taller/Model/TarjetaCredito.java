@@ -4,30 +4,23 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Basic;
-import jakarta.persistence.Transient;
+
 
 /**
  * Clase para representar la tarjetas de credito y las funciones asociadas
  * @author Agustin y Juan
  */
-@Entity
+
 public class TarjetaCredito implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+
     private String idTarjeta;
-    @Basic
+
     private String nombre;
     private String emisor;
     private String numeroTarjeta;
     private String codVerificacion;
     private String multa;
     
-    @Transient
     private ArrayList<Reserva> reservaT = new ArrayList<>();
     
     public TarjetaCredito(){
