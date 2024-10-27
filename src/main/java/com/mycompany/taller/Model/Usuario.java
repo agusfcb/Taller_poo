@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -18,6 +19,7 @@ import javax.persistence.Transient;
  * @author Agustin, Juan y Ana
  */
 @Entity
+@Table(name = "mi_tabla")
 public class Usuario implements Serializable {
     
     @Id
@@ -27,8 +29,6 @@ public class Usuario implements Serializable {
     private String nombre;
     private String telefono;
     private LocalDate fechaCumpleanios;
-    
-    @Basic
     private String correo;
     private String contrasenia;
     private String genero;

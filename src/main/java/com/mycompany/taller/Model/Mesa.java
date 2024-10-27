@@ -1,6 +1,7 @@
 package com.mycompany.taller.Model;
 
 
+import java.io.Serializable;
 import java.util.*;
 import java.lang.Integer;
 import javax.persistence.Basic;
@@ -17,7 +18,7 @@ import javax.persistence.Transient;
  * @author Agus y Juan
  */
 @Entity
-public class Mesa {
+public class Mesa implements Serializable {
     
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
