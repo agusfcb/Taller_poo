@@ -21,7 +21,7 @@ import javax.persistence.Transient;
 public class Mesa implements Serializable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private String numero;
     @Basic
     private Integer capacidad;
