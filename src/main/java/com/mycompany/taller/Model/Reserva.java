@@ -20,17 +20,12 @@ import javax.persistence.TemporalType;
  * Clase para representar la reserva y las funciones asociadas
  * @author Agustin y Juan
  */
-@Entity
+
 public class Reserva {
     
-    @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private String idReserva;
-    @Temporal(TemporalType.DATE)
     private LocalDate dia;
-    @Temporal(TemporalType.TIME)
     private LocalTime hora;
-    @Basic
     private String estadoAsist;
     private Integer cantidadComensales;
     private String comentarios;
@@ -38,6 +33,7 @@ public class Reserva {
     private Mesa mesaReservada;
     private Usuario clienteReserva;
     private TarjetaCredito tarjeta;
+    
     private static ArrayList<Reserva> listaReservas = new ArrayList<>();
     public static final ArrayList<String> estadosPosibles = new ArrayList<>(Arrays.asList("Pendiente", "Sin asistir", "Completado", "Cancelado", "Evento"));
     private static ArrayList<LocalDate> diasEspeciales = new ArrayList<>();

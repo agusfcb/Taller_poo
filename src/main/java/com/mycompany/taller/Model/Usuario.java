@@ -20,7 +20,6 @@ import javax.persistence.Transient;
  * @author Agustin, Juan y Ana
  */
 @Entity
-@Table(name = "mi_tabla")
 public class Usuario implements Serializable {
 
     @Id

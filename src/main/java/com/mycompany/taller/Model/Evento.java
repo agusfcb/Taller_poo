@@ -17,22 +17,19 @@ import javax.persistence.Transient;
  *Clase para representar al Evento y las funciones asociadas
  * @author Agustin y Juan
  */
-@Entity
 public class Evento {
     
-    @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private long idEvento;
-    @Basic
+    
     private String nombreEvento;
-    @Temporal(TemporalType.DATE)
+
     private LocalDate fechaEvento;
-    @Temporal(TemporalType.TIME)
+
     private LocalTime horarioDesde;
-    @Temporal(TemporalType.TIME)
+
     private LocalTime horarioHasta;
     private Administrador adminEvento;
-    @Transient
+
     private ArrayList<Reserva> reservaEvento = new ArrayList<>();
     
     

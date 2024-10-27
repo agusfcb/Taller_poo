@@ -18,20 +18,15 @@ import javax.persistence.Transient;
  * Clase para representar la tarjetas de credito y las funciones asociadas
  * @author Agustin y Juan
  */
-@Entity
 public class TarjetaCredito {
     
-    @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private String idTarjeta;
-    @Basic
     private String nombre;
     private String emisor;
     private String numeroTarjeta;
     private String codVerificacion;
     private String multa;
     
-    @Transient
     private ArrayList<Reserva> reservaT = new ArrayList<>();
     
     public TarjetaCredito(){}
