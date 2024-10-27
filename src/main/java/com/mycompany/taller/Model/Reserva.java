@@ -1,5 +1,6 @@
 package com.mycompany.taller.Model;
 
+import java.io.Serializable;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -13,17 +14,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  * Clase para representar la reserva y las funciones asociadas
  * @author Agustin y Juan
  */
-
-public class Reserva {
-    
+@Entity
+public class Reserva implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private String idReserva;
+    @Basic
     private LocalDate dia;
     private LocalTime hora;
     private String estadoAsist;
@@ -34,12 +36,17 @@ public class Reserva {
     private Usuario clienteReserva;
     private TarjetaCredito tarjeta;
     
+    @Transient
     private static ArrayList<Reserva> listaReservas = new ArrayList<>();
+    @Transient
     public static final ArrayList<String> estadosPosibles = new ArrayList<>(Arrays.asList("Pendiente", "Sin asistir", "Completado", "Cancelado", "Evento"));
+    @Transient
     private static ArrayList<LocalDate> diasEspeciales = new ArrayList<>();
     // Formato de la hora
+    @Transient
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     // Parsear el String a LocalTime
+    @Transient
     private static ArrayList<LocalTime> horarios = new ArrayList<>(Arrays.asList(
         LocalTime.parse("11:00", formatter), 
         LocalTime.parse("13:00", formatter), 
@@ -47,7 +54,7 @@ public class Reserva {
         LocalTime.parse("20:00", formatter), 
         LocalTime.parse("22:00", formatter), 
         LocalTime.parse("00:00", formatter)));
-    
+    @Transient
     private static ArrayList<LocalTime> horariosDiasEspeciales = new ArrayList<>(Arrays.asList(
         LocalTime.parse("09:00", formatter),
         LocalTime.parse("11:00", formatter), 

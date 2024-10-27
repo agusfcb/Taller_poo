@@ -2,6 +2,7 @@ package com.mycompany.taller.Model;
 
 import com.mycompany.taller.Model.Mesa;
 import com.mycompany.taller.Model.Reserva;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -10,26 +11,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 /**
  *Clase para representar al Evento y las funciones asociadas
  * @author Agustin y Juan
  */
-public class Evento {
-    
+@Entity
+public class Evento implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long idEvento;
-    
+    @Basic
     private String nombreEvento;
-
     private LocalDate fechaEvento;
-
     private LocalTime horarioDesde;
-
     private LocalTime horarioHasta;
+    
+    @Transient
     private Administrador adminEvento;
-
+    @Transient
     private ArrayList<Reserva> reservaEvento = new ArrayList<>();
     
     
@@ -89,11 +89,12 @@ public class Evento {
         this.setReservas(listaReservasEvento);
     }    
     
-    public long getIdReserva() {
+    
+    public long getIdEvento() {
         return idEvento;
     }
 
-    public void setIdReserva(long idReserva) {
+    public void setIdEvento(long idReserva) {
         this.idEvento = idReserva;
     }
     

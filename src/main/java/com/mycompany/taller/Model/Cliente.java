@@ -3,20 +3,12 @@ import com.mycompany.taller.Model.Reserva;
 import java.util.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 
 /**
  * Clase para representar al cliente y las funciones que puede realizar
  * @author Agustin y Juan
  */
+
 public class Cliente extends Usuario {
     
     private ArrayList<Reserva> agendaReservas;

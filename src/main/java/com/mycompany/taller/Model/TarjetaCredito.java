@@ -1,5 +1,6 @@
 package com.mycompany.taller.Model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -10,26 +11,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 /**
  * Clase para representar la tarjetas de credito y las funciones asociadas
  * @author Agustin y Juan
  */
-public class TarjetaCredito {
-    
+@Entity
+public class TarjetaCredito implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private String idTarjeta;
+    @Basic
     private String nombre;
     private String emisor;
     private String numeroTarjeta;
     private String codVerificacion;
     private String multa;
     
+    @Transient
     private ArrayList<Reserva> reservaT = new ArrayList<>();
     
-    public TarjetaCredito(){}
+    public TarjetaCredito(){
+    }
 
     public TarjetaCredito(String nombre, String emisor, String numeroTarjeta, String codVerificacion, Reserva reser) {
         this.nombre = nombre;
