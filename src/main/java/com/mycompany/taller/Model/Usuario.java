@@ -1,22 +1,22 @@
 package com.mycompany.taller.Model;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
-
+import java.util.UUID;
 /**
  * Clase para representar al usuarios y las funciones que puede realizar
  *
  * @author Agustin, Juan y Ana
  */
 
-public class Usuario implements Serializable {
+public class Usuario {
 
-    private long idUsuario;
+    private String idUsuario;
 
     private String nombre;
     private String telefono;
-    private LocalDate fechaCumpleanios;
+    private String fechaCumple;
+    private transient LocalDate fechaCumpleanios;
     private String correo;
     private String contrasenia;
     private String genero;
@@ -43,10 +43,12 @@ public class Usuario implements Serializable {
      * @param genero genero
      * @param rolU rol del usuario
      */
-    public Usuario(String nombre, String telefono, LocalDate fechaCumple, String correo, String contrasenia, String genero, String rolU) {
+    public Usuario(String nombre, String telefono, String fechaCumple, String correo, String contrasenia, String genero, String rolU) {
+        this.idUsuario = UUID.randomUUID().toString();
         this.nombre = nombre;
         this.telefono = telefono;
-        this.fechaCumpleanios = fechaCumple;
+        this.fechaCumple = fechaCumple;
+        this.fechaCumpleanios = LocalDate.parse(this.fechaCumple);
         this.correo = correo;
         this.contrasenia = contrasenia;
         this.genero = genero;
@@ -64,10 +66,11 @@ public class Usuario implements Serializable {
      * @param rolU rol del usuario
      * @param idUsuario del usuario
      */
-    public Usuario(String nombre, String telefono, LocalDate fechaCumple, String correo, String contrasenia, String genero, String rolU, long idUsuario) {
+    public Usuario(String nombre, String telefono, String fechaCumple, String correo, String contrasenia, String genero, String rolU, String idUsuario) {
         this.nombre = nombre;
         this.telefono = telefono;
-        this.fechaCumpleanios = fechaCumple;
+        this.fechaCumple = fechaCumple;
+        this.fechaCumpleanios = LocalDate.parse(this.fechaCumple);
         this.correo = correo;
         this.contrasenia = contrasenia;
         this.genero = genero;
@@ -112,10 +115,21 @@ public class Usuario implements Serializable {
         this.genero = genero;
     }
 
-    public void setIdUsuario(long idUsuario) {
+    public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
     }
 
+    public String getFechaCumle() {
+        return fechaCumple;
+    }
+
+    public void setFechaCumle(String fechaCumple) {
+        this.setFechaCumpleanios(LocalDate.parse(fechaCumple));
+        this.fechaCumple = fechaCumple;
+    }
+
+    
+    
     public void setFechaCumpleanios(LocalDate fechaCumpleanios) {
         this.fechaCumpleanios = fechaCumpleanios;
     }
@@ -148,7 +162,7 @@ public class Usuario implements Serializable {
         return genero;
     }
 
-    public long getIdUsuario() {
+    public String getIdUsuario() {
         return idUsuario;
     }
 

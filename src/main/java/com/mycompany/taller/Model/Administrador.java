@@ -35,7 +35,7 @@ public class Administrador extends Empleado{
      * @param pass
      * @param genero 
      */
-    public Administrador(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero) {
+    public Administrador(String name, String tel, String fechaCumple, String email, String pass, String genero) {
         super(name, tel, fechaCumple, email, pass, "Administrador", genero);
         this.listaReservas = new ArrayList<>();
     }
@@ -49,7 +49,7 @@ public class Administrador extends Empleado{
      * @param genero
      * @param idUs 
      */
-    public Administrador(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, long idUs) {
+    public Administrador(String name, String tel, String fechaCumple, String email, String pass, String genero, String idUs) {
         super(name, tel, fechaCumple, email, pass, "Administrador", genero, idUs);
         this.listaReservas = new ArrayList<>();
     }
@@ -130,14 +130,14 @@ public class Administrador extends Empleado{
     
     /**
      * 
-     * @return 
+     * @return array de reservas
      */
     public ArrayList<Reserva> getListaReservas() {
         return Reserva.getListaReservas();  
     }
     /**
      * 
-     * @return 
+     * @return array de reservas
      */
     public ArrayList<Reserva> getListaReservaActualizada() {
         return listaReservaActualizada;
@@ -145,7 +145,7 @@ public class Administrador extends Empleado{
     
     /**
      * La lista de reservas se debe actualizar cuando lo solicite el Administrador (conectado a la persistencia)
-     * @param listaReservaActualizada 
+     * @param listaReservaActualizada array de reservas actualizado en cualquier moemento
      */
     public void setListaReservaActualizada(ArrayList<Reserva> listaReservaActualizada) {
         this.listaReservaActualizada = listaReservaActualizada;
@@ -153,7 +153,7 @@ public class Administrador extends Empleado{
     
     /**
      * 
-     * @return lista de eventos
+     * @return array de eventos
      */
     public static ArrayList<Evento> getListaEventos() {
         return Administrador.listaEventos;
@@ -183,13 +183,13 @@ public class Administrador extends Empleado{
     /**
      * Metodo para designar dias donde el restaurante cerrara antes
      * Precondicion: que no haya reservas en ese dia y horario
-     * @param fecha
-     * @param hora 
+     * @param fecha fehca del dia especial que cierra antes
+     * @param hora horario que se bloquea
      */
     public void cierreEspecial(LocalDate fecha, LocalTime hora){
         try {
             for(Mesa mesaExt : Mesa.getMesasExistentes()){
-                Reserva nuevaReserva = new Reserva(fecha, hora, mesaExt, this);
+                Reserva nuevaReserva = new Reserva(fecha.toString(), hora.toString(), mesaExt, this);
             }
         }catch (Exception e) {
             System.out.println("\n Error al definir cierre anticipado \n");
@@ -198,7 +198,7 @@ public class Administrador extends Empleado{
     
     /**
      * Metodo para guardar dias especiales, util para ver horarios especiales
-     * @param fechaEsp 
+     * @param fechaEsp fecha del dia especial para habilitar mas horarios
      */
     public void agregarDiaEspecial(LocalDate fechaEsp){
         Reserva.getDiasEspeciales().add(fechaEsp);
@@ -214,7 +214,7 @@ public class Administrador extends Empleado{
      * @param rol rol
      * @param gen genero
      */
-    public void crearEmpleado(String name, String tel, LocalDate fechaCumple, String email, String pass, String rol, String gen){
+    public void crearEmpleado(String name, String tel, String fechaCumple, String email, String pass, String rol, String gen){
         switch(rol){
             case "Maitre":
                 Maitre nuevoMaitre = new Maitre(name, tel, fechaCumple, email, pass, gen);
@@ -262,7 +262,7 @@ public class Administrador extends Empleado{
     
     /**
      * Metodo que agrega a la lista de eventos cada evento creado
-     * @param evento 
+     * @param evento objeto del tipo Evento
      */
     public static void agregarEvento(Evento evento){
         Administrador.listaEventos.add(evento);    
@@ -270,7 +270,7 @@ public class Administrador extends Empleado{
     
     /**
      * Metodo para eliminar un evento
-     * @param evento 
+     * @param evento  objeto del tipo Evento
      */
     public static void eliminarEvento(Evento evento){
         Administrador.listaEventos.remove(evento);
@@ -278,8 +278,8 @@ public class Administrador extends Empleado{
     
     /**
      * Metodo para buscar un evento
-     * @param nombre
-     * @return 
+     * @param nombre nombre del evento
+     * @return objeto del tipo Evento
      */
     public Evento buscarEvento(String nombre){
         for (Evento extEv : Administrador.getListaEventos()){
@@ -292,8 +292,8 @@ public class Administrador extends Empleado{
     
     /**
      * Meotodo publico para cancelar eventos
-     * @param evento
-     * @return 
+     * @param evento objeto del tipo evento
+     * @return true si se logra cancelar el evento
      */
     public boolean cancelarEvento(Evento evento){
         try {
@@ -321,11 +321,11 @@ public class Administrador extends Empleado{
     
     /**
      * Metodo publico para crear eventos
-     * @param nombre
-     * @param fecha
-     * @param horaI
-     * @param horaF
-     * @param numerosMesas 
+     * @param nombre nobmre del evento
+     * @param fecha fecha del evento
+     * @param horaI hora del primer turno
+     * @param horaF hora de ultimo turno
+     * @param numerosMesas array de mesas elegidas
      */
     public void crearEventoMesas(String nombre, LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> numerosMesas){
         Evento nuevoEvento = new Evento(nombre, fecha, horaI, horaF, numerosMesas, this);

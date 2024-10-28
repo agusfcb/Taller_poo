@@ -4,17 +4,21 @@
  */
 package com.mycompany.taller.IGU;
 
+import com.mycompany.taller.Model.Controladora;
+
 /**
  * Interfaz grafica del menu principal del administrador
  * @author Agustin y Juan
  */
 public class AdminMenu extends javax.swing.JFrame {
 
+    private Controladora control;
     /**
      * Creates new form AdminMenu
      */
-    public AdminMenu() {
+    public AdminMenu(Controladora cont) {
         initComponents();
+        control = cont;
     }
 
     /**

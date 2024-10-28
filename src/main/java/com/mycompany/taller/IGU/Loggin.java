@@ -4,16 +4,22 @@
  */
 package com.mycompany.taller.IGU;
 
+import com.mycompany.taller.Model.Controladora;
+import com.mycompany.taller.Model.Usuario;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  * Interfaz grafica del Loggin
  * @author Agus
  */
 public class Loggin extends javax.swing.JFrame {
-
+    private Controladora control;
     /**
      * Creates new form NewJFrame1
      */
     public Loggin() {
+        control = new Controladora();
         initComponents();
     }
 
@@ -197,7 +203,47 @@ public class Loggin extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     private void inicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inicioSesionActionPerformed
-        // TODO add your handling code here:
+        String usuario = userName.getText();
+        String contrasenia = jPasswordField1.toString();
+        ArrayList<Usuario> usuarios = Usuario.getListaUsuarios();
+        for(Usuario extUser : usuarios){
+            if(usuario.equals(extUser.toString())){
+                if(extUser.getContrasenia().equals(contrasenia)){
+                    control.setUser(extUser);
+                    break;
+            }
+        }
+        if(control.getUser() == null){
+            JOptionPane.showMessageDialog(null, "Usuario/Contrasenia incorrectos", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            switch(control.getUser().getRol())
+                case "Cliente":
+                    ClienteMenu pantallaCli = new ClienteMenu(control);
+                    pantallaCli.setVisible(true);
+                    pantallaCli.setLocationRelativeTo(null);
+                    this.dispose();
+                    break;
+                case "Administrador":
+                    AdminMenu pantallaAdmin = new AdminMenu(control);
+                    pantallaAdmin.setVisible(true);
+                    pantallaAdmin.setLocationRelativeTo(null);
+                    break;
+                case "Maitre":
+                    break;
+                case "Recepcionista":
+                    break;
+                case "Mesero":
+                    break;
+                default:
+                    break;                
+            }
+        }
+        
+}
+        
+        
+        
+        
     }//GEN-LAST:event_inicioSesionActionPerformed
 
     private void registrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarseActionPerformed

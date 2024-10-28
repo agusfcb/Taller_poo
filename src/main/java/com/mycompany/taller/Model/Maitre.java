@@ -18,7 +18,7 @@ public class Maitre extends Empleado {
     public Maitre(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero) {
         super(name, tel, fechaCumple, email, pass, "Maitre", genero);
     }
-    public Maitre(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, long idUsuario){
+    public Maitre(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, String idUsuario){
         super(name, tel, fechaCumple, email, pass, "Maitre", genero, idUsuario);
     }
 

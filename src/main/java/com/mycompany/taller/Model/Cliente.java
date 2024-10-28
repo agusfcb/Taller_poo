@@ -11,7 +11,9 @@ import java.time.LocalTime;
 
 public class Cliente extends Usuario {
     
-    private ArrayList<Reserva> agendaReservas;
+    //El atributo auxiliar permite respetar un mapeo entre objetos mediante conversiones
+    private ArrayList<String> reservasIds;
+    private transient ArrayList<Reserva> agendaReservas;
     private String premisos = "Realizar reservas individuales, ver historial de reservas propias, cancelar reservas, editar datos";
     
     private static final ArrayList<String> opcionesCambios = new ArrayList<>(Arrays.asList("Nombre","Telefono","Correo","Contrasenia","Genero"));
@@ -21,21 +23,25 @@ public class Cliente extends Usuario {
      */
     public Cliente() {
         super();
+        this.agendaReservas = new ArrayList<Reserva>();
+        this.setReservasIds(conversorStringIds(this.getAgendaReservas()));
     }
     /*
      * Constructor parametrizado
      */
-    public Cliente(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero){
+    public Cliente(String name, String tel, String fechaCumple, String email, String pass, String genero){
         super(name, tel, fechaCumple, email, pass, "Cliente", genero);
         this.agendaReservas = new ArrayList<Reserva>();
+        this.setReservasIds(conversorStringIds(this.getAgendaReservas()));
     }
     
     /*
      * Constructor para la persistencia
      */
-    public Cliente(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, long idUser){
+    public Cliente(String name, String tel, String fechaCumple, String email, String pass, String genero, String idUser){
         super(name, tel, fechaCumple, email, pass, "Cliente", genero, idUser);
         this.agendaReservas = new ArrayList<Reserva>();
+        this.setReservasIds(conversorStringIds(this.getAgendaReservas()));
     }
     
     
@@ -46,6 +52,32 @@ public class Cliente extends Usuario {
     public void setPremiso(String premiso) {
         this.premisos = premiso;
     }
+
+    public ArrayList<String> getReservasIds() {
+        return reservasIds;
+    }
+
+    public void setReservasIds(ArrayList<String> reservasIds) {
+        this.reservasIds = reservasIds;
+    }
+
+    public ArrayList<Reserva> getAgendaReservas() {
+        return agendaReservas;
+    }
+
+    public void setAgendaReservas(ArrayList<Reserva> agendaReservas) {
+        this.agendaReservas = agendaReservas;
+        this.setReservasIds(conversorStringIds(this.getAgendaReservas()));
+    }
+
+    public String getPremisos() {
+        return premisos;
+    }
+
+    public void setPremisos(String premisos) {
+        this.premisos = premisos;
+    }
+    
     
     /**
      * Metodo para agregar una reserva al historial del cliente
@@ -53,6 +85,13 @@ public class Cliente extends Usuario {
      */
     public void addReserva(Reserva res){
         this.agendaReservas.add(res);
+        this.addReservaId(res);
+    }
+    
+    public void addReservaId(Reserva reserv){
+        this.reservasIds.add(reserv.getIdReserva());
+    
+    
     }
     
     /** 
@@ -64,7 +103,7 @@ public class Cliente extends Usuario {
      * @param mesa es la mesa de la reserva
      * @param tarjeta tarjeta de credito
      */
-    public void crearReserva(LocalDate fecha, LocalTime hora, String coment, Integer cantidad, Mesa mesa, TarjetaCredito tarjeta) {
+    public void crearReserva(String fecha, String hora, String coment, Integer cantidad, Mesa mesa, TarjetaCredito tarjeta) {
         Reserva nuevaReserva = new Reserva(fecha, hora, coment, cantidad, mesa, this, tarjeta);
     }
     
@@ -163,7 +202,7 @@ public class Cliente extends Usuario {
             String idRes = ext.getIdReserva().toString();
             String diaR = ext.getDia().toString();
             String horaR = ext.getHora().toString();
-            String mesaR = ext.getMesaReservada().getNumero();
+            String mesaR = ext.getMesaReservada().getIdMesa();
             
             datosReserva.add(idRes);
             datosReserva.add(diaR);
@@ -173,5 +212,25 @@ public class Cliente extends Usuario {
         }
         return listadoImprimir;
     }
-    
+ 
+    public ArrayList<Reserva> conversorReservasId(ArrayList<String> listaIds){
+        ArrayList<Reserva> listaRes = new ArrayList<>();
+        for (String extId : this.getReservasIds()){
+            for(Reserva extRes : Reserva.getListaReservas()){
+                if(extId.equals(extRes.getIdReserva())){
+                    listaRes.add(extRes);
+                }          
+            }
+        }
+        return listaRes;
+    }
+            
+            
+    public ArrayList<String> conversorStringIds(ArrayList<Reserva> reservas){
+        ArrayList<String> listaString = new ArrayList<>();
+        for (Reserva extRes : this.getAgendaReservas()){
+            listaString.add(extRes.getIdReserva());
+        }
+        return listaString;
+    }
 }

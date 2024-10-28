@@ -4,6 +4,7 @@
  */
 package com.mycompany.taller.Model;
 
+import com.mycompany.taller.persistencia.ControladoraPersis;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -13,10 +14,12 @@ import java.util.ArrayList;
  */
 public class Controladora {
     private Usuario user;
-    
+    private ControladoraPersis controlPersis;
     //METODO DE LA PERSISTENCIA QUE TRAIGA A TODOS LOS USUARIOS
 
     public Controladora() {
+        user =  null;
+        controlPersis = new ControladoraPersis(); 
     }
     
     public Usuario getUser(){
@@ -26,4 +29,9 @@ public class Controladora {
     public void setUser(Usuario user) {
         this.user = user;
     }
+
+    public ControladoraPersis getControlPersis() {
+        return controlPersis;
+    }
+    
 }

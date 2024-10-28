@@ -23,30 +23,30 @@ public class Empleado extends Usuario {
     /**
      * 
      * Constructor parametrizado
-     * @param rol
-     * @param name
-     * @param tel
-     * @param email
-     * @param pass
+     * @param rol rol del empleado
+     * @param name nombre del empleado
+     * @param tel telefono
+     * @param email email
+     * @param pass contraseña
      * 
      */
-    public Empleado(String name, String tel, LocalDate fechaCumple, String email, String pass, String rol, String genero) {
+    public Empleado(String name, String tel, String fechaCumple, String email, String pass, String rol, String genero) {
         super(name, tel, fechaCumple, email, pass, rol, genero);
         this.reservas = Reserva.getListaReservas();
         Empleado.listaEmpleados.add(this);
 
     }
     /**
-     * 
-     * @param name
-     * @param tel
-     * @param email
-     * @param pass
-     * @param rol
-     * @param genero
-     * @param idUsuario 
+     * Contructor parametrizado
+     * @param name nombre del empleado
+     * @param tel telefono
+     * @param email email
+     * @param pass contraseña
+     * @param rol rol
+     * @param genero genero
+     * @param idUsuario id del usuario
      */
-    public Empleado(String name, String tel, LocalDate fechaCumple, String email, String pass, String rol, String genero, long idUsuario){
+    public Empleado(String name, String tel, String fechaCumple, String email, String pass, String rol, String genero, String idUsuario){
         super(name, tel, fechaCumple, email, pass, rol, genero, idUsuario);
         
     }
@@ -58,28 +58,11 @@ public class Empleado extends Usuario {
     public void setReservas(ArrayList<Reserva> reservas) {
         this.reservas = reservas;
     }
-    /*
-    private boolean esRolValido(String rol) {
-        for(String r : Roles) {
-            if (r.equals(rol)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    */
-    
-   /*
-    public void setRol(String rol) {
-        if (esRolValido(rol)) {
-            this.rol = rol;
-        }
-    }
-    */
+ 
     public String getRolEmpleado() {
         return this.getRol();
     }
-    public long getIdEmpleado() {
+    public String getIdEmpleado() {
         return this.getIdUsuario();
     }
 

@@ -4,17 +4,21 @@
  */
 package com.mycompany.taller.IGU;
 
+import com.mycompany.taller.Model.Controladora;
+
 /**
  *Interfaz del menu del cliente
  * @author Agus
  */
 public class ClienteMenu extends javax.swing.JFrame {
-
+    
+    Controladora control;
     /**
      * Creates new form NewJFrame2
      */
-    public ClienteMenu() {
+    public ClienteMenu(Controladora cont) {
         initComponents();
+        control = cont;
     }
 
     /**

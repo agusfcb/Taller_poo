@@ -343,7 +343,7 @@ public class Reportes {
         ArrayList<String> detallesReservas = new ArrayList<>();
 
         for (Reserva reserva : reservasEnRango) {
-            String detalle = "Mesa: " + reserva.getMesaReservada().getNumero() +
+            String detalle = "Mesa: " + reserva.getMesaReservada().getIdMesa() +
                          ", Fecha: " + reserva.getDia() +
                          ", Hora de Inicio: " + reserva.getHora() +
                          ", Hora de Fin: " + reserva.getHora().plusHours(2) + // Ejemplo, asumiendo duración de 2 horas

@@ -21,8 +21,6 @@ public class TarjetaCredito implements Serializable {
     private String codVerificacion;
     private String multa;
     
-    private ArrayList<Reserva> reservaT = new ArrayList<>();
-    
     public TarjetaCredito(){
     }
 
@@ -32,7 +30,6 @@ public class TarjetaCredito implements Serializable {
         this.numeroTarjeta = numeroTarjeta;
         this.codVerificacion = codVerificacion;
         this.multa = "$ 0";
-        this.agregarReser(reser);
     }
 
     public String getIdTarjeta() {
@@ -82,18 +79,6 @@ public class TarjetaCredito implements Serializable {
     public void setMulta(String multa) {
         this.multa = multa;
     }
-
-    public ArrayList<Reserva> getReservaT() {
-        return reservaT;
-    }
-    
-    public void setReservaT(ArrayList<Reserva> reservaT) {
-        this.reservaT = reservaT;
-    }
-    
-    public void agregarReser(Reserva reser){
-        this.reservaT.add(reser);
-    }
     
     @Override
     public String toString() {
@@ -109,7 +94,6 @@ public class TarjetaCredito implements Serializable {
      * Este es un metodo que se colocara directamente luego del loggin de forma que tome la fecha cada dia
      * Al iniciar este metodo buscara todas las reservas del dia anterior que no tuvieron asistencia y les asignara una multa
      * @param ArrayList<Reserva> la lista de todas las reservas del dia anterior al dia actual
-     * @return void
      */
     public void agregarMulta(){
         this.multa = "u$d 50";
@@ -117,9 +101,9 @@ public class TarjetaCredito implements Serializable {
     
     /**
      * Valida que se introduzcan 16 digitos
-     * @param numeroTarjeta
-     * @param codigoVerif
-     * @return 
+     * @param numeroTarjeta numero de tarjeta
+     * @param codigoVerif codigo de verificacion
+     * @return true si se verifica la tarjeta
      */
     public static boolean validarTarjeta(String numeroTarjeta, String codigoVerif){
         String regex1 = "\\d{16}";

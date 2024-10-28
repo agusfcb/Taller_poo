@@ -34,12 +34,12 @@ public class Evento implements Serializable {
     
     /**
      * Constructor con mesas de una misma ubicacion
-     * @param nombre
-     * @param fechaEvento
-     * @param horaInicio
-     * @param horaFin
-     * @param ubic
-     * @param adminEv 
+     * @param nombre nombre
+     * @param fechaEvento fecha del evento
+     * @param horaInicio fecha del primer turno
+     * @param horaFin fecha del ultimo turno
+     * @param adminEv administrador que crea el evento
+     * @param ubic ubicacion de un sector de mesas
      */
     public Evento(String nombre, LocalDate fechaEvento, LocalTime horaInicio, LocalTime horaFin, String ubic, Administrador adminEv) {
         this.nombreEvento = nombre;
@@ -52,12 +52,12 @@ public class Evento implements Serializable {
     
     /**
      * Constructor por lista de mesas de diferentes ubicaciones
-     * @param nombre
-     * @param fechaEvento
-     * @param horaInicio
-     * @param horaFin
-     * @param adminEv
-     * @param numerosMesas 
+     * @param nombre nombre
+     * @param fechaEvento fecha del evento
+     * @param horaInicio fecha del primer turno
+     * @param horaFin fecha del ultimo turno
+     * @param adminEv administrador que crea el evento
+     * @param numerosMesas numero de mesas 
      */
     public Evento(String nombre, LocalDate fechaEvento, LocalTime horaInicio, LocalTime horaFin, ArrayList<String> mesasElegidas ,Administrador adminEv) {
         this.nombreEvento = nombre;
@@ -70,13 +70,13 @@ public class Evento implements Serializable {
     
     /**
      * Constructor para la persistencia
-     * @param nombre
-     * @param fechaEvento
-     * @param horaInicio
-     * @param horaFin
-     * @param adminEv
-     * @param listaReservasEvento
-     * @param listaMesasEvento 
+     * @param nombre nombre
+     * @param fechaEvento fecha del evento
+     * @param horaInicio hora del primer turno
+     * @param horaFin hora del ultimo turno
+     * @param adminEv administrador que crea el evento
+     * @param listaReservasEvento lista de reservas asociadas al evento
+     * @param listaMesasEvento lista de mesas asociadas al evento
      */
     public Evento(String nombre, LocalDate fechaEvento, LocalTime horaInicio, LocalTime horaFin,Administrador adminEv, ArrayList<Reserva> listaReservasEvento){
         this.nombreEvento = nombre;
@@ -184,7 +184,7 @@ public class Evento implements Serializable {
         for(Mesa extMesa : Mesa.getMesasExistentes()){
             boolean control = true;
             for (Reserva extReserv : reservasFechaHora){
-                if(extReserv.getMesaReservada().getNumero().equals(extMesa.getNumero())){
+                if(extReserv.getMesaReservada().getIdMesa().equals(extMesa.getIdMesa())){
                     control = false;
                 }
             }
@@ -251,12 +251,12 @@ public class Evento implements Serializable {
     
     //METODOS PARA RESERVAS DE EVENTO POR UBICACION
     /**
-     * Metodo para comprobar si todas las mesas de una ubicacion estan disponibles en un dia y horario eespecifico
-     * @param fechaE
-     * @param horaInicio
-     * @param horaFin
-     * @param ubicacion
-     * @return 
+     * Metodo publico para comprobar si todas las mesas de una ubicacion estan disponibles en un dia y horario eespecifico
+     * @param fechaE fecha del evento
+     * @param horaInicio hora del primer turno
+     * @param horaFin hora del ultimo turno
+     * @param ubicacion ubicacion
+     * @return true si la ubicacion completa esta disponible
      */
     public static boolean controlUbicacion(LocalDate fechaE, LocalTime horaInicio, LocalTime horaFin, String ubicacion){
         return Evento.comprobarUbicacionDisponible(fechaE, horaInicio, horaFin, ubicacion);
@@ -264,11 +264,11 @@ public class Evento implements Serializable {
     
     /**
      * Metodo que comprueba si hay reservas en una ubicacion con parametros del dia y rango horario
-     * @param fechaE
-     * @param horaInicio
-     * @param horaFin
-     * @param ubicacion
-     * @return 
+     * @param fechaE fecha del evento
+     * @param horaInicio hora del primer turno
+     * @param horaFin hora del ultimo turno
+     * @param ubicacion ubicacion
+     * @return true si la ubicacion completa esta disponible
      */
     private static boolean comprobarUbicacionDisponible(LocalDate fechaE, LocalTime horaInicio, LocalTime horaFin, String ubicacion) {
         
@@ -307,9 +307,9 @@ public class Evento implements Serializable {
      * @param horaI Hora de inicio del evento
      * @param horaF Hora de fin del evento
      * @param ubicacion Ubicacion de las mesas que se bloquearan
-     * @return Devuelve la lista de las nuevas reservas creadas para el evento
      */
     public void crearEventoPorUbicacion(LocalDate fecha, LocalTime horaI, LocalTime horaF, String ubicacion, Administrador admin){
+        
         
         ArrayList<LocalTime> horarioUtil = (ArrayList<LocalTime>) Reserva.getHorariosEventos().clone(); 
 
@@ -330,7 +330,7 @@ public class Evento implements Serializable {
         }
         for (Mesa mesaRes : mesasUbicacion) {
             for (LocalTime horaRes : horarioUtil){
-                Reserva nuevaRes = new Reserva(fecha, horaRes, mesaRes, admin);
+                Reserva nuevaRes = new Reserva(fecha.toString(), horaRes.toString(), mesaRes, admin);
                 this.agregarReservaEvento(nuevaRes);
             }
         }
@@ -351,7 +351,7 @@ public class Evento implements Serializable {
         
         for (Mesa copiar : mesas) {
             for (String num : numerosMesas){
-                if (copiar.getNumero().equals(num)){
+                if (copiar.getIdMesa().equals(num)){
                     mesasUbicacion.add(copiar);
                 }
             }
@@ -363,7 +363,7 @@ public class Evento implements Serializable {
         }
         for (Mesa mesaRes : mesasUbicacion){
             for(LocalTime horaRes : horarioUtil){
-                Reserva nuevaReserva = new Reserva(fecha, horaRes, mesaRes, admin);
+                Reserva nuevaReserva = new Reserva(fecha.toString(), horaRes.toString(), mesaRes, admin);
                 this.agregarReservaEvento(nuevaReserva);
             }
         }
@@ -372,10 +372,10 @@ public class Evento implements Serializable {
     
     /**
      * Metodo publico para crear eventos por ubicaciones completas disponibles
-     * @param fecha
-     * @param horaI
-     * @param horaF
-     * @param NumerosMesas 
+     * @param fecha fecha del evento
+     * @param horaI hora del primer turno
+     * @param horaF hora de ultimo turno
+     * @param NumerosMesas numero de mesas elegidas
      */
     public void crearEventoUbicacion(LocalDate fecha, LocalTime horaI, LocalTime horaF, String ubicacion, Administrador adminE){
         this.crearEventoPorUbicacion(fecha, horaI, horaF, ubicacion, adminE);
@@ -384,10 +384,10 @@ public class Evento implements Serializable {
     
     /**
      * Metodo publico para crear eventos por mesas disponibles
-     * @param fecha
-     * @param horaI
-     * @param horaF
-     * @param NumerosMesas 
+     * @param fecha fecha del evento
+     * @param horaI hora del primer turno
+     * @param horaF hora de ultimo turno
+     * @param NumerosMesas numero de mesas elegidas
      */
     public void crearEventoMesas(LocalDate fecha, LocalTime horaI, LocalTime horaF, ArrayList<String> numerosMesas, Administrador adminE){
         this.crearEventoPorMesas(fecha, horaI, horaF, numerosMesas, adminE);

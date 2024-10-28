@@ -18,13 +18,15 @@ public class Reserva implements Serializable {
 
     private String idReserva;
 
-    private LocalDate dia;
-    private LocalTime hora;
+    private transient LocalDate dia;
+    private transient LocalTime hora;
+    private String diaString;
+    private String horaString;
     private String estadoAsist;
     private Integer cantidadComensales;
     private String comentarios;
     
-    private Mesa mesaReservada;
+    private transient Mesa mesaReservada;
     private Usuario clienteReserva;
     private TarjetaCredito tarjeta;
     
@@ -57,13 +59,21 @@ public class Reserva implements Serializable {
         LocalTime.parse("00:00", formatter),
         LocalTime.parse("02:00", formatter)));
     
+    
+    public Reserva(){
+    }
+    
     /*
     * Constructor para el cliente que hace la reserva
     */
-    public Reserva(LocalDate dia, LocalTime hora, String coment, Integer comensales ,Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
+    public Reserva(String dia, String hora, String coment, Integer comensales ,Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
         this.idReserva = UUID.randomUUID().toString();
-        this.dia = dia;
-        this.hora = hora;
+        this.diaString = dia;
+        this.horaString = hora;
+        //Se pasan a formato LocalDate y LocalTime para trabajar con las funciones de la libreria
+        this.dia = LocalDate.parse(this.horaString);
+        this.hora = LocalTime.parse(this.horaString, formatter);
+        
         this.estadoAsist = estadosPosibles.get(0);
         this.comentarios = coment;
         this.cantidadComensales = comensales;
@@ -73,19 +83,22 @@ public class Reserva implements Serializable {
         Reserva.listaReservas.add(this);
         cliente.addReserva(this);
         mesa.agregarReserva(this);
-        tarjeta.agregarReser(this);
     }
-    
     
     /*
     *Constructor para el administrador que gestiona eventos
     */
-    public Reserva(LocalDate dia, LocalTime hora, Mesa mesa, Administrador admin) {
+    public Reserva(String dia, String hora, Mesa mesa, Administrador admin) {
         this.idReserva = UUID.randomUUID().toString();
         this.clienteReserva = admin;
         this.estadoAsist = this.estadosPosibles.get(4);
-        this.dia = dia;
-        this.hora = hora;
+
+        this.diaString = dia;
+        this.horaString = hora;
+        //Se pasan a formato LocalDate y LocalTime para trabajar con las funciones de la libreria
+        this.dia = LocalDate.parse(this.horaString);
+        this.hora = LocalTime.parse(this.horaString, formatter);
+        
         this.mesaReservada = mesa;
         this.cantidadComensales = null;
         this.comentarios = "Evento";
@@ -93,14 +106,18 @@ public class Reserva implements Serializable {
         mesa.agregarReserva(this);
     }
 
-        
     /*
     * Constructor para la persistencia
     */
-    public Reserva(String idReserva, LocalDate dia, LocalTime hora, String estado, String coment, Integer comensales, Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
+    public Reserva(String idReserva, String dia, String hora, String estado, String coment, Integer comensales, Mesa mesa, Cliente cliente, TarjetaCredito tarjeta) {
         this.idReserva = idReserva;
-        this.dia = dia;
-        this.hora = hora;
+        
+        this.diaString = dia;
+        this.horaString = hora;
+        //Se pasan a formato LocalDate y LocalTime para trabajar con las funciones de la libreria
+        this.dia = LocalDate.parse(this.horaString);
+        this.hora = LocalTime.parse(this.horaString, formatter);
+        
         this.estadoAsist = estado;
         this.comentarios = coment;
         this.cantidadComensales = comensales;
@@ -110,16 +127,20 @@ public class Reserva implements Serializable {
         Reserva.listaReservas.add(this);
         cliente.addReserva(this);
         mesa.agregarReserva(this);
-        tarjeta.agregarReser(this);
     }
     
     /*
     *Constructor para la persistencia
     */
-    public Reserva(String idReserva, LocalDate dia, LocalTime hora, String estado, Mesa mesa, Administrador admin) {
+    public Reserva(String idReserva, String dia, String hora, String estado, Mesa mesa, Administrador admin) {
         this.idReserva = idReserva;
-        this.dia = dia;
-        this.hora = hora;
+
+        this.diaString = dia;
+        this.horaString = hora;
+        //Se pasan a formato LocalDate y LocalTime para trabajar con las funciones de la libreria
+        this.dia = LocalDate.parse(this.horaString);
+        this.hora = LocalTime.parse(this.horaString, formatter);
+        
         this.estadoAsist = estado;
         this.mesaReservada = mesa;
         this.clienteReserva = admin;
@@ -129,14 +150,30 @@ public class Reserva implements Serializable {
         Reserva.listaReservas.add(this);
         mesa.agregarReserva(this);
     }
-    
+
+    public String getDiaString() {
+        return diaString;
+    }
+
+    public void setDiaString(String diaString) {
+        this.setDia(LocalDate.parse(diaString));
+        this.diaString = diaString;
+    }
+
+    public String getHoraString() {
+        return horaString;
+    }
+
+    public void setHoraString(String horaString) {
+        this.setHora(LocalTime.parse(horaString, formatter));
+        this.horaString = horaString;
+    }
     
     public LocalDate getDia() {
         return dia;
     }
 
     public void setDia(LocalDate diaSet) {
-
         this.dia = diaSet;
     }
 

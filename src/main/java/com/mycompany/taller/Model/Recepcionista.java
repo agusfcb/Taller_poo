@@ -16,18 +16,12 @@ public class Recepcionista extends Empleado {
         super();
     }
 
-    /**
-     * Constructor parametrizado
-     * @param name
-     * @param tel
-     * @param email
-     * @param pass 
-     */
+
     public Recepcionista(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero) {
         super(name, tel, fechaCumple, email, pass, "Recepcionista", genero);
     }
     //Corregido: saque el parametro String rol, ya que esta escrito "Recepcionista" no lo necesita en el constructor
-    public Recepcionista(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, long idUsuario) {
+    public Recepcionista(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, String idUsuario) {
         super(name, tel, fechaCumple, email, pass, "Recepcionista", genero, idUsuario);
     }
 
@@ -41,9 +35,9 @@ public class Recepcionista extends Empleado {
     
     /**
      * Metodo para buscar listas de reservas por una fecha y hora especifica
-     * @param fecha
-     * @param hora
-     * @return Array<Reserva>
+     * @param fecha fecha
+     * @param hora hora
+     * @return array de las reservas en la hora y fecha filtrada
      */
     public ArrayList<Reserva> buscarReservas(LocalDate fecha, LocalTime hora) {
         // Ordena las reservas por fecha
@@ -72,15 +66,15 @@ public class Recepcionista extends Empleado {
     }
     /**
      * Metodo para tomar los datos de una fecha de la reserva
-     * @param fecha
-     * @param hora 
+     * @param fecha fehca
+     * @param hora hora
      */
     public void tomarDatosFecha(LocalDate fecha, LocalTime hora) {
         System.out.println("Fecha y hora recibidas: " + fecha + "" + hora);
     }
     /**
      * Metodo para buscar las reservas por ID
-     * @param idReserva
+     * @param idReserva id de la reserva
      * @return Reserva
      */
     private Reserva buscarId(String idReserva) {
@@ -93,7 +87,7 @@ public class Recepcionista extends Empleado {
     }
     /**
      * Metodo para tomar el ID de una reserva
-     * @param idReserva
+     * @param idReserva id de la reserva
      * @return Reserva
      */
     public Reserva tomarID(String idReserva) {
@@ -101,8 +95,8 @@ public class Recepcionista extends Empleado {
     }
     /**
      * Metodo para cambiar el estado de la reserva según el ID
-     * @param id
-     * @param nuevoEstado 
+     * @param id id de la reerva
+     * @param nuevoEstado cambio de estado
      */
     public void cambiarEstadoReserva(String id, String nuevoEstado) {
         Reserva reserva = buscarId(id);
@@ -127,7 +121,7 @@ public class Recepcionista extends Empleado {
     }
     /**
      * Metodo para confirmar la asistencia por ID
-     * @param id 
+     * @param id id de la reserva
      */
     public void confirmarAsistencia(String id) {
         Reserva reserva = buscarId(id);
@@ -147,8 +141,8 @@ public class Recepcionista extends Empleado {
     }
     /**
      * Metodo privado para buscar el nombre del cliente en una lista de reservas
-     * @param nombre
-     * @param listRes
+     * @param nombre nombre del cliente
+     * @param listRes lista de reservas del dia para buscar
      * @return Reserva
      */
     private Reserva buscarNom(String nombre, ArrayList<Reserva> listRes) {
@@ -161,8 +155,8 @@ public class Recepcionista extends Empleado {
     }
     /**
      * Metodo para tomar un nombre del cliente en una lista de reservas
-     * @param nombre
-     * @param listRes
+     * @param nombre nombre del cliente
+     * @param listRes lista de reservas para buscar
      * @return Reserva
      */
     public Reserva tomarNombre(String nombre, ArrayList<Reserva> listRes) {
@@ -170,8 +164,8 @@ public class Recepcionista extends Empleado {
     }
     /**
      * Metodo para ver los comentarios de las reservas con respecto al ID
-     * @param idReserva
-     * @return String
+     * @param idReserva id de la reserva
+     * @return comentarios en formato string para presentar
     */
     @Override
     public String verComentarios(String idReserva) {

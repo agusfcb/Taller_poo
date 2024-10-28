@@ -1,26 +1,22 @@
 package com.mycompany.taller.Model;
 
 
-import java.io.Serializable;
 import java.util.*;
 import java.lang.Integer;
-
 
 /**
  * Clase para representar a las mesas y las funciones asociadas
  * @author Agustin y Juan
  */
 
-public class Mesa implements Serializable {
+public class Mesa {
     
-
-    private String numero;
+    private String idMesa;
 
     private Integer capacidad;
     private String ubicacion;
     
-
-    private ArrayList<Reserva> reservasMesa;
+    private transient ArrayList<Reserva> reservasMesa;
 
     private static final ArrayList<String> ubicacionesDisponibles = new ArrayList<>(Arrays.asList("Interior A", "Interior B", "Interior C", "Patio A", "Patio B"));
 
@@ -32,7 +28,7 @@ public class Mesa implements Serializable {
     }
     
     public Mesa(Integer capacidad, String ubicacion) {
-        this.numero = String.valueOf(Mesa.getMesasExistentes().size() + 1);
+        this.idMesa = String.valueOf(Mesa.getMesasExistentes().size() + 1);
         this.capacidad = capacidad;
         this.ubicacion = ubicacion;
         this.reservasMesa = new ArrayList<Reserva>();
@@ -40,17 +36,21 @@ public class Mesa implements Serializable {
     }
     
     public Mesa(String numMesa, Integer capacidad, String ubicacion) {
-        this.numero = numMesa;
+        this.idMesa = numMesa;
         this.capacidad = capacidad;
         this.ubicacion = ubicacion;
         this.reservasMesa = new ArrayList<Reserva>();
         Mesa.mesasExistentes.add(this);
     }
-    
-    
-    public String getNumero() {
-        return numero;
+
+    public String getIdMesa() {
+        return idMesa;
     }
+
+    public void setIdMesa(String idMesa) {
+        this.idMesa = idMesa;
+    }
+    
 
     public Integer getCapacidad() {
         return capacidad;
@@ -58,10 +58,6 @@ public class Mesa implements Serializable {
 
     public String getUbicacion() {
         return ubicacion;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
     }
 
     public void setCapacidad(Integer capacidad) {
@@ -107,7 +103,7 @@ public class Mesa implements Serializable {
     public void removerMesa(String num){
         ArrayList<Mesa> mesasTotales = Mesa.getMesasExistentes();
         for(Mesa ext : mesasTotales){
-            if(ext.getNumero().equals(num)){
+            if(ext.getIdMesa().equals(num)){
                 Mesa.mesasExistentes.remove(ext);
             }
         }
@@ -116,5 +112,4 @@ public class Mesa implements Serializable {
     public void removerReserva(Reserva res){
         this.reservasMesa.remove(res);
     }
-    
 }
