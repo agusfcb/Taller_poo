@@ -1,5 +1,7 @@
 package com.mycompany.taller.Pincipal;
 
+import com.mycompany.taller.IGU.Loggin;
+
 /**
  * Clase principal
  * @author Agus
@@ -7,6 +9,8 @@ package com.mycompany.taller.Pincipal;
 public class Taller {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Loggin pantallaLoggin = new Loggin();
+        pantallaLoggin.setVisible(true);
+        pantallaLoggin.setLocationRelativeTo(null);
     }
 }

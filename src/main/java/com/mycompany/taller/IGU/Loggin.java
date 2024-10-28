@@ -216,7 +216,7 @@ public class Loggin extends javax.swing.JFrame {
         if(control.getUser() == null){
             JOptionPane.showMessageDialog(null, "Usuario/Contrasenia incorrectos", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         }else{
-            switch(control.getUser().getRol())
+            switch(control.getUser().getRol()){
                 case "Cliente":
                     ClienteMenu pantallaCli = new ClienteMenu(control);
                     pantallaCli.setVisible(true);
