@@ -14,10 +14,10 @@ public class Mesero extends Empleado {
     public Mesero() {
         super();
     }
-    public Mesero(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero) {
+    public Mesero(String name, String tel, String fechaCumple, String email, String pass, String genero) {
         super(name, tel, fechaCumple, email, pass, "Mesero", genero);
     }
-    public Mesero(String name, String tel, LocalDate fechaCumple, String email, String pass, String genero, String idUsuario){
+    public Mesero(String name, String tel, String fechaCumple, String email, String pass, String genero, String idUsuario){
         super(name, tel, fechaCumple, email, pass, "Maitre", genero, idUsuario);
     }
 
